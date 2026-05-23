@@ -6,7 +6,7 @@ tags: ["cloudflare", "ai", "rag", "workflows", "llm", "side-project"]
 draft: false
 ---
 
-BLUF: I built a multimodal AI playground as a single Cloudflare Worker. Chat with 39 models across six providers, generate images, video, music, speech, transcribe audio, run RAG over your own PDFs, multi-turn conversations. Total infrastructure cost at idle: $0. Source under AGPL-3.0 at [github.com/SkyPhusion/skyphusion-llm-public](https://github.com/SkyPhusion/skyphusion-llm-public).
+I built a multimodal AI playground as a single Cloudflare Worker. Chat with 39 models across six providers, generate images, video, music, speech, transcribe audio, run RAG over your own PDFs, multi-turn conversations. Total infrastructure cost at idle: $0. Source under AGPL-3.0 at [github.com/SkyPhusion/skyphusion-llm-public](https://github.com/SkyPhusion/skyphusion-llm-public).
 
 This post is less "feature catalog" (the README does that) and more "things I learned by deploying it." Topics:
 
