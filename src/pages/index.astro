@@ -2,20 +2,43 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+// Featured post slug. Set to null to hide the Featured section entirely.
+const FEATURED_SLUG: string | null = 'llm';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = FEATURED_SLUG
+  ? allPosts.find((p) => p.id === FEATURED_SLUG)
+  : undefined;
+
+// Hide the featured post from the recent list so it doesn't appear twice.
+const posts = allPosts
+  .filter((p) => p.id !== FEATURED_SLUG)
   .slice(0, 10);
 ---
-<BaseLayout title="skyphusion.net" description="Notes from Conrad Rockenhaus">
-  <h1>skyphusion.net</h1>
-  <p>Notes, thoughts, and occasional findings.</p>
+<BaseLayout title="skyphusion.net" description="Home page of Conrad Rockenhaus">
+  <h1>Home Page of Conrad Rockenhaus</h1>
+  <p>Personal site. Notes on technology, infrastructure, and occasional findings from other domains.</p>
+
+  {featured && (
+    <section class="featured">
+      <h2>Featured</h2>
+      <p class="featured-item">
+        <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
+      </p>
+      <p class="featured-summary">
+        Architecture and lessons from building a 39-model multimodal AI playground as a single Cloudflare Worker.
+      </p>
+    </section>
+  )}
 
   <h2>Recent posts</h2>
   {posts.length === 0 ? (
-    <p class="muted">No posts yet.</p>
+    <p class="muted">No other posts yet.</p>
   ) : (
     <ul class="post-list">
-      {posts.map(post => (
+      {posts.map((post) => (
         <li>
           <a href={`/blog/${post.id}`}>{post.data.title}</a>
           <time datetime={post.data.pubDate.toISOString()}>
@@ -28,6 +51,18 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 </BaseLayout>
 
 <style>
+  .featured {
+    margin-bottom: 2rem;
+  }
+  .featured-item {
+    margin: 0.5rem 0 0.25rem 0;
+    font-weight: 600;
+  }
+  .featured-summary {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
   .post-list {
     list-style: none;
     padding: 0;
