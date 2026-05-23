@@ -1,0 +1,68 @@
+name = "skyphusion-llm-public"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+# AI binding. The unified binding handles both Workers AI and third-party
+# providers (OpenAI, Anthropic, Google, Mistral, etc.) under one call surface.
+[ai]
+binding = "AI"
+
+# D1 database for chat history. Fill in database_id after running:
+#   npx wrangler d1 create skyphusion-llm-public
+[[d1_databases]]
+binding = "DB"
+database_name = "skyphusion-llm-public"
+database_id = "PLACEHOLDER_RUN_wrangler_d1_create_THEN_PASTE_HERE"
+
+# R2 bucket for input + output artifacts (images, audio, video frames).
+# Create with:
+#   npx wrangler r2 bucket create skyphusion-llm-public
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "skyphusion-llm-public"
+
+# Vectorize index for RAG document embeddings. 768 dimensions matches
+# @cf/baai/bge-base-en-v1.5; cosine similarity.
+# Create with:
+#   npx wrangler vectorize create skyphusion-llm-vec --dimensions=768 --metric=cosine
+[[vectorize]]
+binding = "VEC"
+index_name = "skyphusion-llm-vec"
+
+# Static frontend (HTML, CSS, JS).
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Cloudflare Workflow for long-running Unified Billing video and music gen
+# (v0.12.0). env.AI.run for these models blocks until completion (30s-3min),
+# which exceeds the ~30s waitUntil budget after an HTTP response. Workflows
+# provide a durable execution primitive: the LongRunWorkflow class invokes the
+# model, downloads the result, uploads to R2, and finalizes the D1 row across
+# independently-retryable steps. Each instance is observable in the Cloudflare
+# dashboard.
+[[workflows]]
+name = "skyphusion-longrun"
+binding = "LONGRUN"
+class_name = "LongRunWorkflow"
+
+# Per-instance observability for the worker (lets you tail logs in the
+# dashboard). Workflows have their own dashboard surface; this enables it
+# for the rest of the worker too.
+[observability]
+enabled = true
+
+# Note: GATEWAY_ID is set as a worker secret rather than a var in this file
+# (v0.12.0+). This keeps deployer-specific values out of the committed template.
+# Set it once after first deploy:
+#   echo "your-gateway-slug" | npx wrangler secret put GATEWAY_ID
+# For local development, also add it to .dev.vars:
+#   GATEWAY_ID=your-gateway-slug
+#
+# Other worker secrets (also set via `npx wrangler secret put <NAME>`):
+#   ANTHROPIC_API_KEY, XAI_API_KEY, GOOGLE_API_KEY, OPENAI_API_KEY,
+#   AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY,
+#   AWS_REGION (optional, defaults us-east-1; for Nova),
+#   AWS_REGION_PEGASUS (optional, defaults us-west-2; Pegasus only available
+#                       in us-west-2 or eu-west-1),
+#   CF_AIG_TOKEN (optional, only if Authenticated Gateway is enabled).

@@ -10,12 +10,8 @@
 	"observability": {
 		"enabled": true
 	},
-	"routes": [
-		{
-			"pattern": "skyphusion.net",
-			"custom_domain": true,
-			"pattern": "www.skyphusion.net",
-			"custom_domain": true
-		}
-	]
+		"routes": [
+			{ "pattern": "skyphusion.net", "custom_domain": true },
+			{ "pattern": "www.skyphusion.net", "custom_domain": true }
+		]
 }
