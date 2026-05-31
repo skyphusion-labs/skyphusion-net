@@ -1,13 +1,13 @@
 # skyphusion-net
 
-Personal blog at skyphusion.net. Astro 5 static site, deployed to Cloudflare Pages, markdown-authored, zero server.
+Personal blog at skyphusion.net. Astro 6 site, prerendered to static HTML and served from a Cloudflare Worker, markdown-authored.
 
 ## Stack
 
 | Layer | Choice |
 |---|---|
-| Site generator | Astro 5 |
-| Hosting | Cloudflare Pages (free tier) |
+| Site generator | Astro 6 |
+| Hosting | Cloudflare Workers (free tier), `@astrojs/cloudflare` adapter |
 | Authoring | Markdown with YAML frontmatter |
 | RSS | @astrojs/rss |
 | Sitemap | @astrojs/sitemap |
@@ -42,8 +42,8 @@ draft: false
 Content in markdown.
 ```
 
-3. Push to main.
-4. Cloudflare Pages auto-builds and deploys. Live at https://skyphusion.net/blog/my-new-post within ~30 seconds.
+3. Run `npm run deploy` (or push to main, if you've wired up a CI deploy).
+4. Live at https://skyphusion.net/blog/my-new-post within ~30 seconds.
 
 Set `draft: true` to keep a post out of the build (won't appear in lists, won't get a URL).
 
@@ -51,19 +51,20 @@ Set `draft: true` to keep a post out of the build (won't appear in lists, won't 
 
 ```bash
 npm run build    # Produces dist/ folder
-npm run preview  # Serves dist/ locally
+npm run preview  # build + wrangler dev — runs the built Worker locally (closest to prod)
 ```
 
 ## Project structure
 
 ```
 skyphusion-net/
-├── astro.config.mjs          # Astro config (site URL, integrations)
+├── astro.config.mjs          # Astro config (site URL, integrations, Cloudflare adapter)
+├── wrangler.jsonc            # Cloudflare Worker config (assets binding, routes)
 ├── package.json
 ├── tsconfig.json
 ├── src/
+│   ├── content.config.ts     # Blog post schema (title, description, etc.)
 │   ├── content/
-│   │   ├── config.ts         # Blog post schema (title, description, etc.)
 │   │   └── blog/
 │   │       └── hello-world.md
 │   ├── layouts/
@@ -80,22 +81,23 @@ skyphusion-net/
     └── robots.txt
 ```
 
-## Cloudflare Pages deployment
+## Cloudflare Workers deployment
+
+The site builds to static HTML (every route uses `getStaticPaths`) and is served by a Cloudflare Worker. The `@astrojs/cloudflare` adapter (`astro.config.mjs`) and `wrangler.jsonc` define the Worker, which serves `dist/` through the `ASSETS` binding on the custom domains `skyphusion.net` and `www.skyphusion.net`.
+
+Deploy from your machine:
+
+```bash
+npm run deploy   # build + wrangler deploy
+```
 
 One-time setup:
 
-1. Push this repo to GitHub (private is fine).
-2. Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git.
-3. Select the `skyphusion-net` repo.
-4. Build settings:
-   - **Framework preset**: Astro
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Root directory**: (leave blank)
-5. Save and Deploy. First build takes ~1 minute.
-6. After build succeeds, Custom domains → Set up a custom domain → `skyphusion.net`. Cloudflare auto-configures DNS if domain is already in your CF account.
+1. Authenticate Wrangler: `npx wrangler login`.
+2. `npm run deploy`. The first deploy provisions the Worker.
+3. Custom domains are declared in `wrangler.jsonc` (`routes`); Cloudflare wires DNS automatically if the domain is in your CF account.
 
-After that: every `git push origin main` triggers a build. Production at skyphusion.net. Preview deploys for any other branch get their own *.pages.dev URL.
+Custom-domain or binding changes go in `wrangler.jsonc`. After editing bindings, run `npm run generate-types` to refresh `worker-configuration.d.ts`.
 
 ## Customization quick hits
 
