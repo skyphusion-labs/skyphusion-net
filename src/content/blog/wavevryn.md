@@ -10,6 +10,27 @@ A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI pla
 
 The pitch: you plan a film in a chat UI, the system trains a LoRA for each character so they stay consistent across shots, renders SDXL keyframes and turns them into motion with image-to-video, and hands you back a silent MP4. The render runs on a GPU that **scales to zero** — you pay only while a job is actually running, and $0 the rest of the time.
 
+## See it run
+
+Here is a finished render straight off the pipeline:
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/kurogane-forms.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/kurogane-forms.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>Kurogane Forms</em>: a single-character, 17-shot render.</figcaption>
+</figure>
+
+Everything in that clip came out of the pipeline:
+
+- **Planning:** Claude Opus 4.8
+- **Music:** MiniMax Music 2.6 (`minimax/music-2.6`)
+- **SDXL keyframes:** `SG161222/RealVisXL_V5.0`
+- **Image-to-video:** `Wan-AI/Wan2.2-I2V-A14B-Diffusers`
+
+The keyframes use `SG161222/RealVisXL_V5.0`, which is my default base. An anime base like `cagliostrolab/animagine-xl-4.0` is wired up as a selectable option and would have been the on-paper pick for this style, but I keep RealVisXL V5.0 as the default on purpose: as the clip shows, it holds up well across styles, because the character LoRA and the prompt carry most of the look and the base only has to render it cleanly.
+
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
 - Why the system is split into an always-on control plane and a scale-to-zero GPU backend
