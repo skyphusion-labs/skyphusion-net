@@ -6,27 +6,26 @@
 // vivijure-serverless); the blog is content-driven, so landing on main IS the
 // release. Non-main branches are type-checked and built but never deployed.
 //
-// Jenkins job: a plain Pipeline-from-SCM (branch main, Script Path Jenkinsfile)
-// on mindcrime, with a githubPush() trigger so every push fires the webhook.
+// Jenkins job: a multibranch pipeline (GitHub source SkyPhusion/skyphusion-net,
+// branch discovery, Script Path Jenkinsfile) on mindcrime, fed by a repo
+// githubPush() webhook so every push triggers a scan + build.
 //
 // Credentials (Jenkins -> Manage Credentials), already present on mindcrime:
 //   CLOUDFLARE_API_TOKEN   Secret Text  (token with Workers Scripts:Edit +
 //                                        Workers Routes:Edit on the zone)
 //   CLOUDFLARE_ACCOUNT_ID  Secret Text
 //
-// Runtime: a node:24 Docker agent (the full image, not -slim: `checkout scm`
-// runs inside the container and needs git, which the slim variant omits). npm
-// ci installs wrangler from devDependencies, so the agent needs only Docker.
+// Runtime: runs on the mindcrime host (`agent any`), NOT a throwaway Docker
+// container. The @astrojs/cloudflare v13 adapter renders prerendered routes
+// inside a workerd "tunnel" during `astro build`; that tunnel dies in a
+// disposable node:* container (build aborts with `connect ECONNREFUSED
+// 127.0.0.1:<port>` during "prerendering static routes"), but works on the
+// host, which is the same Node + wrangler environment that deploys
+// skyphusion-llm-public. The host provides node/npm/npx (Node 22, satisfies
+// Astro 6's >=22 requirement); wrangler comes from devDependencies via npm ci.
 
 pipeline {
-    agent {
-        docker {
-            image 'node:24'
-            // root so npm's cache + global dirs are writable; -v caches npm
-            // between builds for faster `npm ci`.
-            args  '-u root:root -v $HOME/.npm-skyphusion:/root/.npm'
-        }
-    }
+    agent any
 
     options {
         timeout(time: 20, unit: 'MINUTES')
@@ -49,10 +48,10 @@ pipeline {
             steps {
                 checkout scm
                 script {
-                    // BRANCH_NAME is only set for multibranch jobs; a plain
-                    // Pipeline-from-SCM job exposes the ref via GIT_BRANCH
-                    // (e.g. "origin/main"). Normalize both to a bare name so the
-                    // deploy gate works regardless of how the job is wired.
+                    // Multibranch jobs set BRANCH_NAME; fall back to GIT_BRANCH
+                    // (e.g. "origin/main") so the deploy gate also works if this
+                    // is ever rewired as a plain Pipeline-from-SCM job. Normalize
+                    // to a bare branch name.
                     env.GIT_REF = (env.BRANCH_NAME ?: env.GIT_BRANCH ?: '')
                         .replaceFirst(/^origin\//, '')
                     echo "ref: ${env.GIT_REF ?: '(unknown)'}"
