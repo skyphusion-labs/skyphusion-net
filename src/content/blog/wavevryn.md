@@ -43,6 +43,24 @@ Here is a harder one. The single-character render only has to keep *one* face co
 
 Same stack as the first clip (Opus 4.8 planning, MiniMax Music 2.6, RealVisXL V5.0 keyframes, Wan 2.2 I2V), plus the one piece that earns its keep the moment two characters share a frame: the **regional engine**. Each character is drawn inside its own masked region with its own LoRA and IP-Adapter, so the two identities stay separate across all twelve shots instead of collapsing into a single averaged face. (The *Multi-character shots* note further down covers how that works.)
 
+Both clips above are anime; the same RealVisXL V5.0 default renders photorealism just as readily. The next two are photoreal, and they add the audio layer that lands on the silent picture once the GPU is done. The first carries generated narration; the second is scored with a generated track:
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/aria-solo-showcase.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/aria-solo-showcase.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>Aria</em>: a photorealistic single-character render, with generated narration over the cut.</figcaption>
+</figure>
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/aria-martha-showcase.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/aria-martha-showcase.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>Aria and Martha</em>: a photorealistic multi-character render, scored with a generated track (MiniMax Music 2.6).</figcaption>
+</figure>
+
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
 - Why the system is split into an always-on control plane and a scale-to-zero GPU backend
