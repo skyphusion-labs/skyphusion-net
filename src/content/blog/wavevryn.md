@@ -31,6 +31,18 @@ Everything in that clip came out of the pipeline:
 
 The keyframes use `SG161222/RealVisXL_V5.0`, which is my default base. An anime base like `cagliostrolab/animagine-xl-4.0` is wired up as a selectable option and would have been the on-paper pick for this style, but I keep RealVisXL V5.0 as the default on purpose: as the clip shows, it holds up well across styles, because the character LoRA and the prompt carry most of the look and the base only has to render it cleanly.
 
+Here is a harder one. The single-character render only has to keep *one* face consistent; this next clip has to keep two distinct characters from bleeding into each other across every shot:
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/no_winner_hero.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/no_winner_hero.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>No Winner Hero</em>: a multi-character, 12-shot render.</figcaption>
+</figure>
+
+Same stack as the first clip (Opus 4.8 planning, MiniMax Music 2.6, RealVisXL V5.0 keyframes, Wan 2.2 I2V), plus the one piece that earns its keep the moment two characters share a frame: the **regional engine**. Each character is drawn inside its own masked region with its own LoRA and IP-Adapter, so the two identities stay separate across all twelve shots instead of collapsing into a single averaged face. (The *Multi-character shots* note further down covers how that works.)
+
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
 - Why the system is split into an always-on control plane and a scale-to-zero GPU backend
