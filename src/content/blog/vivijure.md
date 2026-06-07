@@ -3,7 +3,7 @@ title: "Vivijure: a scale-to-zero GPU render backend for AI film"
 description: "Introducing vivijure-serverless, the GPU half of an AI film/video pipeline. An always-on Cloudflare Worker plans the film and preps the cast; a scale-to-zero RunPod endpoint trains character LoRAs and renders SDXL keyframes plus image-to-video, paying $0 while idle. Notes on the additive serverless wrapper, the R2 state round-trip, two CUDA targets, LoRA reuse, and the silent-failure lessons that shaped it."
 pubDate: 2026-06-06
 tags: ["runpod", "serverless", "gpu", "cloudflare", "ai", "diffusion", "lora", "side-project"]
-draft: false
+draft: true
 ---
 
 A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI playground that lives entirely in one Cloudflare Worker. This post is about its other half: **Vivijure**, an AI film/video pipeline, and specifically `vivijure-serverless`, the GPU backend that does the actual rendering. Source is MIT at [github.com/SkyPhusion/vivijure-serverless](https://github.com/SkyPhusion/vivijure-serverless).
