@@ -11,6 +11,8 @@ A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI pla
 
 The pitch: you plan a film in a chat UI, the system trains a LoRA for each character so they stay consistent across shots, renders SDXL keyframes and turns them into motion with image-to-video, and hands you back a silent MP4. The render runs on a GPU that **scales to zero**; you pay only while a job is actually running, and $0 the rest of the time.
 
+> **Part two is up:** [a pluggable motion backend and a GPU+cloud hybrid render](/blog/vivijure-hybrid/). Motion is no longer welded to the GPU, a single film can render some shots on the pod's Wan image-to-video and some on a cloud motion model, then merge them off-GPU into one MP4. The keyframe turned out to be the contract the whole time.
+
 ## See it run
 
 Here is a finished render straight off the pipeline:
