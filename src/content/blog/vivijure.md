@@ -3,7 +3,7 @@ title: "Vivijure: a scale-to-zero GPU render backend for AI film"
 description: "Introducing vivijure-serverless, the GPU half of an AI film/video pipeline. An always-on Cloudflare Worker plans the film and preps the cast; a scale-to-zero RunPod endpoint trains character LoRAs and renders SDXL keyframes plus image-to-video, paying $0 while idle. Notes on the additive serverless wrapper, the R2 state round-trip, two CUDA targets, LoRA reuse, and the silent-failure lessons that shaped it."
 pubDate: 2026-06-06
 tags: ["runpod", "serverless", "gpu", "cloudflare", "ai", "diffusion", "lora", "side-project"]
-draft: true
+draft: false
 ---
 
 A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI playground that lives entirely in one Cloudflare Worker. This post is about its other half: **Vivijure**, an AI film/video pipeline, and specifically `vivijure-serverless`, the GPU backend that does the actual rendering. Source is MIT at [github.com/SkyPhusion/vivijure-serverless](https://github.com/SkyPhusion/vivijure-serverless).
@@ -62,6 +62,18 @@ Both clips above are anime; the same RealVisXL V5.0 default renders photorealism
 </figure>
 
 That second clip is my favorite reminder that multi-character rendering is a tuning game, not a solved-or-broken switch. The cast sheet called for Aria and a second character, **Marcus**, a grey-bearded older man. The regional engine put two distinct figures on screen with a clean gap between them, but with the per-character scales left loose the identity routing drifted, and Marcus came back as an older woman. The result was convincing enough on its own terms that the working caption simply took it at face value and called her Martha, and the name stuck. Dialed in, the engine holds each character across a scene; left loose, you get good-natured accidents like this one, which is why I kept it instead of swapping in another clean render.
+
+Here is what dialed in actually looks like. Same cast sheet, Aria and Marcus, run again with the per-character LoRA and IP-Adapter scales tuned for the shot:
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/aria-marcus-showcase.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/aria-marcus-showcase.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>Aria and Marcus</em>: the same two-character cast, with per-character scales tuned so Marcus renders as the grey-bearded older man the cast sheet asked for. A silent draft pass (no audio layer yet).</figcaption>
+</figure>
+
+This time Marcus comes back as himself, the older man he was written to be, and he holds his own identity and his own region of the frame next to Aria across the whole render. It is a silent draft pass with no audio layer yet, but it is the proof the previous clip only hints at: the regional engine renders a genuine multi-character scene correctly once the scales are set, by design rather than by luck.
 
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
