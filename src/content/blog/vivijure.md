@@ -3,7 +3,7 @@ title: "Vivijure: a scale-to-zero GPU render backend for AI film"
 description: "Introducing vivijure-serverless, the GPU half of an AI film/video pipeline. An always-on Cloudflare Worker plans the film and preps the cast; a scale-to-zero RunPod endpoint trains character LoRAs and renders SDXL keyframes plus image-to-video, paying $0 while idle. Notes on the additive serverless wrapper, the R2 state round-trip, two CUDA targets, LoRA reuse, and the silent-failure lessons that shaped it."
 pubDate: 2026-06-06
 tags: ["runpod", "serverless", "gpu", "cloudflare", "ai", "diffusion", "lora", "side-project"]
-draft: true
+draft: false
 ---
 
 A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI playground that lives entirely in one Cloudflare Worker. This post is about its other half: **Vivijure**, an AI film/video pipeline, and specifically `vivijure-serverless`, the GPU backend that does the actual rendering. Source is AGPL-3.0 at [github.com/SkyPhusion/vivijure-serverless](https://github.com/SkyPhusion/vivijure-serverless).
@@ -86,6 +86,16 @@ That clip is a fast draft pass: fewer image-to-video steps and no audio. Here is
 </figure>
 
 The honest caveat is that this cast is the friendly case, a young red-haired woman next to an older grey-bearded man reads as two different people at a glance; two characters who share an age, build, and hair are still the genuinely hard one.
+
+That same lever, a cast built to be distinct on purpose, is the whole idea behind the last example. **NEON HALFLIFE** is an anime cyberpunk music video carried by two characters drawn as far apart as the cast sheet allows: Vesper, a lean young silver-haired infiltrator lit in cool teal, and Rhode, a heavy-built older bearded mercenary lit in warm orange. Ten shots, a generated darksynth score, conceived and directed end to end by Claude (Opus 4.8).
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/neon_halflife.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/neon_halflife.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>NEON HALFLIFE</em>: an anime cyberpunk multi-character MV, the range piece for the system. The cast was designed for maximum distinctness, the exact lever this section is about, and their character LoRAs were trained on this backend; the keyframes and image-to-video motion come from the control plane's image and video models, scored with a generated track (MiniMax Music 2.6).</figcaption>
+</figure>
 
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
