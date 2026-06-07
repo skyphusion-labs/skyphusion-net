@@ -73,7 +73,19 @@ Here is what it looks like once the setup is right. Same cast sheet, Aria and Ma
   <figcaption><em>Aria and Marcus</em>: the same two-character cast, rendered at the standard per-character scales once the setup was right (a visually distinct cast, pose conditioning for the spatial gap, full-length per-region prompts), so Marcus comes back as the grey-bearded older man the cast sheet asked for. A silent draft pass (no audio layer yet).</figcaption>
 </figure>
 
-This time Marcus comes back as himself, the older man he was written to be, and he holds his own identity and his own region of the frame next to Aria across the whole render. It is a silent draft pass with no audio layer yet, but it is the proof the previous clip only hints at: the regional engine renders a genuine multi-character scene correctly once the setup is right, by design rather than by luck. The honest caveat is that this cast is the friendly case, a young red-haired woman next to an older grey-bearded man reads as two different people at a glance; two characters who share an age, build, and hair are still the genuinely hard one.
+This time Marcus comes back as himself, the older man he was written to be, and he holds his own identity and his own region of the frame next to Aria across the whole render. It is a silent draft pass with no audio layer yet, but it is the proof the previous clip only hints at: the regional engine renders a genuine multi-character scene correctly once the setup is right, by design rather than by luck.
+
+That clip is a fast draft pass: fewer image-to-video steps and no audio. Here is the same scene taken to final quality and given a generated score, so the jump from draft to finished is visible:
+
+<figure>
+  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/aria-marcus-final-scored.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/aria-marcus-final-scored.mp4">Download the MP4</a>.
+  </video>
+  <figcaption><em>Aria and Marcus</em>, final quality: the same render and the same setup (regional engine, pose conditioning, standard per-character scales) taken to full image-to-video quality and scored with a generated track (MiniMax Music 2.6).</figcaption>
+</figure>
+
+The honest caveat is that this cast is the friendly case, a young red-haired woman next to an older grey-bearded man reads as two different people at a glance; two characters who share an age, build, and hair are still the genuinely hard one.
 
 Like the LLM writeup, this is less feature catalog (the README does that) and more the decisions and failures that shaped it. Topics:
 
