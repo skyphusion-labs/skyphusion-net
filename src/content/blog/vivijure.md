@@ -90,7 +90,7 @@ The honest caveat is that this cast is the friendly case, a young red-haired wom
 That same lever, a cast built to be distinct on purpose, is the whole idea behind the last example. **NEON HALFLIFE** is an anime cyberpunk music video carried by two characters drawn as far apart as the cast sheet allows: Vesper, a lean young silver-haired infiltrator lit in cool teal, and Rhode, a heavy-built older bearded mercenary lit in warm orange. Ten shots, a generated darksynth score, conceived and directed end to end by Claude (Opus 4.8).
 
 <figure>
-  <video controls preload="metadata" playsinline style="width:100%;border-radius:8px;border:1px solid var(--border);">
+  <video controls preload="metadata" playsinline poster="https://assets.skyphusion.net/neon_halflife.jpg" style="width:100%;border-radius:8px;border:1px solid var(--border);">
     <source src="https://assets.skyphusion.net/neon_halflife.mp4" type="video/mp4" />
     Your browser does not support embedded video. <a href="https://assets.skyphusion.net/neon_halflife.mp4">Download the MP4</a>.
   </video>
