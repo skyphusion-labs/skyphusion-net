@@ -4,7 +4,7 @@ description: "Introducing vivijure-serverless, the GPU half of an AI film/video 
 pubDate: 2026-06-06
 updatedDate: 2026-06-07
 tags: ["runpod", "serverless", "gpu", "cloudflare", "ai", "diffusion", "lora", "side-project"]
-draft: false
+draft: true
 ---
 
 A while back I wrote up [skyphusion-llm-public](/blog/llm/), a multimodal AI playground that lives entirely in one Cloudflare Worker. This post is about its other half: **Vivijure**, an AI film/video pipeline, and specifically `vivijure-serverless`, the GPU backend that does the actual rendering. Source is AGPL-3.0 at [github.com/SkyPhusion/vivijure-serverless](https://github.com/SkyPhusion/vivijure-serverless).

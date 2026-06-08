@@ -3,7 +3,7 @@ title: "Vivijure, part two: a pluggable motion backend and a GPU+cloud hybrid re
 description: "A follow-up to the Vivijure render-backend post. How image-to-video became a pluggable backend (pod Wan on the GPU, or a cloud motion model), how a single keyframe turned out to be the universal interchange format between the two, and how one film can now render some shots on the GPU and some in the cloud, then merge them off-GPU into one MP4. The keyframe is the contract; R2 is the seam."
 pubDate: 2026-06-07
 tags: ["runpod", "serverless", "gpu", "cloudflare", "ai", "diffusion", "image-to-video", "side-project"]
-draft: false
+draft: true
 ---
 
 The [last Vivijure post](/blog/vivijure/) was about the GPU render backend: a scale-to-zero RunPod endpoint that trains character LoRAs, renders SDXL keyframes, turns them into motion with image-to-video, and hands back a silent MP4. That post ended with the backend doing one thing well: rendering a whole film on one GPU, Wan image-to-video and all.
