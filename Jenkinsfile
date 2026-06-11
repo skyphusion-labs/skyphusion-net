@@ -4,28 +4,27 @@
 // change, etc.) it type-checks the site and, if clean, builds and deploys the
 // Worker to Cloudflare. There is no release-tag dance here (unlike
 // vivijure-serverless); the blog is content-driven, so landing on main IS the
-// release. Non-main branches are type-checked and built but never deployed.
+// release. Non-main branches are type-checked and built never deployed.
 //
-// Jenkins job: a multibranch pipeline (GitHub source SkyPhusion/skyphusion-net,
-// branch discovery, Script Path Jenkinsfile) on mindcrime, fed by a repo
-// githubPush() webhook so every push triggers a scan + build.
+// Jenkins job: multibranch pipeline (GitHub source SkyPhusion/skyphusion-net,
+// branch discovery, Script Path Jenkinsfile) on dischord Jenkins, fed by a
+// repo githubPush() webhook so every push triggers a scan + build.
 //
-// Credentials (Jenkins -> Manage Credentials), already present on mindcrime:
+// Credentials (Jenkins -> Manage Credentials), present on dischord Jenkins:
 //   CLOUDFLARE_API_TOKEN   Secret Text  (token with Workers Scripts:Edit +
 //                                        Workers Routes:Edit on the zone)
 //   CLOUDFLARE_ACCOUNT_ID  Secret Text
 //
-// Runtime: runs on the mindcrime host (`agent any`), NOT a throwaway Docker
+// Runtime: runs on vangelis (label: bare-metal), NOT a throwaway Docker
 // container. The @astrojs/cloudflare v13 adapter renders prerendered routes
 // inside a workerd "tunnel" during `astro build`; that tunnel dies in a
 // disposable node:* container (build aborts with `connect ECONNREFUSED
 // 127.0.0.1:<port>` during "prerendering static routes"), but works on the
-// host, which is the same Node + wrangler environment that deploys
-// skyphusion-llm-public. The host provides node/npm/npx (Node 22, satisfies
-// Astro 6's >=22 requirement); wrangler comes from devDependencies via npm ci.
+// bare-metal host. vangelis runs Node 22 (satisfies Astro 6's >=22 requirement)
+// and Temurin JRE 21; wrangler comes from devDependencies via npm ci.
 
 pipeline {
-    agent any
+    agent { label 'bare-metal' }
 
     options {
         timeout(time: 20, unit: 'MINUTES')
