@@ -15,16 +15,15 @@
 //                                        Workers Routes:Edit on the zone)
 //   CLOUDFLARE_ACCOUNT_ID  Secret Text
 //
-// Runtime: runs on vangelis (label: bare-metal), NOT a throwaway Docker
-// container. The @astrojs/cloudflare v13 adapter renders prerendered routes
-// inside a workerd "tunnel" during `astro build`; that tunnel dies in a
-// disposable node:* container (build aborts with `connect ECONNREFUSED
-// 127.0.0.1:<port>` during "prerendering static routes"), but works on the
-// bare-metal host. vangelis runs Node 22 (satisfies Astro 6's >=22 requirement)
-// and Temurin JRE 21; wrangler comes from devDependencies via npm ci.
+// Runtime: runs on the HEL1 fleet (label: build) inside an ephemeral Docker
+// agent. The @astrojs/cloudflare v13 adapter renders prerendered routes inside
+// a workerd subprocess during `astro build`; workerd requires kernel namespace
+// support (CLONE_NEWUSER/CLONE_NEWNET) which is enabled via seccomp=unconfined
+// on the agent container (see fleet-chezmoi docker-clouds.yaml). Node 22 is
+// required by Astro 6; the agent image ships Node 22.
 
 pipeline {
-    agent { label 'bare-metal' }
+    agent { label 'build' }
 
     options {
         timeout(time: 20, unit: 'MINUTES')
