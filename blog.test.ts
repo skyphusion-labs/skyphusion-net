@@ -10,7 +10,7 @@ describe('Skyphusion Blog Engine Smoke Suite', () => {
   });
 
   it('should verify recent blog posts render successfully', async () => {
-    const response = await fetch('http://localhost:4321/posts/the-hollow-grid');
+    const response = await fetch('http://localhost:4321/blog/the-hollow-grid');
     expect(response.status).toBe(200);
   });
 });
