@@ -14,7 +14,7 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.5.3",
+    "@astrojs/cloudflare": "^13.7.0",
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.2.0",
     "astro": "^6.4.7"
@@ -24,7 +24,7 @@
     "@vitest/coverage-istanbul": "^4.1.9",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9",
-    "wrangler": "^4.93.0"
+    "wrangler": "^4.101.0"
   },
   "overrides": {
     "vite": "^7"
