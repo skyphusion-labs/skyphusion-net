@@ -3,7 +3,7 @@ title: "Vivijure's first full run, and the stall that fixed itself"
 description: "The first film rendered end to end on Vivijure Studio: NEON HALFLIFE, a silent 1080p ten-shot cyberpunk render on a self-hosted GPU. The point is not the picture; it is that the first unattended run came out clean (zero clips dropped) and then healed its own finish-phase stall across a session restart with nobody watching. Notes on why the studio ships silent by default, and why a system recovering itself is the milestone worth showing."
 pubDate: 2026-06-19
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "side-project"]
-draft: true
+draft: false
 ---
 
 Vivijure is a self-hosted AI film studio. You write a storyboard, it renders the shots to video on a GPU you own, and it hands you back a finished cut; no subscription, no account wall, and every artifact lands in your own storage. The control plane is a Cloudflare Worker that runs free at idle, and it is built as a module host: a thin core (storyboard, cast, render orchestration) with each stage, keyframes, motion, finish, score, served by a swappable module worker, so you can run an expensive cloud model or your own GPU for any given step. The heavy rendering hits whatever GPU you point it at, your own box or a rented one, so the expensive part only exists while a render is actually running.
