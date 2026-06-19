@@ -6,7 +6,9 @@ tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "side-proje
 draft: true
 ---
 
-The two earlier Vivijure posts ([the scale-to-zero backend](/blog/vivijure/) and [the pluggable hybrid motion lane](/blog/vivijure-hybrid/)) were about the architecture. This one is about a single render, because it is the first time the whole studio ran a film start to finish, unattended, and the interesting part is not the clip. It is what the system did when something went wrong with nobody watching.
+Vivijure is a self-hosted AI film studio. You write a storyboard, it renders the shots to video on a GPU you own, and it hands you back a finished cut; no subscription, no account wall, and every artifact lands in your own storage. The control plane runs on Cloudflare's free tier and the heavy rendering hits whatever GPU you point it at, your own box or a rented one, so the expensive part only exists while a render is actually running.
+
+This post is not a feature tour. It is about a single render, because it is the first time the whole studio ran a film start to finish, unattended, and the interesting part is not the clip. It is what the system did when something went wrong with nobody watching.
 
 ## See it run
 
@@ -40,4 +42,4 @@ That is the part I am actually proud of. Not that it rendered a cyberpunk clip; 
 
 I will keep showing the real state of this, including the parts that are not finished. This is a silent render and I am presenting it as one. The stall it recovered from was a real bug in the finish phase, now fixed; the recovery worked because the orchestrator was built to re-adopt in-flight work rather than assume a clean run, and this is the first time that design got tested for real and passed. The render history in the studio still shows the failed and stalled attempts that came before this clean run, and I am leaving them there, because the failures are how you know the green one is real.
 
-As with the earlier posts: Vivijure grew out of an earlier collaborative attempt at a local AI-video pipeline; the design and implementation here are entirely my own.
+One note on provenance: Vivijure grew out of an earlier collaborative attempt at a local AI-video pipeline; the design and implementation here are entirely my own.
