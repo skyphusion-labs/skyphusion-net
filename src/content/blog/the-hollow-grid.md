@@ -6,7 +6,7 @@ tags: ["cloudflare", "durable-objects", "websockets", "mud", "serverless", "fede
 draft: false
 ---
 
-The first two posts here were about an [AI playground](/blog/llm/) and an [AI film backend](/blog/vivijure/). This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket) that runs entirely on Cloudflare Workers and Durable Objects. No VPS, no process to babysit, and about $0 when nobody is playing. It is also a small federation: two worlds live in production, share one backend, and your character walks between them.
+The first two posts here were about an [AI playground](/blog/llm/) and an [AI film backend](/blog/vivijure-first-run/). This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket) that runs entirely on Cloudflare Workers and Durable Objects. No VPS, no process to babysit, and about $0 when nobody is playing. It is also a small federation: two worlds live in production, share one backend, and your character walks between them.
 
 You can play it right now in a browser:
 

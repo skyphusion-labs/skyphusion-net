@@ -6,7 +6,7 @@ tags: ["cloudflare", "email", "smtp", "go", "side-project"]
 draft: false
 ---
 
-Every project eventually needs to send a boring email: a render finished, a build failed, a monitor went down. The [skyphusion stack](/blog/vivijure/) was no different, so I finally sat down with [Cloudflare Email Sending](https://developers.cloudflare.com/email-service/) — which lets a Worker send transactional mail directly, no third-party ESP — and built a small thing around it. It turned out generic enough to spin out as its own MIT repo: [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay).
+Every project eventually needs to send a boring email: a render finished, a build failed, a monitor went down. The [skyphusion stack](/blog/vivijure-first-run/) was no different, so I finally sat down with [Cloudflare Email Sending](https://developers.cloudflare.com/email-service/) — which lets a Worker send transactional mail directly, no third-party ESP — and built a small thing around it. It turned out generic enough to spin out as its own MIT repo: [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay).
 
 It's two pieces:
 
@@ -57,4 +57,4 @@ The security rule I wrote into the README while doing it, because it's the one e
 
 A small MIT utility — the email plumbing for my own stack — made public because the shape is generic: one central Workers send-service, plus an SMTP shim for everything that can't speak HTTP. If you're on Cloudflare and you've been reaching for an external SMTP provider just to get a "your thing is done" email out the door, this might save you the dependency.
 
-Code is at [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay), MIT licensed. It's the third piece of the stack I've written up here, after the [LLM playground](/blog/llm/) and the [GPU render backend](/blog/vivijure/) — the unglamorous one that emails you when the other two finish.
+Code is at [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay), MIT licensed. It's the third piece of the stack I've written up here, after the [LLM playground](/blog/llm/) and the [GPU render backend](/blog/vivijure-first-run/) — the unglamorous one that emails you when the other two finish.
