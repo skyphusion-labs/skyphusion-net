@@ -1,12 +1,13 @@
 name: CI
 
-# Typecheck on every push/PR; deploy to Cloudflare on main. Mirrors the vivijure
-# GH-Actions deploy pattern: self-hosted fleet runner, wrangler deploy on main.
-# skyphusion-org is a thin static-asset worker -- no tests, no container builds.
+# Deploy the site to Cloudflare on pushes to main. GitHub-hosted, fork-safe
+# (no self-hosted runner): skyphusion-net is a public repo, so a self-hosted
+# fleet runner would let fork PRs execute on a build box, and GitHub refuses to
+# dispatch public-repo jobs to a runner group that disallows public repos
+# anyway. This is just an Astro build + wrangler deploy with no fleet need.
+# Typecheck (push + PR) lives in typecheck.yml on the same GitHub-hosted path.
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -18,21 +19,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
-    runs-on: [self-hosted, fleet]
-    container: node:22-alpine
+  deploy:
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Deploy (main only)
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
