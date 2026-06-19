@@ -6,7 +6,7 @@ tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "side-proje
 draft: true
 ---
 
-Vivijure is a self-hosted AI film studio. You write a storyboard, it renders the shots to video on a GPU you own, and it hands you back a finished cut; no subscription, no account wall, and every artifact lands in your own storage. The control plane runs on Cloudflare's free tier and the heavy rendering hits whatever GPU you point it at, your own box or a rented one, so the expensive part only exists while a render is actually running.
+Vivijure is a self-hosted AI film studio. You write a storyboard, it renders the shots to video on a GPU you own, and it hands you back a finished cut; no subscription, no account wall, and every artifact lands in your own storage. The control plane is a Cloudflare Worker that runs free at idle, and it is built as a module host: a thin core (storyboard, cast, render orchestration) with each stage, keyframes, motion, finish, score, served by a swappable module worker, so you can run an expensive cloud model or your own GPU for any given step. The heavy rendering hits whatever GPU you point it at, your own box or a rented one, so the expensive part only exists while a render is actually running.
 
 This post is not a feature tour. It is about a single render, because it is the first time the whole studio ran a film start to finish, unattended, and the interesting part is not the clip. It is what the system did when something went wrong with nobody watching.
 
