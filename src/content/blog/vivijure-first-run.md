@@ -13,9 +13,9 @@ The two earlier Vivijure posts ([the scale-to-zero backend](/blog/vivijure/) and
 This is **NEON HALFLIFE**: the first film rendered end to end on Vivijure Studio. Ten shots, 1080p, about thirty seconds. The motion ran on a self-hosted GPU through the `own-gpu` Wan image-to-video backend, the default for the bring-your-own-GPU path.
 
 <figure>
-  <video controls preload="metadata" playsinline poster="https://assets.skyphusion.net/neon-halflife-run1.jpg" style="width:100%;border-radius:8px;border:1px solid var(--border);">
-    <source src="https://assets.skyphusion.net/neon-halflife-run1.mp4" type="video/mp4" />
-    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/neon-halflife-run1.mp4">Download the MP4</a>.
+  <video controls preload="metadata" playsinline poster="https://assets.skyphusion.net/vivijure/showcase/neon-halflife-run1.jpg" style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/vivijure/showcase/neon-halflife-run1.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/vivijure/showcase/neon-halflife-run1.mp4">Download the MP4</a>.
   </video>
   <figcaption><em>NEON HALFLIFE</em>: the first full Vivijure run. Ten shots, 1080p, roughly thirty seconds, animated on a self-hosted GPU. Silent by design (see below).</figcaption>
 </figure>
