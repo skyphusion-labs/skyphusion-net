@@ -1,6 +1,6 @@
 ---
 title: "The film that learned to talk, and the three bugs it hit first"
-description: "The fourth Vivijure showcase: a talking character, lip-synced to its own dialogue, rendered start to finish on a self-hosted GPU with nobody steering it. Two shots, about two and a half seconds, and voiced. The honest part is that it came out silent once, and then a from-scratch re-fire found two more orchestration bugs before any user could. Notes on the three control-plane and backend fixes that gave it a voice."
+description: "The fourth Vivijure showcase, Vivijure Speaks: a talking character lip-synced to its own dialogue and upscaled, rendered start to finish on a self-hosted GPU with nobody steering it. Two shots, about two and a half seconds, and voiced. The honest part is that it came out silent once, and then a from-scratch re-fire found two more orchestration bugs before any user could. Notes on the three control-plane and backend fixes that gave it a voice."
 pubDate: 2026-06-22
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "lip-sync", "side-project"]
 draft: false
@@ -13,14 +13,14 @@ Like the [first-run post](/blog/vivijure-first-run/), this is not a feature tour
 ## See it run
 
 <figure>
-  <video controls preload="metadata" playsinline poster="https://assets.skyphusion.net/vivijure/showcase/talking-character.jpg" style="width:100%;border-radius:8px;border:1px solid var(--border);">
-    <source src="https://assets.skyphusion.net/vivijure/showcase/talking-character.mp4" type="video/mp4" />
-    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/vivijure/showcase/talking-character.mp4">Download the MP4</a>.
+  <video controls preload="metadata" playsinline poster="https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.jpg" style="width:100%;border-radius:8px;border:1px solid var(--border);">
+    <source src="https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.mp4" type="video/mp4" />
+    Your browser does not support embedded video. <a href="https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.mp4">Download the MP4</a>.
   </video>
-  <figcaption><em>The talking-character showcase</em>: two shots, about two and a half seconds. A talking character lip-synced to its own dialogue (per-shot dialogue TTS, then MuseTalk over an interpolated clip). Motion on a self-hosted GPU through the <code>own-gpu</code> Wan backend. Rendered unattended on the hardened scatter orchestrator.</figcaption>
+  <figcaption><em>Vivijure Speaks</em>: two shots, about two and a half seconds. A talking character lip-synced to its own dialogue and upscaled (per-shot dialogue TTS, then MuseTalk lip-sync and a CUDA Real-ESRGAN pass over an interpolated clip). Motion on a self-hosted GPU through the <code>own-gpu</code> Wan backend. Rendered unattended on the hardened scatter orchestrator.</figcaption>
 </figure>
 
-The character speaks a generated line per shot. The dialogue is generated, the audio is muxed into each clip, and MuseTalk drives the mouth to match it, all on top of the same bring-your-own-GPU motion path the first film used. It is a short clip on purpose: I wanted the smallest render that exercises the whole talking pipeline end to end, because the smallest one is the one I can re-fire over and over while chasing a bug.
+The character speaks a generated line per shot. The dialogue is generated, the audio is muxed into each clip, MuseTalk drives the mouth to match it, and a CUDA Real-ESRGAN pass upscales the result before assembly, all on top of the same bring-your-own-GPU motion path the first film used. It is a short clip on purpose: I wanted the smallest render that exercises the whole talking pipeline end to end, because the smallest one is the one I can re-fire over and over while chasing a bug.
 
 And there were bugs. The first time I ran it, the character said nothing at all.
 
@@ -50,7 +50,7 @@ The fix (backend #108) is to trust storage, not the snapshot. Before honoring a 
 
 The next re-fire got further and then stalled, and this one is my favorite, because the work was already finished and the pipeline could not see it.
 
-The finish chain runs per shot as a sequence of steps: interpolate the clip, then lip-sync it. The orchestrator advances the chain by polling each step's GPU job. But when a mid-chain step's job is garbage-collected right after it completes (the poll comes back 404, job-not-found) or its status envelope freezes in-progress forever, that step pended with no way forward. The guard that recovers a stalled finish from storage only trusted the chain's *final* artifact, so a completed-but-forgotten interpolation step sitting at the front of the chain never advanced. Both shots' interpolated clips were already in storage. Lip-sync was never dispatched. The warm MuseTalk endpoint sat there idle while the shots stalled to the deadline.
+The finish chain runs per shot as a sequence of steps: interpolate the clip, lip-sync it, then upscale it. The orchestrator advances the chain by polling each step's GPU job. But when a mid-chain step's job is garbage-collected right after it completes (the poll comes back 404, job-not-found) or its status envelope freezes in-progress forever, that step pended with no way forward. The guard that recovers a stalled finish from storage only trusted the chain's *final* artifact, so a completed-but-forgotten interpolation step sitting at the front of the chain never advanced. Both shots' interpolated clips were already in storage. Lip-sync was never dispatched. The warm MuseTalk endpoint sat there idle while the shots stalled to the deadline.
 
 The fix (#239) extends the same trust-storage instinct from the final step to *any* step. When a step's poll comes back gone or frozen, the orchestrator checks storage for that specific step's expected output; if it is there, it folds it in, advances the chain, and dispatches the next module. A 404 with nothing in storage still fails loud; a frozen step with no output yet still waits. Because it only advances one step on its own output, it cannot reintroduce the mid-chain phantom-adopt that layer one was built to prevent. The remaining modules still run.
 
@@ -60,4 +60,4 @@ Three bugs, three layers: a gather that dropped your audio, a backend that trust
 
 I said in the first-run post that I would keep showing the real state of this, including the parts that are not finished, and I meant it. A showcase that only shows the take that worked is marketing. The take that talks is up top. It is worth knowing how many times it had to go silent first.
 
-The next showcase pushes further: the same talking character on a cloud motion backend, upscaled, with proper titles. Different render, different proof. This one was about the voice.
+The next showcase pushes further: the same talking character on a cloud motion backend, with proper titles. Different render, different proof. This one was about the voice.
