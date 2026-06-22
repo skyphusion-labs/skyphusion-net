@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, fleet]
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
