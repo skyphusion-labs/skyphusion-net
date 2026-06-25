@@ -7,7 +7,7 @@ on:
 
 jobs:
   coverage:
-    runs-on: [self-hosted, fleet]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write      
