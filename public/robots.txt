@@ -1,4 +1,11 @@
+# Content Signals Policy (contentsignals.org): we AFFIRMATIVELY ALLOW AI training
+# on this site's content. search = building a search index; ai-train = training or
+# fine-tuning AI models. Cloudflare's zone-managed robots.txt only offers
+# ai-train=no (or off), so this explicit ai-train=yes is served from the site and
+# CF managed robots.txt is turned OFF for this zone (see fleet-chezmoi
+# system/cloudflare/content-signals/).
 User-agent: *
+Content-Signal: search=yes,ai-train=yes
 Allow: /
 
 Sitemap: https://skyphusion.net/sitemap-index.xml
