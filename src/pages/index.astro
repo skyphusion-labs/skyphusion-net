@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { webSiteJsonLd } from '../lib/seo';
+
+const site = Astro.site?.href ?? 'https://skyphusion.net';
 
 // Featured post slug. Set to null to hide the Featured section entirely.
-const FEATURED_SLUG: string | null = 'vivijure';
+const FEATURED_SLUG: string | null = 'vivijure-talking-character';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -17,18 +20,31 @@ const posts = allPosts
   .filter((p) => p.id !== FEATURED_SLUG)
   .slice(0, 10);
 ---
-<BaseLayout title="skyphusion.net" description="Home page of Conrad Rockenhaus">
+<BaseLayout
+  title="skyphusion.net"
+  description="Home page of Conrad Rockenhaus"
+  jsonLd={webSiteJsonLd(site)}
+>
   <h1>Home Page of Conrad Rockenhaus</h1>
-  <p>Personal site. Notes on technology, infrastructure, and occasional findings from other domains.</p>
+  <p>Engineering blog and project hub. Notes on Cloudflare, AI infrastructure, and open source systems we build and run.</p>
+
+  <section class="projects-teaser">
+    <h2>Open source</h2>
+    <p>
+      <a href="/projects/">View all projects</a>
+      <span class="sep">/</span>
+      multimodal AI, film studio, Discord roadies, OSINT attribution, federated MUD, searchable email on Workers.
+    </p>
+  </section>
 
   {featured && (
     <section class="featured">
       <h2>Featured</h2>
       <p class="featured-item">
-        <a href={`/blog/${featured.id}`}>{featured.data.title}</a>
+        <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
       </p>
       <p class="featured-summary">
-        How an always-on Cloudflare Worker and a scale-to-zero RunPod GPU backend split an AI film/video pipeline so it pays nothing while idle.
+        Vivijure Speaks: a talking character rendered through the studio UI, lip-synced on a self-hosted GPU module, with three orchestration bugs fixed before any user hit them.
       </p>
     </section>
   )}
@@ -40,7 +56,7 @@ const posts = allPosts
     <ul class="post-list">
       {posts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
           <time datetime={post.data.pubDate.toISOString()}>
             {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
           </time>
@@ -51,6 +67,15 @@ const posts = allPosts
 </BaseLayout>
 
 <style>
+  .projects-teaser {
+    margin-bottom: 2rem;
+  }
+  .projects-teaser p {
+    margin: 0.5rem 0 0 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .sep { color: var(--border); margin: 0 0.5rem; }
   .featured {
     margin-bottom: 2rem;
   }

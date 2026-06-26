@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '../../../lib/seo';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((post) => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const site = Astro.site?.href ?? 'https://skyphusion.net';
+const tagUrl = `${site}/blog/tags/${encodeURIComponent(tag)}/`;
+const title = `Posts tagged "${tag}", skyphusion.net`;
+const description = `${posts.length} post${posts.length === 1 ? '' : 's'} tagged "${tag}" on skyphusion.net`;
+const jsonLd = breadcrumbJsonLd([
+  { name: 'Home', url: site },
+  { name: 'Blog', url: `${site}/blog/` },
+  { name: 'Tags', url: `${site}/blog/tags/` },
+  { name: `#${tag}`, url: tagUrl },
+]);
+---
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <h1>#{tag}</h1>
+  <p class="muted">{posts.length} post{posts.length === 1 ? '' : 's'}</p>
+
+  {posts.length === 0 ? (
+    <p class="muted">No posts with this tag.</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <div class="post-header">
+            <a href={`/blog/${post.id}/`} class="post-title">{post.data.title}</a>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            </time>
+          </div>
+          <p class="excerpt">{post.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <p class="back"><a href="/blog/tags/">&larr; All tags</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+</BaseLayout>
+
+<style>
+  .muted { color: var(--muted); }
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+  .post-list li {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .post-list li:last-child { border-bottom: none; }
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .post-title { font-weight: 600; }
+  .post-list time {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+  .excerpt {
+    margin: 0.375rem 0 0 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .back {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .sep { color: var(--border); margin: 0 0.5rem; }
+</style>

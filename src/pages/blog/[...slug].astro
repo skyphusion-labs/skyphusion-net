@@ -1,6 +1,16 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Giscus from '../../components/Giscus.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
+import { relatedPosts } from '../../lib/posts';
+import {
+  absoluteUrl,
+  blogPostingJsonLd,
+  breadcrumbJsonLd,
+  canonicalUrl,
+  tagPath,
+} from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -12,8 +22,41 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const related = relatedPosts(post, allPosts);
+
+const site = Astro.site?.href ?? 'https://skyphusion.net';
+const url = canonicalUrl(`/blog/${post.id}/`, site);
+const image = post.data.image ? absoluteUrl(post.data.image, site) : undefined;
+const jsonLd = [
+  blogPostingJsonLd({
+    title: post.data.title,
+    description: post.data.description,
+    url,
+    pubDate: post.data.pubDate,
+    updatedDate: post.data.updatedDate,
+    image,
+    tags: post.data.tags,
+  }),
+  breadcrumbJsonLd([
+    { name: 'Home', url: site },
+    { name: 'Blog', url: `${site}/blog/` },
+    { name: post.data.title, url },
+  ]),
+];
 ---
-<BaseLayout title={`${post.data.title}, skyphusion.net`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title}, skyphusion.net`}
+  description={post.data.description}
+  ogType="article"
+  ogImage={post.data.image}
+  jsonLd={jsonLd}
+  article={{
+    publishedTime: post.data.pubDate,
+    modifiedTime: post.data.updatedDate,
+    tags: post.data.tags,
+  }}
+>
   <article>
     <header class="post-header">
       <h1>{post.data.title}</h1>
@@ -22,20 +65,24 @@ const { Content } = await render(post);
           {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
         {post.data.updatedDate && (
-          <span class="updated">
+          <time class="updated" datetime={post.data.updatedDate.toISOString()}>
             (updated {post.data.updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })})
-          </span>
+          </time>
         )}
         {post.data.tags.length > 0 && (
           <span class="tags">
-            {post.data.tags.map(tag => <span class="tag">#{tag}</span>)}
+            {post.data.tags.map(tag => (
+              <a href={tagPath(tag)} class="tag">#{tag}</a>
+            ))}
           </span>
         )}
       </div>
     </header>
     <Content />
   </article>
-  <p class="back"><a href="/blog">&larr; All posts</a></p>
+  <RelatedPosts posts={related} />
+  <Giscus />
+  <p class="back"><a href="/blog/">&larr; All posts</a></p>
 </BaseLayout>
 
 <style>
@@ -59,6 +106,13 @@ const { Content } = await render(post);
     border-radius: 3px;
     margin-right: 0.25rem;
     font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .tag:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    text-decoration: none;
   }
   .updated { font-style: italic; }
   .back {

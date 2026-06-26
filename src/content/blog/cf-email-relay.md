@@ -1,12 +1,14 @@
 ---
-title: "cf-email-relay: transactional email on Cloudflare, plus an SMTP bridge"
+title: "cf-email-relay: transactional email on Cloudflare, plus an SMTP bridge (retired)"
 description: "A small two-part utility for sending transactional email through Cloudflare Email Sending: a Worker with a service-binding RPC and a token-gated HTTP endpoint, and a tiny Go SMTP relay that bridges the services that can only speak SMTP. Notes on the one-validation-path design, why the SMTP bridge is the genuinely useful part, the container wrinkle that made the relay multi-listen, and wiring Jenkins and Uptime Kuma to send through it."
 pubDate: 2026-06-05
 tags: ["cloudflare", "email", "smtp", "go", "side-project"]
-draft: false
+draft: true
 ---
 
-Every project eventually needs to send a boring email: a render finished, a build failed, a monitor went down. The [skyphusion stack](https://github.com/skyphusion-labs/vivijure) was no different, so I finally sat down with [Cloudflare Email Sending](https://developers.cloudflare.com/email-service/) (which lets a Worker send transactional mail directly, no third-party ESP) and built a small thing around it. It turned out generic enough to spin out as its own MIT repo: [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay).
+> **Retired.** This project was superseded by [Postern](/blog/postern/). See the [Postern write-up](/blog/postern/) for the current design.
+
+Every project eventually needs to send a boring email: a render finished, a build failed, a monitor went down. The [skyphusion stack](https://github.com/skyphusion-labs/vivijure) was no different, so I finally sat down with [Cloudflare Email Sending](https://developers.cloudflare.com/email-service/) (which lets a Worker send transactional mail directly, no third-party ESP) and built a small thing around it. It turned out generic enough to spin out as its own MIT repo: [github.com/skyphusion-labs/cf-email-relay](https://github.com/skyphusion-labs/cf-email-relay).
 
 It's two pieces:
 
@@ -57,4 +59,4 @@ The security rule I wrote into the README while doing it, because it's the one e
 
 A small MIT utility (the email plumbing for my own stack) made public because the shape is generic: one central Workers send-service, plus an SMTP shim for everything that can't speak HTTP. If you're on Cloudflare and you've been reaching for an external SMTP provider just to get a "your thing is done" email out the door, this might save you the dependency.
 
-Code is at [github.com/SkyPhusion/cf-email-relay](https://github.com/SkyPhusion/cf-email-relay), MIT licensed. It's the third piece of the stack I've written up here, after the [LLM playground](/blog/llm/) and the [GPU render backend](https://github.com/skyphusion-labs/vivijure-backend), the unglamorous one that emails you when the other two finish.
+Code is at [github.com/skyphusion-labs/cf-email-relay](https://github.com/skyphusion-labs/cf-email-relay), MIT licensed. It's the third piece of the stack I've written up here, after the [LLM playground](/blog/llm/) and the [GPU render backend](https://github.com/skyphusion-labs/vivijure-backend), the unglamorous one that emails you when the other two finish.

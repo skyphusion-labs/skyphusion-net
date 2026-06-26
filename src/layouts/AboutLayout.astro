@@ -1,0 +1,11 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { personJsonLd } from '../lib/seo';
+
+const site = Astro.site?.href ?? 'https://skyphusion.net';
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} jsonLd={personJsonLd(site)}>
+  <slot />
+</BaseLayout>

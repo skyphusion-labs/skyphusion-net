@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: ../layouts/AboutLayout.astro
 title: "About, skyphusion.net"
 description: "About Conrad Rockenhaus and skyphusion.net"
 ---
@@ -10,9 +10,9 @@ I'm Conrad Rockenhaus: independent developer, solo infrastructure operator, and 
 
 ## What I build
 
-Most of my time goes to **[skyphusion-llm-public](https://github.com/)**, an open-source multimodal AI playground built on Cloudflare Workers. Text, image, video, and music generation, with long-running jobs handled through Cloudflare Workflows rather than fragile fire-and-forget patterns. It's BYOK-friendly and meant to be self-hostable by anyone who wants their own corner of the model ecosystem instead of renting someone else's.
+Most of my time goes to **[Prism](https://github.com/skyphusion-labs/prism)**, an open-source multimodal AI playground built on Cloudflare Workers. Text, image, video, and music generation, with long-running jobs handled through Cloudflare Workflows rather than fragile fire-and-forget patterns. It's BYOK-friendly and meant to be self-hostable by anyone who wants their own corner of the model ecosystem instead of renting someone else's.
 
-Around that sits a personal AI services stack I run for myself and a few people I trust, fronted by [vivijure.skyphusion.org](https://vivijure.skyphusion.org).
+Around that sits **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio (planner UI, cast, render orchestration on Cloudflare Workers), which I run for myself and a few people I trust at [vivijure.skyphusion.org](https://vivijure.skyphusion.org).
 
 ## What I run
 
@@ -37,4 +37,4 @@ When I'm not in a terminal, I'm usually deep in a home automation rabbit hole (H
 
 ## Contact
 
-Reach me at conrad@rockenhaus.net.
+Reach me at conrad@skyphusion.org.

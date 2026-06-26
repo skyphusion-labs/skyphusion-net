@@ -6,7 +6,7 @@
 // vivijure-serverless); the blog is content-driven, so landing on main IS the
 // release. Non-main branches are type-checked and built never deployed.
 //
-// Jenkins job: multibranch pipeline (GitHub source SkyPhusion/skyphusion-net,
+// Jenkins job: multibranch pipeline (GitHub source skyphusion-labs/skyphusion-net,
 // branch discovery, Script Path Jenkinsfile) on dischord Jenkins, fed by a
 // repo githubPush() webhook so every push triggers a scan + build.
 //

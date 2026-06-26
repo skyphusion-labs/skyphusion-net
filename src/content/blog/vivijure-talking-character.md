@@ -2,6 +2,7 @@
 title: "The film that learned to talk, and the three bugs it hit first"
 description: "The fourth Vivijure showcase, Vivijure Speaks: a talking character lip-synced to its own dialogue and upscaled, rendered start to finish on a self-hosted GPU with nobody steering it. Two shots, about two and a half seconds, and voiced. The honest part is that it came out silent once, and then a from-scratch re-fire found two more orchestration bugs before any user could. Notes on the three control-plane and backend fixes that gave it a voice."
 pubDate: 2026-06-22
+image: "https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.jpg"
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "lip-sync", "side-project"]
 draft: false
 ---
@@ -9,6 +10,8 @@ draft: false
 The first three films I showed off Vivijure were a silent picture, a scored one, and a narrated one. This is the fourth, and it is the first one where a character actually opens its mouth: a talking character, lip-synced to its own dialogue, rendered start to finish on a GPU I own with nobody steering it.
 
 Like the [first-run post](/blog/vivijure-first-run/), this is not a feature tour. It is a small clip, two shots and about two and a half seconds. The interesting part is not the length. It is that it came out wrong twice before it came out right, and a from-scratch re-fire found both of those bugs before a user ever could.
+
+**[vivijure](https://github.com/skyphusion-labs/vivijure)** is the studio itself: planner UI, cast, render history, and the Cloudflare Worker that orchestrates module workers. That is the repo to fork. **[vivijure-backend](https://github.com/skyphusion-labs/vivijure-backend)** is one attachable GPU module (keyframes, image-to-video, assembly on RunPod), not the product. Layer one and layer three below are studio fixes in `vivijure`; layer two is a backend fix in `vivijure-backend`.
 
 ## See it run
 

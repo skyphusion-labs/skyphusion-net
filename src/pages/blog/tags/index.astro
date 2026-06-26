@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { tagPath } from '../../../lib/seo';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const tagCounts = new Map<string, number>();
+
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+
+const tags = [...tagCounts.entries()].sort(([a], [b]) => a.localeCompare(b));
+---
+<BaseLayout title="Tags, skyphusion.net" description="Browse posts by tag on skyphusion.net">
+  <h1>Tags</h1>
+  {tags.length === 0 ? (
+    <p class="muted">No tags yet.</p>
+  ) : (
+    <ul class="tag-list">
+      {tags.map(([tag, count]) => (
+        <li>
+          <a href={tagPath(tag)}>#{tag}</a>
+          <span class="count">{count}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+  <p class="back"><a href="/blog/">&larr; Blog</a></p>
+</BaseLayout>
+
+<style>
+  .muted { color: var(--muted); }
+  .tag-list {
+    list-style: none;
+    padding: 0;
+  }
+  .tag-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-list li:last-child { border-bottom: none; }
+  .count {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+  .back {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

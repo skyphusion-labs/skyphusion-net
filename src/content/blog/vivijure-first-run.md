@@ -2,11 +2,14 @@
 title: "Vivijure's first full run, and the stall that fixed itself"
 description: "The first film rendered end to end on Vivijure Studio: NEON HALFLIFE, a silent 1080p ten-shot cyberpunk render on a self-hosted GPU. The point is not the picture; it is that the first unattended run came out clean (zero clips dropped) and then healed its own finish-phase stall across a session restart with nobody watching. Notes on why the studio ships silent by default, and why a system recovering itself is the milestone worth showing."
 pubDate: 2026-06-19
+image: "https://assets.skyphusion.net/vivijure/showcase/neon-halflife-run1.jpg"
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "side-project"]
 draft: false
 ---
 
-Vivijure is a self-hosted AI film studio. You write a storyboard, it renders the shots to video on a GPU you own, and it hands you back a finished cut; no subscription, no account wall, and every artifact lands in your own storage. The control plane is a Cloudflare Worker that runs free at idle, and it is built as a module host: a thin core (storyboard, cast, render orchestration) with each stage, keyframes, motion, finish, score, served by a swappable module worker, so you can run an expensive cloud model or your own GPU for any given step. The heavy rendering hits whatever GPU you point it at, your own box or a rented one, so the expensive part only exists while a render is actually running.
+Vivijure is a self-hosted AI film studio. You write a storyboard in the web UI, cast your characters, and hit render; the studio orchestrates the pipeline and hands you back a finished cut. No subscription, no account wall, and every artifact lands in your own storage. That studio is the product: a Cloudflare Worker with a planner frontend, cast management, render history, and a JSON API that module workers plug into. Keyframes, motion, finish, and score are swappable stages; you can route a shot through an expensive cloud API or your own GPU for that step only. The expensive compute spins up only while a render is actually running.
+
+**[vivijure](https://github.com/skyphusion-labs/vivijure)** is where that lives. Start there if you want to fork or deploy the studio. GPU rendering (keyframes, image-to-video, ffmpeg assembly) is a separate attachable stack, **[vivijure-backend](https://github.com/skyphusion-labs/vivijure-backend)** on RunPod; one of many modules the control plane can call, not the main repo. Live studio: [vivijure.skyphusion.org](https://vivijure.skyphusion.org).
 
 This post is not a feature tour. It is about a single render, because it is the first time the whole studio ran a film start to finish, unattended, and the interesting part is not the clip. It is what the system did when something went wrong with nobody watching.
 
@@ -42,4 +45,4 @@ That is the part I am actually proud of. Not that it rendered a cyberpunk clip; 
 
 I will keep showing the real state of this, including the parts that are not finished. This is a silent render and I am presenting it as one. The stall it recovered from was a real bug in the finish phase, now fixed; the recovery worked because the orchestrator was built to re-adopt in-flight work rather than assume a clean run, and this is the first time that design got tested for real and passed. The render history in the studio still shows the failed and stalled attempts that came before this clean run, and I am leaving them there, because the failures are how you know the green one is real.
 
-One note on provenance: Vivijure grew out of an earlier collaborative attempt at a local AI-video pipeline; the design and implementation here are entirely my own.
+One note on provenance: Vivijure grew out of an earlier collaborative attempt at a local AI-video pipeline; the design and implementation here are entirely my own. The studio (frontend and orchestration): [github.com/skyphusion-labs/vivijure](https://github.com/skyphusion-labs/vivijure). GPU render module: [github.com/skyphusion-labs/vivijure-backend](https://github.com/skyphusion-labs/vivijure-backend).
