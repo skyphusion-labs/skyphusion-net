@@ -115,4 +115,5 @@ Custom-domain or binding changes go in `wrangler.jsonc`. After editing bindings,
 
 ## License
 
-Personal use. No license granted to third parties.
+- **Site code:** [MIT](LICENSE).
+- **Blog content** (posts, prose, images, and other written or visual material): all rights reserved. No license is granted to reuse the content; the MIT license covers the code only.
