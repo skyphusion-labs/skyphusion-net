@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+{posts.length > 0 && (
+  <section class="related" aria-label="Related posts">
+    <h2>Related posts</h2>
+    <ul>
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .related h2 {
+    font-size: 1.125rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .related ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .related li {
+    margin-bottom: 0.625rem;
+  }
+</style>

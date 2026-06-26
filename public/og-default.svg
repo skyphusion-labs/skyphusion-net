@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="skyphusion.net">
+  <rect width="1200" height="630" fill="#0f0f10"/>
+  <rect x="80" y="80" width="1040" height="470" rx="8" fill="none" stroke="#2a2a2c" stroke-width="2"/>
+  <text x="120" y="300" fill="#e8e8e8" font-family="ui-monospace, Menlo, Monaco, Consolas, monospace" font-size="72" font-weight="600">skyphusion.net</text>
+  <text x="120" y="380" fill="#8a8a8a" font-family="ui-monospace, Menlo, Monaco, Consolas, monospace" font-size="32">Notes on technology and infrastructure</text>
+</svg>

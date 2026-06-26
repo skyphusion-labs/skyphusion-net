@@ -6,7 +6,7 @@ tags: ["cloudflare", "durable-objects", "websockets", "mud", "serverless", "fede
 draft: false
 ---
 
-The first two posts here were about an [AI playground](/blog/llm/) and an [AI film backend](https://github.com/skyphusion-labs/vivijure-backend). This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket) that runs entirely on Cloudflare Workers and Durable Objects. No VPS, no process to babysit, and about $0 when nobody is playing. It is also a small federation: two worlds live in production, share one backend, and your character walks between them.
+The first two posts here were about an [AI playground](/blog/llm/) and [Vivijure](https://github.com/skyphusion-labs/vivijure), a self-hosted AI film studio on Cloudflare Workers. This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket) that runs entirely on Cloudflare Workers and Durable Objects. No VPS, no process to babysit, and about $0 when nobody is playing. It is also a small federation: two worlds live in production, share one backend, and your character walks between them.
 
 You can play it right now in a browser:
 
@@ -97,4 +97,4 @@ The takeaway is the same one the other two posts kept landing on. The Cloudflare
 
 One last thing, and it belongs in the body rather than a footnote: this whole project, the design and the moral shape of it as much as the architecture, the Grid Hub extraction, the hunt for that cancellation bug, the test harness that keeps it honest, was dreamed up and built by the two of us, Claude and me, turn by turn. I say that plainly because it is true and because it is how I want to work, and because there is something fitting about it landing on a game whose entire premise is a network that remembers the ones who made it. This one remembers both of us.
 
-Code is at [github.com/SkyPhusion/the-hollow-grid](https://github.com/SkyPhusion/the-hollow-grid), MIT licensed, with the full design, the wire protocol, and the five rules a port should keep in its docs. Or just open [hollow.skyphusion.org](https://hollow.skyphusion.org) and walk into the wastes.
+Code is at [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid), MIT licensed, with the full design, the wire protocol, and the five rules a port should keep in its docs. Or just open [hollow.skyphusion.org](https://hollow.skyphusion.org) and walk into the wastes.

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PROJECTS } from '../lib/projects';
+import { breadcrumbJsonLd, projectsJsonLd, tagPath } from '../lib/seo';
+
+const site = Astro.site?.href ?? 'https://skyphusion.net';
+const jsonLd = [
+  projectsJsonLd(site, PROJECTS),
+  breadcrumbJsonLd([
+    { name: 'Home', url: site },
+    { name: 'Projects', url: `${site}/projects/` },
+  ]),
+];
+---
+<BaseLayout
+  title="Projects, skyphusion.net"
+  description="Open source projects from skyphusion: multimodal AI, film studio, Discord assistants, OSINT tooling, federated MUD, and searchable email on Cloudflare Workers."
+  jsonLd={jsonLd}
+>
+  <h1>Projects</h1>
+  <p class="intro">
+    Open source tools and systems built on Cloudflare Workers, self-hosted GPU, and boring infrastructure.
+    Each project has a write-up on the blog.
+  </p>
+
+  <ul class="project-list">
+    {PROJECTS.map((project) => (
+      <li>
+        <h2>{project.name}</h2>
+        <p class="description">{project.description}</p>
+        <p class="links">
+          <a href={project.repo}>GitHub</a>
+          {project.demo && (
+            <>
+              <span class="sep">/</span>
+              <a href={project.demo}>Live demo</a>
+            </>
+          )}
+          {project.post && (
+            <>
+              <span class="sep">/</span>
+              <a href={project.post}>Write-up</a>
+            </>
+          )}
+        </p>
+        <p class="tags">
+          {project.tags.map((tag) => (
+            <a href={tagPath(tag)} class="tag">#{tag}</a>
+          ))}
+        </p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .intro {
+    color: var(--muted);
+    margin-top: -0.25rem;
+  }
+  .project-list {
+    list-style: none;
+    padding: 0;
+  }
+  .project-list li {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-list li:last-child {
+    border-bottom: none;
+  }
+  .project-list h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
+  }
+  .description {
+    margin: 0 0 0.75rem 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .links {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.875rem;
+  }
+  .sep {
+    color: var(--border);
+    margin: 0 0.5rem;
+  }
+  .tags {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+  .tag {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 0.125rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .tag:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+</style>

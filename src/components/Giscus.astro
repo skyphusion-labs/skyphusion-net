@@ -1,0 +1,38 @@
+---
+import { GISCUS_CONFIG } from '../config/giscus';
+---
+
+<section class="giscus-section" aria-label="Comments">
+  <h2>Comments</h2>
+  <script
+    is:inline
+    src="https://giscus.app/client.js"
+    data-repo={GISCUS_CONFIG.repo}
+    data-repo-id={GISCUS_CONFIG.repoId}
+    data-category={GISCUS_CONFIG.category}
+    data-category-id={GISCUS_CONFIG.categoryId}
+    data-mapping={GISCUS_CONFIG.mapping}
+    data-strict={GISCUS_CONFIG.strict}
+    data-reactions-enabled={GISCUS_CONFIG.reactionsEnabled}
+    data-emit-metadata={GISCUS_CONFIG.emitMetadata}
+    data-input-position={GISCUS_CONFIG.inputPosition}
+    data-theme={GISCUS_CONFIG.theme}
+    data-lang={GISCUS_CONFIG.lang}
+    data-loading={GISCUS_CONFIG.loading}
+    crossorigin="anonymous"
+    async
+  ></script>
+</section>
+
+<style>
+  .giscus-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .giscus-section h2 {
+    font-size: 1.125rem;
+    margin: 0 0 1.5rem 0;
+  }
+</style>
