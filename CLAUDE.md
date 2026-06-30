@@ -28,8 +28,8 @@ Vitest) that asserts the homepage and a recent post render 200; it fetches `http
 so it needs a server already running (`npm run dev`, or the `astro preview` the coverage workflow
 starts). CI is **GitHub Actions** on GitHub-hosted `ubuntu-latest` (public repo, fork-safe): push/PR
 typecheck (`typecheck.yml`), build + `wrangler deploy` on `main` (`ci.yml`), and the Vitest coverage
-run against a live preview server (`code-coverage-ts.yml`). The committed `Jenkinsfile` is a legacy
-artifact (the old `jenkins.rockenhaus.net` pipeline is retired); GitHub Actions is the live CI/CD.
+run against a live preview server (`code-coverage-ts.yml`). GitHub Actions is the entire CI/CD
+pipeline (`ci.yml` builds and runs `wrangler deploy` on `main`); there is no other build system.
 
 ## Architecture
 
