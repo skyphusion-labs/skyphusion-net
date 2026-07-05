@@ -12,7 +12,9 @@ I'm Conrad Rockenhaus: independent developer, solo infrastructure operator, and 
 
 Most of my time goes to **[Prism](https://github.com/skyphusion-labs/prism)**, an open-source multimodal AI playground built on Cloudflare Workers. Text, image, video, and music generation, with long-running jobs handled through Cloudflare Workflows rather than fragile fire-and-forget patterns. It's BYOK-friendly and meant to be self-hostable by anyone who wants their own corner of the model ecosystem instead of renting someone else's.
 
-Around that sits **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio (planner UI, cast, render orchestration on Cloudflare Workers), which I run for myself and a few people I trust at [vivijure.skyphusion.org](https://vivijure.skyphusion.org).
+Around that sits **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio (planner UI, cast, render orchestration on Cloudflare Workers), which I run for myself and a few people I trust. Meet it at [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome).
+
+All of this is built with my team, **[Skyphusion Labs](https://skyphusion.org)**. The code lives at [github.com/skyphusion-labs](https://github.com/skyphusion-labs), with a front door at [github.skyphusion.org](https://github.skyphusion.org).
 
 ## What I run
 

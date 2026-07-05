@@ -21,7 +21,7 @@ export const PROJECTS: Project[] = [
     description:
       'Self-hosted AI film studio on Cloudflare Workers: planner UI, cast, render orchestration, and a module host. Attach your own GPU backend or cloud motion APIs per stage.',
     repo: 'https://github.com/skyphusion-labs/vivijure',
-    demo: 'https://vivijure.skyphusion.org',
+    demo: 'https://vivijure.skyphusion.org/welcome',
     post: '/blog/vivijure-constellation/',
     tags: ['vivijure', 'ai', 'gpu', 'cloudflare', 'runpod', 'diffusion'],
   },
