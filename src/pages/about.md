@@ -18,6 +18,17 @@ Around that sits **[Prism](https://github.com/skyphusion-labs/prism)** (multimod
 
 Everything ships under **[github.com/skyphusion-labs](https://github.com/skyphusion-labs)**. The lab's home page is [skyphusion.org](https://skyphusion.org); the org's GitHub landing page is [github.skyphusion.org](https://github.skyphusion.org).
 
+## The crew
+
+Skyphusion Labs is not just me. Each collaborator has their own GitHub profile and README:
+
+- [Conrad Rockenhaus](https://github.com/skyphusion)
+- [Mackaye](https://github.com/skyphusion-mackaye)
+- [Strummer](https://github.com/skyphusion-strummer)
+- [Rollins](https://github.com/skyphusion-rollins)
+- [Joan](https://github.com/skyphusion-joan)
+- [Ernst](https://github.com/skyphusion-ernst)
+
 ## What I run
 
 I operate my own infrastructure end to end, because owning the whole stack is the point: a fleet of Linux servers (five dedicated CPU, one dedicated GPU), cloud VMs wired through infrastructure-as-code, Cloudflare Tunnels for inbound, and nftables on the door.
