@@ -117,7 +117,18 @@ const imageHeight = ogImageHeight ?? (!ogImage ? DEFAULT_OG_IMAGE_HEIGHT : undef
     <slot />
   </main>
   <footer>
-    <p>&copy; {new Date().getFullYear()} skyphusion.net <span class="sep">/</span> <a href="/rss.xml">RSS</a></p>
+    <p class="footer-identity">
+      <a href="https://skyphusion.org">Skyphusion Labs</a>
+      <span class="sep">/</span>
+      <a href="https://github.skyphusion.org">Labs on GitHub</a>
+      <span class="sep">/</span>
+      <a href="https://github.skyphusion.net">Conrad Rockenhaus</a>
+      <span class="sep">/</span>
+      <a href="https://vivijure.skyphusion.org/welcome">Vivijure</a>
+      <span class="sep">/</span>
+      <a href="https://x.com/skyphusion">@skyphusion</a>
+    </p>
+    <p>&copy; {new Date().getFullYear()} Conrad Rockenhaus <span class="sep">/</span> <a href="/rss.xml">RSS</a> <span class="sep">/</span> <a href="mailto:conrad@skyphusion.org">conrad@skyphusion.org</a></p>
   </footer>
 </body>
 </html>
@@ -196,6 +207,10 @@ const imageHeight = ogImageHeight ?? (!ogImage ? DEFAULT_OG_IMAGE_HEIGHT : undef
     font-size: 0.875rem;
   }
   footer .sep { color: var(--border); margin: 0 0.5rem; }
+  footer .footer-identity {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.8125rem;
+  }
 
   h1, h2, h3, h4 { line-height: 1.25; }
   h1 { font-size: 1.875rem; margin-top: 0; }

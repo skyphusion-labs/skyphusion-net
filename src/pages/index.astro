@@ -26,7 +26,22 @@ const posts = allPosts
   jsonLd={webSiteJsonLd(site)}
 >
   <h1>Home Page of Conrad Rockenhaus</h1>
-  <p>Engineering blog and project hub. Notes on Cloudflare, AI infrastructure, and open source systems we build and run.</p>
+  <p>
+    Engineering blog and project hub for <a href="https://skyphusion.org">Skyphusion Labs</a>.
+    Notes on Cloudflare, AI infrastructure, and open source systems we build and run.
+    Our flagship is <a href="https://vivijure.skyphusion.org/welcome">Vivijure</a>, a free AGPL-3.0 AI film studio you own outright.
+  </p>
+  <p class="identity-links">
+    <a href="https://github.com/skyphusion">GitHub</a>
+    <span class="sep">/</span>
+    <a href="https://github.skyphusion.net">GitHub page</a>
+    <span class="sep">/</span>
+    <a href="https://github.skyphusion.org">Labs GitHub page</a>
+    <span class="sep">/</span>
+    <a href="https://github.com/skyphusion-labs">github.com/skyphusion-labs</a>
+    <span class="sep">/</span>
+    <a href="https://x.com/skyphusion">X</a>
+  </p>
 
   <section class="projects-teaser">
     <h2>Open source</h2>
@@ -69,6 +84,11 @@ const posts = allPosts
 <style>
   .projects-teaser {
     margin-bottom: 2rem;
+  }
+  .identity-links {
+    margin: 0.75rem 0 0 0;
+    font-size: 0.875rem;
+    color: var(--muted);
   }
   .projects-teaser p {
     margin: 0.5rem 0 0 0;

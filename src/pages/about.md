@@ -1,29 +1,40 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About, skyphusion.net"
-description: "About Conrad Rockenhaus and skyphusion.net"
+title: "About Conrad Rockenhaus, skyphusion.net"
+description: "Conrad Rockenhaus builds free AGPL open source software with Skyphusion Labs: the Vivijure AI film studio, Prism, Postern, The Hollow Grid, and more. Engineering blog at skyphusion.net."
 ---
 
 # About
 
-I'm Conrad Rockenhaus: independent developer, solo infrastructure operator, and Navy combat veteran. This site is where I keep notes, occasional findings, and the front doors to the things I build and run.
+I'm **Conrad Rockenhaus**: independent developer, infrastructure operator, and Navy combat veteran. This site is where I keep engineering notes, occasional findings, and the front doors to the things my crew and I build and run.
 
 ## What I build
 
-Most of my time goes to **[Prism](https://github.com/skyphusion-labs/prism)**, an open-source multimodal AI playground built on Cloudflare Workers. Text, image, video, and music generation, with long-running jobs handled through Cloudflare Workflows rather than fragile fire-and-forget patterns. It's BYOK-friendly and meant to be self-hostable by anyone who wants their own corner of the model ecosystem instead of renting someone else's.
+The flagship is **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio I wrote with my crew at [Skyphusion Labs](https://skyphusion.org). Storyboard, cast, render orchestration on Cloudflare Workers, swappable GPU backends (your own iron, RunPod by the second, or cloud i2v APIs), and a [CPU container media stack](https://github.com/skyphusion-labs/vivijure/tree/main/containers) so concat, mux, and finishing work stay off the GPU bill. **Free, AGPL-3.0, not for sale, never gated.** Meet it at [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome).
 
-Around that sits **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio (planner UI, cast, render orchestration on Cloudflare Workers), which I run for myself and a few people I trust. Meet it at [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome).
+Around that sits **[Prism](https://github.com/skyphusion-labs/prism)** (multimodal AI playground), **[Postern](https://github.com/skyphusion-labs/postern)** (email for humans and agents), **[The Hollow Grid](https://github.com/skyphusion-labs/the-hollow-grid)** (federated MUD), **[Common Thread](https://github.com/skyphusion-labs/common-thread)** (OSINT attribution), and more. All open source. All yours to fork.
 
-All of this is built with my team, **[Skyphusion Labs](https://skyphusion.org)**. The code lives at [github.com/skyphusion-labs](https://github.com/skyphusion-labs), with a front door at [github.skyphusion.org](https://github.skyphusion.org).
+## Skyphusion Labs
+
+Everything ships under **[github.com/skyphusion-labs](https://github.com/skyphusion-labs)**. The lab's home page is [skyphusion.org](https://skyphusion.org); the org's GitHub landing page is [github.skyphusion.org](https://github.skyphusion.org).
 
 ## What I run
 
-I operate my own infrastructure end to end, because owning the whole stack is the point:
+I operate my own infrastructure end to end, because owning the whole stack is the point: a fleet of Linux servers (five dedicated CPU, one dedicated GPU), cloud VMs wired through infrastructure-as-code, Cloudflare Tunnels for inbound, and nftables on the door.
 
-- **Monitoring** at [status.skyphusion.org](https://status.skyphusion.org), with push notifications so I find out before anyone else does.
-- A small fleet of Linux VPS instances, GPU inference, Cloudflare Tunnels for secure inbound, and nftables doing the gatekeeping.
+The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` is the lab's front door.
 
-The split is simple: `skyphusion.net` is the personal and infrastructure entry point; `skyphusion.org` is where the AI-facing services live.
+## Around the web
+
+- Engineering blog: [skyphusion.net](https://skyphusion.net) (this site)
+- Skyphusion Labs: [skyphusion.org](https://skyphusion.org)
+- Labs GitHub landing page: [github.skyphusion.org](https://github.skyphusion.org)
+- My GitHub landing page: [github.skyphusion.net](https://github.skyphusion.net)
+- GitHub profile: [github.com/skyphusion](https://github.com/skyphusion)
+- The code: [github.com/skyphusion-labs](https://github.com/skyphusion-labs)
+- Vivijure welcome: [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome)
+- X: [x.com/skyphusion](https://x.com/skyphusion)
+- Email: [conrad@skyphusion.org](mailto:conrad@skyphusion.org)
 
 ## Tools of choice
 
@@ -31,7 +42,7 @@ Fedora Linux as a daily driver. Cloudflare Workers as a deployment platform. Sel
 
 ## Service
 
-Before any of this, I served in the Navy. Combat veteran, with deployments to Kosovo and Afghanistan attached to fire-support and signals-intelligence units. It shaped how I work: direct, prepared, and allergic to hand-waving.
+Before any of this, I served in the Navy, with deployments to Kosovo and Afghanistan attached to fire-support and signals-intelligence units. It shaped how I work: direct, prepared, and allergic to hand-waving.
 
 ## Off the keyboard
 
@@ -39,4 +50,4 @@ When I'm not in a terminal, I'm usually deep in a home automation rabbit hole (H
 
 ## Contact
 
-Reach me at conrad@skyphusion.org.
+Reach me at [conrad@skyphusion.org](mailto:conrad@skyphusion.org).

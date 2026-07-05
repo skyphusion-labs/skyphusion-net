@@ -1,6 +1,6 @@
 ---
 title: "The Vivijure constellation: every engine in my open source AI film studio"
-description: "A full tour of the Vivijure constellation by Conrad Rockenhaus of Skyphusion Labs: the vivijure Studio control plane, the Slate Discord screenwriter, the vivijure-backend RunPod GPU engine, the vivijure-local-12gb and vivijure-local-16gb consumer GPU doors, and the vivijure-musetalk, vivijure-upscale, and vivijure-audio-upscale finish engines. All AGPL-3.0, all on GitHub, and after a two-week hardening sprint the studio is almost ready for full public release."
+description: "A full tour of the Vivijure constellation by Conrad Rockenhaus of Skyphusion Labs: the vivijure Studio control plane, CPU media containers on your own iron, the Slate Discord screenwriter, the vivijure-backend RunPod GPU engine, the vivijure-local-12gb and vivijure-local-16gb consumer GPU doors, cloud i2v modules, and the vivijure-musetalk, vivijure-upscale, and vivijure-audio-upscale finish engines. All AGPL-3.0, all on GitHub, and after a two-week hardening sprint the studio is almost ready for full public release."
 pubDate: 2026-07-05
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "lip-sync", "side-project"]
 draft: false
@@ -23,13 +23,18 @@ you (Discord or the Studio web page)
                                         |
         +-------------------------------+--------------------------------+
         |                               |                                |
-  GPU render engines             cloud video modules              finish engines
+  GPU render engines             cloud video modules              finish engines (GPU)
   vivijure-backend (RunPod)      Seedance, Kling, Veo, Wan       vivijure-musetalk (lip-sync)
   vivijure-local-12gb (LTX)                                       vivijure-upscale (Real-ESRGAN)
   vivijure-local-16gb (CogVideoX)                                 vivijure-audio-upscale (speech)
+                                        |
+                                        v
+                         CPU media stack (containers/ on your iron)
+                         video-finish, image-prep, audio-beat-sync,
+                         audio-master (+ audio-mix, wiring pending)
 ```
 
-One rule holds everywhere: the Studio is the single source of truth, and every engine is a swappable module behind a JSON contract. You can route motion through a rented datacenter GPU, a cloud API, or the graphics card in your own computer, per render, without the control plane changing at all.
+One rule holds everywhere: the Studio is the single source of truth, and every engine is a swappable module behind a JSON contract. You can route motion through a rented datacenter GPU, a cloud API, or the graphics card in your own computer, per render, without the control plane changing at all. The same contract also keeps work that does not need a GPU off the GPU bill: assembly, mux, captions, portrait prep, beat analysis, and loudness normalization run on cheap always-on CPU containers you host yourself.
 
 ## vivijure: the Studio, sprinting to release
 
@@ -76,9 +81,25 @@ Three small GPU satellites, each doing exactly one job on RunPod, each opt-in:
 
 All three landed the same security fix this sprint: job-supplied R2 keys are now pinned to the render's key map before any bucket I/O, so a malformed or malicious job cannot point a satellite at storage it should not touch.
 
+## The CPU media stack: GPU money for GPU work only
+
+Owning Vivijure is not just about custody of your films and your keys. It is also about **where the meter runs**. Diffusion, image-to-video, LoRA training, lip-sync, and video upscale belong on a GPU, and Vivijure gives you three honest ways to buy that time: rent high-end silicon **by the second** on RunPod serverless ([vivijure-backend](https://github.com/skyphusion-labs/vivijure-backend)), run motion on **your own card** over a Cloudflare tunnel ([vivijure-local-12gb](https://github.com/skyphusion-labs/vivijure-local-12gb) and [vivijure-local-16gb](https://github.com/skyphusion-labs/vivijure-local-16gb)), or call a **cloud i2v endpoint** through the Studio's swappable motion modules (Seedance, Kling, Veo, Wan, and friends). Pick one per shot; the contract does not move.
+
+Everything that is not diffusion should not be billed like diffusion. That is why the Studio ships a **CPU container architecture** under [`vivijure/containers`](https://github.com/skyphusion-labs/vivijure/tree/main/containers): five always-on HTTP services you run on your own container host (a homelab box, a dedicated CPU server, anywhere Docker runs). They join a private `vivijure` Docker network and are reached from the Cloudflare Worker over **Workers VPC** through a **cloudflared** tunnel connector. The Worker presigns short-lived R2 GET/PUT URLs and passes them in the request body, so the containers stay stateless and credential-free: no R2 bindings, no secrets mounted, no media bytes flowing through the Worker.
+
+The five services, each doing one job on CPU:
+
+- **video-finish** (ffmpeg): the off-GPU tail of the pipeline. Concatenates per-shot clips, muxes the audio bed, burns captions, prepends title cards, appends credits. This is the work the old single-pod layout used to charge GPU seconds for.
+- **image-prep** (rembg/u2net on onnxruntime): strips backgrounds from cast reference portraits before they condition keyframe generation. Sharper cutouts, cleaner LoRA conditioning, zero GPU.
+- **audio-beat-sync** (librosa): when a film carries a music bed, beat-aware cutting trims shot boundaries onto musical beats instead of arbitrary scene seconds.
+- **audio-master** (ffmpeg): film-level mastering of the assembled audio bed, optional music upscale plus two-pass LUFS loudnorm, before mux.
+- **audio-mix** (ffmpeg): multi-track mix with sidechain duck and loudnorm. Built and documented; wiring into the assemble path is the tracked follow-up.
+
+Together they keep a render bill honest: **GPU money goes to GPU work only**. Concat, mux, captions, portrait prep, beat analysis, and loudness normalization run on the cheap always-on CPU fleet you already have. Deploy is one compose file (`docker compose -p vivijure-media -f containers/compose.yaml up -d --build`); v0.15.0 promoted the tunnel plus VPC Services to the standard install path so the guided deploy script provisions them alongside the rest of the stack.
+
 ## Why it is shaped this way
 
-The constellation looks like a lot of repos, and it is, on purpose. Each engine has its own license file, its own NOTICE, its own CI, its own one-script deploy, and its own docs written for an outsider. That is the shape that makes the public release honest: you can run the Studio alone on the Workers free tier, add the cloud backend when you want datacenter quality, add a local door when you want zero rent, and add finish engines one at a time. Nothing is bundled that you did not ask for, and nothing you skip can break what you kept.
+The constellation looks like a lot of repos, and it is, on purpose. Each engine has its own license file, its own NOTICE, its own CI, its own one-script deploy, and its own docs written for an outsider. That is the shape that makes the public release honest: you can run the Studio alone on the Workers free tier, add the cloud backend when you want datacenter quality, add a local door when you want zero rent, wire the CPU media stack on iron you already own so assembly never touches a GPU, and add finish engines one at a time. Nothing is bundled that you did not ask for, and nothing you skip can break what you kept.
 
 Every piece of it is AGPL-3.0: if you run a modified version as a network service, you owe your users the corresponding source. For a studio whose whole pitch is "no subscription, no account wall, no lock-in," that is the right license.
 

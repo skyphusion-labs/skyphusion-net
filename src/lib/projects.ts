@@ -19,7 +19,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'Vivijure',
     description:
-      'Self-hosted AI film studio on Cloudflare Workers: planner UI, cast, render orchestration, and a module host. Attach your own GPU backend or cloud motion APIs per stage.',
+      'Self-hosted AI film studio on Cloudflare Workers: planner UI, cast, render orchestration, and a module host. Rent GPU time by the second, run on your own card, call cloud i2v APIs, and keep assembly on CPU containers you host.',
     repo: 'https://github.com/skyphusion-labs/vivijure',
     demo: 'https://vivijure.skyphusion.org/welcome',
     post: '/blog/vivijure-constellation/',

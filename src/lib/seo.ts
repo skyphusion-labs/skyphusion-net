@@ -8,7 +8,11 @@ export const DEFAULT_OG_IMAGE_HEIGHT = 630;
 
 export const SOCIAL_PROFILES = [
   `https://x.com/${X_USERNAME}`,
+  'https://github.com/skyphusion',
   'https://github.com/skyphusion-labs',
+  'https://skyphusion.org',
+  'https://github.skyphusion.org',
+  'https://github.skyphusion.net',
 ] as const;
 
 export const PRODUCT_URLS = [
@@ -127,11 +131,24 @@ export function webSiteJsonLd(site: string) {
     '@type': 'WebSite',
     name: SITE_NAME,
     url: site,
-    description: 'Notes on technology, infrastructure, and occasional findings.',
+    description:
+      'Engineering blog by Conrad Rockenhaus: free AGPL open source AI film studio (Vivijure), Cloudflare Workers infrastructure, and self-hosted systems from Skyphusion Labs.',
     author: {
       '@type': 'Person',
       name: AUTHOR_NAME,
       url: `${site}/about/`,
+      sameAs: [...SOCIAL_PROFILES, ...PRODUCT_URLS],
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Skyphusion Labs',
+      url: 'https://skyphusion.org',
+      sameAs: [
+        'https://github.com/skyphusion-labs',
+        'https://github.skyphusion.org',
+        'https://github.skyphusion.net',
+        'https://skyphusion.net',
+      ],
     },
   };
 }
@@ -164,7 +181,11 @@ export function personJsonLd(site: string) {
       '@type': 'Organization',
       name: 'Skyphusion Labs',
       url: 'https://skyphusion.org',
-      sameAs: ['https://github.com/skyphusion-labs'],
+      sameAs: [
+        'https://github.com/skyphusion-labs',
+        'https://github.skyphusion.org',
+        'https://github.skyphusion.net',
+      ],
     },
   };
 }
