@@ -92,6 +92,15 @@ const imageHeight = ogImageHeight ?? (!ogImage ? DEFAULT_OG_IMAGE_HEIGHT : undef
   {jsonLd && (
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   )}
+
+  <!-- Cloudflare Web Analytics -->
+  <script
+    is:inline
+    defer
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "e31c135e4b43480c96db496537782204"}'
+  ></script>
+  <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
   <header>
