@@ -15,13 +15,21 @@ export const PRODUCT_URLS = [
   'https://github.com/skyphusion-labs/prism',
   'https://github.com/skyphusion-labs/postern',
   'https://github.com/skyphusion-labs/the-hollow-grid',
+  'https://github.com/skyphusion-labs/mud-bots',
   'https://github.com/skyphusion-labs/vivijure',
   'https://github.com/skyphusion-labs/slate',
   'https://github.com/skyphusion-labs/SidVicious_exe',
   'https://github.com/skyphusion-labs/common-thread',
   'https://github.com/skyphusion-labs/vivijure-backend',
+  'https://github.com/skyphusion-labs/vivijure-local-12gb',
+  'https://github.com/skyphusion-labs/vivijure-local-16gb',
+  'https://github.com/skyphusion-labs/vivijure-musetalk',
+  'https://github.com/skyphusion-labs/vivijure-upscale',
+  'https://github.com/skyphusion-labs/vivijure-audio-upscale',
+  'https://skyphusion.org',
   'https://vivijure.skyphusion.org',
   'https://hollow.skyphusion.org',
+  'https://dustfall.skyphusion.org',
   'https://common-thread.skyphusion.org',
 ] as const;
 
@@ -152,8 +160,9 @@ export function personJsonLd(site: string) {
     jobTitle: 'Independent developer',
     worksFor: {
       '@type': 'Organization',
-      name: SITE_NAME,
-      url: site,
+      name: 'Skyphusion Labs',
+      url: 'https://skyphusion.org',
+      sameAs: ['https://github.com/skyphusion-labs'],
     },
   };
 }

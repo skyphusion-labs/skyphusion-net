@@ -2,6 +2,7 @@
 title: "Common Thread: sockpuppet attribution from public signals"
 description: "Common Thread pairs a twelve-section methodology paper with a Cloudflare Workers reference implementation: archive public social artifacts, extract deterministic behavioral features, and emit calibrated cluster-level attribution claims with full chain of custody. For journalists, OSINT practitioners, and researchers who need reproducible investigations without platform-internal data."
 pubDate: 2026-06-25
+updatedDate: 2026-07-05
 tags: ["cloudflare", "ai", "osint", "side-project"]
 draft: false
 ---
@@ -41,5 +42,16 @@ Ingest can run through Apify upload jobs (Twitter, Reddit, Instagram scrapers) w
 Public UI: [common-thread.skyphusion.org](https://common-thread.skyphusion.org). API: [common-thread-backend.skyphusion.org](https://common-thread-backend.skyphusion.org). Contact the team before leaning on the hosted API in your own project.
 
 v1 is in active stabilization. The paper is the authority; code cites paper sections.
+
+## Update, July 2026: stabilization in practice
+
+The two weeks since this post went up were spent making v1 trustworthy rather than bigger, and reconciling the two halves of the project so they cannot drift:
+
+- **Paper and code reconciled.** The paper's taxonomy now matches the implementation's terminology and the v1 signal set exactly. When the code cites a paper section, the section says what the code does.
+- **New extractors, and a correctness fix on an old one.** Support landed for Apify Reddit activity/profile and Instagram profile scrapes (shipped, reverted for a defect, then reworked and re-landed properly). A subtler fix replaced substring URL platform checks with parsed-host matching, so a post that merely mentions another platform's domain can no longer be misclassified.
+- **API behavior hardened.** The Workers now return generic 500s (no internal detail leakage) and a clean 400 on malformed JSON bodies, and the web UI's proxy constrains backend overrides and credential forwarding.
+- **CI got serious.** The hybrid DB-backed suites now run in CI, a twitter-scrapes suite runs against a synthetic corpus (no real accounts in the fixtures), and unified coverage reporting is wired across the project. For a tool whose output may end up attached to a legal filing, "the tests actually run against a database" is not optional.
+
+The dual-license split (CC-BY-4.0 paper, AGPL-3.0 implementation) is now asserted in a NOTICE file as well.
 
 Code: [github.com/skyphusion-labs/common-thread](https://github.com/skyphusion-labs/common-thread).

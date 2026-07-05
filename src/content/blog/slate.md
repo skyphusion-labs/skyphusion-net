@@ -2,6 +2,7 @@
 title: "Slate: co-writing films in Discord, shipping them to Vivijure"
 description: "Slate is the Discord front door to Vivijure: a collaborative screenwriter assistant that keeps a structured storyboard brief in channel, generates portraits and thumbnails, searches the web and a knowledge base, and submits finished bundles to the Vivijure studio API when the crew is ready."
 pubDate: 2026-06-25
+updatedDate: 2026-07-05
 tags: ["vivijure", "discord", "ai", "cloudflare", "film", "side-project"]
 draft: false
 ---
@@ -45,6 +46,16 @@ Slate assembles the storyboard bundle and talks to Vivijure only through its JSO
 - Cloudflare Workers for search (`vivijure-search`) and log storage (`slate-logs`)
 - Image generation through Workers AI and AI Gateway model aliases (FLUX, SDXL, GPT Image, Recraft, and others)
 - Docker Compose on our internal fleet for production; GitHub Actions for tests and Worker deploy
+
+## Update, July 2026: v0.2.1 and the release sprint
+
+Slate is part of the [Vivijure constellation](/blog/vivijure-constellation/), which spent the last two weeks in a release-hardening sprint, and Slate's share of it landed as v0.2.1:
+
+- **No more ambiguous renders.** Slate now always sends an explicit serving `motion_backend` on full render submissions, matching the studio's new submit-time preflight. A render can no longer launch against whatever backend happened to be the default.
+- **The ship-it trap is closed.** A casual "ship it" in conversation no longer risks an accidental submission, and studio error bodies are no longer leaked raw into the channel.
+- **Correctness under load.** A per-channel write queue serializes brief updates so concurrent messages cannot clobber render settings, and every studio call now carries its `Authorization: Bearer` header (one path was missing it).
+- **Real unit tests.** The bot's pure logic was extracted into a `lib.mjs` so it can be tested without a Discord connection.
+- **Operational maturity.** The search worker was renamed `vivijure-search` to `slate-search` to reflect its true owner, the bot image is built and pushed to GHCR on version tags, and production deploys are now an IaC tag-driven flow. Hardcoded database ids and internal fleet topology came out of the public repo.
 
 AGPL-3.0. No public invite: Slate is a Discord bot you deploy for your own server.
 

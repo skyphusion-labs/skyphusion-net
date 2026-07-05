@@ -2,6 +2,7 @@
 title: "The film that learned to talk, and the three bugs it hit first"
 description: "The fourth Vivijure showcase, Vivijure Speaks: a talking character lip-synced to its own dialogue and upscaled, rendered start to finish on a self-hosted GPU with nobody steering it. Two shots, about two and a half seconds, and voiced. The honest part is that it came out silent once, and then a from-scratch re-fire found two more orchestration bugs before any user could. Notes on the three control-plane and backend fixes that gave it a voice."
 pubDate: 2026-06-22
+updatedDate: 2026-07-05
 image: "https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.jpg"
 tags: ["vivijure", "ai", "gpu", "cloudflare", "runpod", "diffusion", "lip-sync", "side-project"]
 draft: false
@@ -64,3 +65,5 @@ Three bugs, three layers: a gather that dropped your audio, a backend that trust
 I said in the first-run post that I would keep showing the real state of this, including the parts that are not finished, and I meant it. A showcase that only shows the take that worked is marketing. The take that talks is up top. It is worth knowing how many times it had to go silent first.
 
 The next showcase pushes further: the same talking character on a cloud motion backend, with proper titles. Different render, different proof. This one was about the voice.
+
+*Update, July 2026: in the two weeks after this post, the studio went from v0.11.0 to v0.16.0 in a release-hardening sprint: output validation at both layers (so a broken clip fails loud instead of assembling into your film), the local-consumer GPU doors going live, credentials moved to the Secrets Store, and the media stack promoted to the standard install. The full picture of the studio and every engine around it, now almost ready for full public release, is in [the constellation post](/blog/vivijure-constellation/).*

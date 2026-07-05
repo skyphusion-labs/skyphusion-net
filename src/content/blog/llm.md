@@ -2,7 +2,7 @@
 title: "Building Prism: multimodal AI on Cloudflare Workers"
 description: "Architecture and lessons from Prism, a multimodal AI playground as a single Cloudflare Worker: 35 chat models across five providers, voice chat, RAG, projects, Discord ingestion, web search, SSE streaming, Workflows for durable video and music jobs, and a public demo mode where each user brings their own AI Gateway credentials."
 pubDate: 2026-05-23
-updatedDate: 2026-06-25
+updatedDate: 2026-07-05
 tags: ["cloudflare", "ai", "rag", "workflows", "llm", "side-project"]
 draft: false
 ---
@@ -108,5 +108,9 @@ A reference template for the Cloudflare AI stack, not a SaaS competitor to ChatG
 Fork it if you want your own corner of the model ecosystem. PRs welcome; see [CONTRIBUTING.md](https://github.com/skyphusion-labs/prism/blob/main/CONTRIBUTING.md).
 
 AGPL-3.0: if you run it as a network service, you owe your users source access. Seems right for a project like this.
+
+## Update, July 2026
+
+Prism is in maintenance-and-hardening mode while the [Vivijure constellation](/blog/vivijure-constellation/) sprints toward its public release, and the recent changes reflect that: a CodeQL-flagged DOM XSS path in the frontend's video frame extraction was fixed (frames now come off `video.srcObject` instead of a tainted URL), the template now defaults `workers_dev = false` so a fork does not accidentally expose an unauthenticated `workers.dev` door, a stale cron trigger that survived an old feature was explicitly cleared, and contributions now go through DCO sign-off with a proper NOTICE file. Small commits, but they are exactly the kind that matter for a template other people fork and deploy.
 
 Code: [github.com/skyphusion-labs/prism](https://github.com/skyphusion-labs/prism).

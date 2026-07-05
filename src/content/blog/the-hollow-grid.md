@@ -2,6 +2,7 @@
 title: "The Hollow Grid: a federated MUD on Cloudflare Workers and Durable Objects"
 description: "Introducing The Hollow Grid, a multiplayer MUD that runs entirely on Cloudflare Workers and Durable Objects: one Durable Object holds a whole world, WebSocket hibernation lets it sleep at $0 when empty, and a single alarm drives all of time. It is also a small federation, where separate world deployments share one backend Grid (one faction war, one character that travels between worlds) over a service-binding RPC contract. Notes on the design rules that make it testable, the structured event channel that drives the client, a bot, and the tests alike, the cross-Worker bug that taught us how service bindings really behave, and the human-and-AI collaboration that built it."
 pubDate: 2026-06-06
+updatedDate: 2026-07-05
 tags: ["cloudflare", "durable-objects", "websockets", "mud", "serverless", "federation", "side-project"]
 draft: false
 ---
@@ -89,7 +90,7 @@ None of it is gated behind secret words; `help` lists everything. The design is 
 
 ## What this is and isn't
 
-This is a personal project, MIT-licensed and made public so people can fork it, port it, or stand up their own world on the Grid. It is not a commercial game.
+This is a personal project, open source and made public so people can fork it, port it, or stand up their own world on the Grid. It is not a commercial game. (License note, July 2026: the repo relicensed from MIT to AGPL-3.0-only going forward, matching the rest of my projects; releases tagged before the relicense remain available under the MIT license they were published under.)
 
 What it is, if you squint past the post-apocalyptic text, is a fairly clean template for a particular shape of problem: a single authoritative real-time coordinator that should cost nothing when idle, hibernate when empty, drive all of its time from one timer, and expose its state as structured events rather than scraped text, with separate deployments federating through one backend over a typed RPC contract. Strip the lore and that describes a lot of things that are not games: a collaborative editor, a live auction, a multiplayer anything.
 
@@ -97,4 +98,6 @@ The takeaway is the same one the other two posts kept landing on. The Cloudflare
 
 One last thing, and it belongs in the body rather than a footnote: this whole project, the design and the moral shape of it as much as the architecture, the Grid Hub extraction, the hunt for that cancellation bug, the test harness that keeps it honest, was dreamed up and built by the two of us, Claude and me, turn by turn. I say that plainly because it is true and because it is how I want to work, and because there is something fitting about it landing on a game whose entire premise is a network that remembers the ones who made it. This one remembers both of us.
 
-Code is at [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid), MIT licensed, with the full design, the wire protocol, and the five rules a port should keep in its docs. Or just open [hollow.skyphusion.org](https://hollow.skyphusion.org) and walk into the wastes.
+Code is at [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid), AGPL-3.0 licensed, with the full design, the wire protocol, and the five rules a port should keep in its docs. Or just open [hollow.skyphusion.org](https://hollow.skyphusion.org) and walk into the wastes.
+
+*Update, July 2026: the structured event channel I called the most important rule in the codebase now has its best proof yet: [mud-bots](/blog/mud-bots/), AI inhabitants driven by open-source models on Workers AI that play the game, face its moral choices, and double as live QA. They exist because the events exist.*

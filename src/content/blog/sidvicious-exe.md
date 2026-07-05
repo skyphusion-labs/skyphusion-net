@@ -2,6 +2,7 @@
 title: "SidVicious_exe: a punk rock Discord roadie on Cloudflare"
 description: "SidVicious_exe is a self-hosted Discord roadie forked from Slate with the film stack removed: Claude via AI Gateway, web search, a Vectorize knowledge base, and image generation across Workers AI and gateway models, with a deliberately irreverent personality."
 pubDate: 2026-06-25
+updatedDate: 2026-07-05
 tags: ["discord", "ai", "cloudflare", "side-project"]
 draft: false
 ---
@@ -37,5 +38,9 @@ Discord channel
 ```
 
 Deploy with `npm run roadie`, a standalone Dockerfile, or Compose on your own box. AGPL-3.0. No public invite in the repo: you host it for your server.
+
+## Update, July 2026
+
+The roadie now ships as a versioned container image: tagging a release builds and pushes the image to GHCR, so self-hosters can pin a version instead of building from source. The Workers config got a defense-in-depth pass too, disabling the unused `workers.dev` route on the main worker while explicitly pinning it open on the search worker that the bot actually consumes. Internal fleet topology came out of the public docs, and contributions now go through DCO sign-off.
 
 Code: [github.com/skyphusion-labs/SidVicious_exe](https://github.com/skyphusion-labs/SidVicious_exe).
