@@ -97,14 +97,13 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   )}
 
-  <!-- Cloudflare Web Analytics -->
+  <!-- Umami OSS marketing analytics (self-hosted). website-id: fleet-chezmoi/system/umami/websites.json -->
   <script
     is:inline
     defer
-    src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon='{"token": "a89ee4398122485e9db86dd84d07e09c"}'
+    src="https://analytics.skyphusion.org/script.js"
+    data-website-id="a67a0d45-5496-403f-adb1-b52792987260"
   ></script>
-  <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
   <header>
@@ -139,6 +138,7 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
       <a href="https://rockenhaus.net">Public court record</a>
     </p>
     <p>&copy; {new Date().getFullYear()} Conrad Rockenhaus <span class="sep">/</span> <a href="/rss.xml">RSS</a> <span class="sep">/</span> <a href="mailto:conrad@skyphusion.org">conrad@skyphusion.org</a></p>
+    <p class="footer-analytics">Cookieless analytics (self-hosted) for aggregate traffic only; no individual tracking or ad-tech.</p>
   </footer>
 </body>
 </html>
@@ -220,6 +220,11 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
   footer .footer-identity {
     margin: 0 0 0.75rem 0;
     font-size: 0.8125rem;
+  }
+  footer .footer-analytics {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--muted);
   }
 
   h1, h2, h3, h4 { line-height: 1.25; }
