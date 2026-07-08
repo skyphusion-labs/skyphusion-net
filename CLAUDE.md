@@ -4,7 +4,7 @@ Guidance for Claude Code (and the crew) working in this repo.
 
 ## What this is
 
-Personal blog at **skyphusion.net** -- an Astro 6 site, markdown-authored, prerendered to static HTML
+Personal blog at **skyphusion.net** -- an Astro 7 site, markdown-authored, prerendered to static HTML
 and served from a Cloudflare Worker (the `@astrojs/cloudflare` adapter). Content is a single `blog`
 content collection; everything renders from markdown. Currently **v0.1.0**. Live: skyphusion.net /
 www.skyphusion.net.
