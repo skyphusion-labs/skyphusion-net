@@ -6,7 +6,7 @@ Guidance for Claude Code (and the crew) working in this repo.
 
 Personal blog at **skyphusion.net** -- an Astro 7 site, markdown-authored, prerendered to static HTML
 and served from a Cloudflare Worker (the `@astrojs/cloudflare` adapter). Content is a single `blog`
-content collection; everything renders from markdown. Currently **v0.1.0**. Live: skyphusion.net /
+content collection; everything renders from markdown. Currently **v0.2.0**. Live: skyphusion.net /
 www.skyphusion.net.
 
 ## Commands
@@ -15,7 +15,7 @@ www.skyphusion.net.
 npm install
 npm run dev          # astro dev -> http://localhost:4321 (live reload)
 npm run typecheck    # astro check -- the CI gate; run before pushing
-npm run build        # astro build -> dist/
+npm run build        # astro build -> dist/client/ (static) + dist/server/
 npm run preview      # build + wrangler dev (serves the built worker locally, closest to prod)
 npm run deploy       # build + wrangler deploy (account from CLOUDFLARE_ACCOUNT_ID)
 npm run generate-types   # wrangler types (regenerates the gitignored worker-configuration.d.ts)
@@ -49,11 +49,13 @@ pipeline (`ci.yml` builds and runs `wrangler deploy` on `main`); there is no oth
   auto-generates the sitemap at build, with per-post `lastmod` injected from frontmatter via
   `scripts/post-lastmod.mjs` (the content collection is not available at config time, so lastmod is
   parsed from the markdown directly). `src/lib/seo.ts` centralizes SEO helpers.
-- **Deploy is Workers, not Pages.** `astro.config.mjs` uses the `@astrojs/cloudflare` SSR adapter;
-  `wrangler.jsonc` defines a Worker (`main: @astrojs/cloudflare/entrypoints/server`) serving `dist/`
-  via the `ASSETS` binding on custom domains `skyphusion.net` / `www.skyphusion.net`. Every route
-  uses `getStaticPaths`, so the build prerenders all content; the Worker adapter serves the
-  prerendered assets and is what would enable server routes later.
+- **Deploy is Workers, not Pages.** `astro.config.mjs` uses the `@astrojs/cloudflare` v14 SSR adapter;
+  `wrangler.jsonc` defines the Worker (`main: @astrojs/cloudflare/entrypoints/server`). At build time
+  the adapter writes a merged config to `dist/client/wrangler.json` and serves prerendered assets from
+  `dist/client/` via the `ASSETS` binding on custom domains `skyphusion.net` / `www.skyphusion.net`.
+  Adapter 14 also declares default `SESSION` (KV) and `IMAGES` bindings; this static blog does not use
+  them. Every route uses `getStaticPaths`, so the build prerenders all content; the Worker adapter
+  serves the prerendered assets and is what would enable server routes later.
 - **Code highlighting**: Shiki, `github-dark-dimmed` theme with line wrap (`astro.config.mjs`).
 
 ## Writing a post
