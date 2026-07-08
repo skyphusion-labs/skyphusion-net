@@ -5,6 +5,8 @@ export const X_USERNAME = 'skyphusion';
 export const DEFAULT_OG_IMAGE = '/og-default.png';
 export const DEFAULT_OG_IMAGE_WIDTH = 1200;
 export const DEFAULT_OG_IMAGE_HEIGHT = 630;
+export const DEFAULT_OG_IMAGE_ALT =
+  'skyphusion.net: engineering notes on open source AI, Cloudflare Workers, and self-hosted infrastructure by Conrad Rockenhaus.';
 
 export const SOCIAL_PROFILES = [
   `https://x.com/${X_USERNAME}`,
@@ -13,6 +15,7 @@ export const SOCIAL_PROFILES = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
+  'https://vivijure.com',
 ] as const;
 
 export const PRODUCT_URLS = [
@@ -33,6 +36,7 @@ export const PRODUCT_URLS = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
+  'https://vivijure.com',
   'https://vivijure.skyphusion.org/welcome',
   'https://hollow.skyphusion.org',
   'https://dustfall.skyphusion.org',
@@ -148,6 +152,7 @@ export function webSiteJsonLd(site: string) {
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
         'https://skyphusion.net',
+        'https://vivijure.com',
       ],
     },
   };
@@ -185,6 +190,7 @@ export function personJsonLd(site: string) {
         'https://github.com/skyphusion-labs',
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
+        'https://vivijure.com',
       ],
     },
   };
