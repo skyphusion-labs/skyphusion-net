@@ -5,9 +5,12 @@ name: CI
 # fleet runner would let fork PRs execute on a build box, and GitHub refuses to
 # dispatch public-repo jobs to a runner group that disallows public repos
 # anyway. This is just an Astro build + wrangler deploy with no fleet need.
-# Typecheck (push + PR) lives in typecheck.yml on the same GitHub-hosted path.
+# The `ci` job (typecheck + vitest) satisfies the org required check on PRs;
+# typecheck.yml remains the fork-safe hosted path for untrusted fork PRs.
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -19,7 +22,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  ci:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -27,7 +30,38 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - run: npm run typecheck
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Start Astro preview server
+        run: npx astro preview --port 4321 &
+
+      - name: Wait for Astro server to be ready
+        run: |
+          echo "Waiting for blog compiler to listen on port 4321..."
+          timeout 15s bash -c 'until lsof -i :4321 -s TCP:LISTEN; do sleep 1; done' || true
+
+      - name: Run blog tests
+        run: npx vitest run
+
+  deploy:
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
