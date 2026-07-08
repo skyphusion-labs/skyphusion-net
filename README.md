@@ -1,12 +1,12 @@
 # skyphusion-net
 
-Personal blog at skyphusion.net. Astro 6 site, prerendered to static HTML and served from a Cloudflare Worker, markdown-authored.
+Personal blog at skyphusion.net. Astro 7 site, prerendered to static HTML and served from a Cloudflare Worker, markdown-authored.
 
 ## Stack
 
 | Layer | Choice |
 |---|---|
-| Site generator | Astro 6 |
+| Site generator | Astro 7 |
 | Hosting | Cloudflare Workers (free tier), `@astrojs/cloudflare` adapter |
 | Authoring | Markdown with YAML frontmatter |
 | RSS | @astrojs/rss |

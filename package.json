@@ -1,7 +1,7 @@
 {
   "name": "skyphusion-net",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -15,10 +15,10 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.7.0",
-    "@astrojs/rss": "^4.0.0",
-    "@astrojs/sitemap": "^3.2.0",
-    "astro": "^6.4.7"
+    "@astrojs/cloudflare": "^14.1.2",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.0.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
@@ -26,8 +26,5 @@
     "typescript": "^6.0.3",
     "vitest": "^4.1.10",
     "wrangler": "^4.107.1"
-  },
-  "overrides": {
-    "vite": "^7"
   }
 }
