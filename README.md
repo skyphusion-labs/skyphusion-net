@@ -7,7 +7,7 @@ Personal blog at skyphusion.net. Astro 7 site, prerendered to static HTML and se
 | Layer | Choice |
 |---|---|
 | Site generator | Astro 7 |
-| Hosting | Cloudflare Workers (free tier), `@astrojs/cloudflare` adapter |
+| Hosting | Cloudflare Workers (free tier), `@astrojs/cloudflare` v14 adapter |
 | Authoring | Markdown with YAML frontmatter |
 | RSS | @astrojs/rss |
 | Sitemap | @astrojs/sitemap |
@@ -50,9 +50,12 @@ Set `draft: true` to keep a post out of the build (won't appear in lists, won't 
 ## Build and preview
 
 ```bash
-npm run build    # Produces dist/ folder
+npm run build    # Produces dist/client/ (static assets) and dist/server/
 npm run preview  # build + wrangler dev — runs the built Worker locally (closest to prod)
 ```
+
+`npm run preview` and `wrangler deploy` use the merged config the adapter writes to
+`dist/client/wrangler.json` at build time (your hand-authored `wrangler.jsonc` is the source).
 
 ## Project structure
 
@@ -83,7 +86,7 @@ skyphusion-net/
 
 ## Cloudflare Workers deployment
 
-The site builds to static HTML (every route uses `getStaticPaths`) and is served by a Cloudflare Worker. The `@astrojs/cloudflare` adapter (`astro.config.mjs`) and `wrangler.jsonc` define the Worker, which serves `dist/` through the `ASSETS` binding on the custom domains `skyphusion.net` and `www.skyphusion.net`.
+The site builds to static HTML (every route uses `getStaticPaths`) and is served by a Cloudflare Worker. The `@astrojs/cloudflare` v14 adapter (`astro.config.mjs`) and `wrangler.jsonc` define the Worker; at build time the adapter merges them into `dist/client/wrangler.json` and serves prerendered assets from `dist/client/` through the `ASSETS` binding on the custom domains `skyphusion.net` and `www.skyphusion.net`.
 
 Deploy from your machine:
 
