@@ -33,18 +33,21 @@ Skyphusion Labs is not just me. Each collaborator has their own GitHub profile a
 
 I operate my own infrastructure end to end, because owning the whole stack is the point: a fleet of Linux servers (five dedicated CPU, one dedicated GPU), cloud VMs wired through infrastructure-as-code, Cloudflare Tunnels for inbound, and nftables on the door.
 
-The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` is the lab's front door.
+The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` is the lab's front door. My public Michigan court record lives at [rockenhaus.net](https://rockenhaus.net) (also [litigation.rockenhaus.net](https://litigation.rockenhaus.net)).
 
 ## Around the web
 
 - Engineering blog: [skyphusion.net](https://skyphusion.net) (this site)
+- Public court record: [rockenhaus.net](https://rockenhaus.net)
 - Skyphusion Labs: [skyphusion.org](https://skyphusion.org)
 - Labs GitHub landing page: [github.skyphusion.org](https://github.skyphusion.org)
 - My GitHub landing page: [github.skyphusion.net](https://github.skyphusion.net)
 - GitHub profile: [github.com/skyphusion](https://github.com/skyphusion)
 - The code: [github.com/skyphusion-labs](https://github.com/skyphusion-labs)
 - Vivijure welcome: [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome)
-- X: [x.com/skyphusion](https://x.com/skyphusion)
+- X: [x.com/skyphusion](https://x.com/skyphusion) (verified)
+- Facebook: [facebook.com/skyphusion](https://facebook.com/skyphusion) (Meta Verified)
+- Instagram: [instagram.com/skyphusion](https://instagram.com/skyphusion) (Meta Verified)
 - Email: [conrad@skyphusion.org](mailto:conrad@skyphusion.org)
 
 ## Tools of choice

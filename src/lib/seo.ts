@@ -8,10 +8,15 @@ export const DEFAULT_OG_IMAGE_HEIGHT = 630;
 export const DEFAULT_OG_IMAGE_ALT =
   'skyphusion.net: engineering notes on open source AI, Cloudflare Workers, and self-hosted infrastructure by Conrad Rockenhaus.';
 
+export const PUBLIC_RECORD_URL = 'https://rockenhaus.net/' as const;
+
 export const SOCIAL_PROFILES = [
   `https://x.com/${X_USERNAME}`,
+  'https://facebook.com/skyphusion',
+  'https://instagram.com/skyphusion',
   'https://github.com/skyphusion',
   'https://github.com/skyphusion-labs',
+  PUBLIC_RECORD_URL,
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
@@ -136,7 +141,7 @@ export function webSiteJsonLd(site: string) {
     name: SITE_NAME,
     url: site,
     description:
-      'Engineering blog by Conrad Rockenhaus: free AGPL open source AI film studio (Vivijure), Cloudflare Workers infrastructure, and self-hosted systems from Skyphusion Labs.',
+      'Engineering blog by Conrad Rockenhaus: free AGPL open source AI film studio (Vivijure), Cloudflare Workers infrastructure, and self-hosted systems from Skyphusion Labs. Public Michigan court record at rockenhaus.net.',
     author: {
       '@type': 'Person',
       name: AUTHOR_NAME,
@@ -180,6 +185,8 @@ export function personJsonLd(site: string) {
     name: AUTHOR_NAME,
     email: AUTHOR_EMAIL,
     url: `${site}/about/`,
+    description:
+      'Conrad Rockenhaus builds open source AI and Cloudflare infrastructure. Public Michigan court record at rockenhaus.net.',
     sameAs: [...SOCIAL_PROFILES, ...PRODUCT_URLS],
     jobTitle: 'Independent developer',
     worksFor: {
