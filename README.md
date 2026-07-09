@@ -1,6 +1,6 @@
 # skyphusion-net
 
-Personal blog at skyphusion.net. Astro 7 site, prerendered to static HTML and served from a Cloudflare Worker, markdown-authored.
+Engineering blog of [Conrad Rockenhaus](https://github.com/skyphusion) at **https://skyphusion.net**. Astro 7 site, prerendered to static HTML and served from a Cloudflare Worker, markdown-authored.
 
 ## Stack
 
@@ -115,6 +115,12 @@ Custom-domain or binding changes go in `wrangler.jsonc`. After editing bindings,
 - **Comments**: Giscus (GitHub Discussions backend) or self-hosted Cactus (Matrix).
 - **Analytics**: Cloudflare Web Analytics (free, privacy-preserving, no JS cookies). Enable in CF dashboard, paste one script tag in BaseLayout.
 - **Newsletter**: Buttondown or Resend, both have generous free tiers.
+
+## Links
+
+- **Live site:** https://skyphusion.net
+- **Skyphusion Labs:** https://skyphusion.org · **Org:** https://github.com/skyphusion-labs
+- **Related:** [vivijure](https://github.com/skyphusion-labs/vivijure), [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid)
 
 ## License
 
