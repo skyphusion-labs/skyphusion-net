@@ -44,7 +44,7 @@ Sending stays on the structured API (or SMTP submission through the relay). Webm
 | Relay: SMTP → HTTPS → `/send` | Relay: inbound ingest, outbound dispatch, SMTP submission |
 | MIT template repo | Operational mailbox under `skyphusion-labs` |
 
-The Go relay still listens on loopback (reference deploy: `127.0.0.1:2525`). Jenkins and Uptime Kuma still email through SMTP locally. The relay now also posts inbound mail to `/ingest` with a transport token, and can dispatch outbound via BYO SMTP when `OUTBOUND_TRANSPORT=relay`.
+The Go relay still listens on loopback (reference deploy: `127.0.0.1:2525`). Gatus, the fleet hosts, and other local apps that only speak SMTP (still RFC 821 from 1982) send through it locally. The relay now also posts inbound mail to `/ingest` with a transport token, and can dispatch outbound via BYO SMTP when `OUTBOUND_TRANSPORT=relay`.
 
 Legacy fallback: if `POSTERN_INGEST_URL` is unset, the relay still posts to `/send` like the old project.
 
