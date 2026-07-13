@@ -22,35 +22,39 @@ const TURNSTILE_SITEKEY = '0x4AAAAAADwUZ5hhCvLDz51Q';
     Example: &ldquo;How does The Hollow Grid federation work?&rdquo; or
     &ldquo;What is Postern?&rdquo;
   </p>
+
+  <link rel="stylesheet" href="/ask-widget.css" />
+
+  <script
+    is:inline
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+  <script
+    is:inline
+    defer
+    src="/ask-widget.js"
+    data-endpoint={SEARCH_ENDPOINT}
+    data-target="#blog-ask"
+    data-label="Search the blog"
+    data-placeholder="Ask about a post, project, or design decision"
+    data-sitekey={TURNSTILE_SITEKEY}
+  ></script>
+
+  <style>
+    .lede {
+      color: var(--muted);
+      margin-top: -0.5rem;
+    }
+    .hint {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+    }
+    .muted { color: var(--muted); }
+    .vjask-turnstile {
+      margin-top: 0.5rem;
+      min-height: 65px;
+    }
+  </style>
 </BaseLayout>
-
-<link rel="stylesheet" href="/ask-widget.css" />
-
-<script
-  is:inline
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-  async
-  defer
-></script>
-<script
-  is:inline
-  defer
-  src="/ask-widget.js"
-  data-endpoint={SEARCH_ENDPOINT}
-  data-target="#blog-ask"
-  data-label="Search the blog"
-  data-placeholder="Ask about a post, project, or design decision"
-  data-sitekey={TURNSTILE_SITEKEY}
-></script>
-
-<style>
-  .lede {
-    color: var(--muted);
-    margin-top: -0.5rem;
-  }
-  .hint {
-    margin-top: 2rem;
-    font-size: 0.875rem;
-  }
-  .muted { color: var(--muted); }
-</style>

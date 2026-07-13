@@ -76,3 +76,7 @@
 .vjask-sources li {
   font-family: inherit;
 }
+.vjask-turnstile {
+  margin-top: 0.5rem;
+  min-height: 65px;
+}
