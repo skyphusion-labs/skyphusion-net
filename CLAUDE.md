@@ -27,9 +27,10 @@ npm run generate-types   # wrangler types (regenerates the gitignored worker-con
 Vitest) that asserts the homepage and a recent post render 200; it fetches `http://localhost:4321`,
 so it needs a server already running (`npm run dev`, or the `astro preview` the coverage workflow
 starts). CI is **GitHub Actions** on GitHub-hosted `ubuntu-latest` (public repo, fork-safe): push/PR
-typecheck (`typecheck.yml`), build + `wrangler deploy` on `main` (`ci.yml`), and the Vitest coverage
-run against a live preview server (`code-coverage-ts.yml`). GitHub Actions is the entire CI/CD
-pipeline (`ci.yml` builds and runs `wrangler deploy` on `main`); there is no other build system.
+typecheck (`typecheck.yml`), build + `wrangler deploy` on `main` (`ci.yml`), Vitest coverage
+(`code-coverage-ts.yml`), and `corpus-notify.yml` (dispatches search-mcp `corpus-sync` on merge to
+`main`; not a required check). GitHub Actions is the entire CI/CD pipeline; there is no other build
+system.
 
 ## Architecture
 
@@ -44,11 +45,23 @@ pipeline (`ci.yml` builds and runs `wrangler deploy` on `main`); there is no oth
   and `blog/tags/`.
 - **Layout**: `src/layouts/BaseLayout.astro` holds the header, footer, global styles, and the
   `:root` CSS variables (`--bg`, `--fg`, `--accent`, `--border`, `--muted`, `--code-bg`) that all
-  pages theme from; `AboutLayout.astro` is the about page shell.
+  pages theme from; `AboutLayout.astro` is the about page shell. Umami analytics loads here
+  (`analytics.skyphusion.org`). Nav includes `/search/`.
+- **Comments**: `src/components/Giscus.astro` on post pages; config in `src/config/giscus.ts`
+  (GitHub Discussions on `skyphusion-labs/skyphusion-net`, `pathname` mapping).
+- **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp.
+  Browser POSTs to `https://search.vivijure.com/ask` (query Worker → `skyphusion-public` AI Search).
+  Turnstile gate; blog Origin gets a blog-tuned system prompt on the Worker. This repo is in the
+  search-mcp corpus (`SKYPHUSION_TARGETS_JSON`); `.github/workflows/corpus-notify.yml` dispatches
+  `corpus-sync` on merge to `main` so public and internal indexes refresh.
+- **Middleware** (`src/middleware.ts`): `www.skyphusion.net` → apex 301; `/blog/cf-email-relay` →
+  `/blog/postern/` 301.
+- **Related posts**: `src/lib/posts.ts` scores tag overlap; used on `[...slug].astro`.
 - **Feeds + SEO**: `src/pages/rss.xml.js` builds RSS from the same collection; `@astrojs/sitemap`
   auto-generates the sitemap at build, with per-post `lastmod` injected from frontmatter via
   `scripts/post-lastmod.mjs` (the content collection is not available at config time, so lastmod is
-  parsed from the markdown directly). `src/lib/seo.ts` centralizes SEO helpers.
+  parsed from the markdown directly). `src/lib/seo.ts` centralizes SEO helpers (JSON-LD, OG/Twitter,
+  canonical URLs, tag paths). `public/robots.txt` declares Content Signals (`search=yes,ai-train=yes`).
 - **Deploy is Workers, not Pages.** `astro.config.mjs` uses the `@astrojs/cloudflare` v14 SSR adapter;
   `wrangler.jsonc` defines the Worker (`main: @astrojs/cloudflare/entrypoints/server`). At build time
   the adapter writes a merged config to `dist/client/wrangler.json` and serves prerendered assets from

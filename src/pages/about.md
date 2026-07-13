@@ -31,7 +31,16 @@ Skyphusion Labs is not just me. Each collaborator has their own GitHub profile a
 
 ## What I run
 
-I operate my own infrastructure end to end, because owning the whole stack is the point: a fleet of Linux servers (five dedicated CPU, one dedicated GPU), cloud VMs wired through infrastructure-as-code, Cloudflare Tunnels for inbound, and nftables on the door.
+I operate my own infrastructure end to end, because owning the whole stack is the point. Skyphusion Labs is not a side project that fits on one box; the products we ship need real capacity behind them.
+
+Today that looks like:
+
+- **Six dedicated servers** for CPU work (crew boxes, controllers, mail edge, DNS, CI runners, and the long-running services that do not belong on serverless)
+- **One dedicated GPU server** for local render dev, conformance gates, and iron we own outright
+- **Four cloud instances** (bastions, mesh connectors, and the co-located VMs that wire the fleet to the public internet)
+- **Thirty GPU serverless workers** on RunPod for burst render and inference without keeping high-end silicon hot at idle
+
+Everything is wired through infrastructure-as-code where it can be: Cloudflare Tunnels for inbound, nftables on the door, GitHub Actions for CI, and chezmoi for the configs that have to survive a rebuild.
 
 The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` is the lab's front door. My public Michigan court record lives at [rockenhaus.net](https://rockenhaus.net) (also [litigation.rockenhaus.net](https://litigation.rockenhaus.net)).
 
@@ -52,7 +61,7 @@ The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` i
 
 ## Tools of choice
 
-Fedora Linux as a daily driver. Cloudflare Workers as a deployment platform. Self-hosting over SaaS wherever it makes sense. Node managed through nvm, configs kept honest, and a strong preference for understanding a system rather than trusting it.
+macOS as a daily driver. Cloudflare Workers as a deployment platform. Self-hosting over SaaS wherever it makes sense. Node managed through nvm, configs kept honest, and a strong preference for understanding a system rather than trusting it.
 
 ## Service
 
