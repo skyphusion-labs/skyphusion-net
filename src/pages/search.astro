@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const SEARCH_ENDPOINT = 'https://search.vivijure.com/ask';
+const TURNSTILE_SITEKEY = '0x4AAAAAADwUZ5hhCvLDz51Q';
+---
+
+<BaseLayout
+  title="Search, skyphusion.net"
+  description="Search Conrad Rockenhaus's engineering blog with Cloudflare AI Search."
+>
+  <h1>Search</h1>
+  <p class="lede">
+    Ask a question about posts, projects, and architecture notes on this blog.
+    Answers stream from <a href="https://github.com/skyphusion-labs/search-mcp">search-mcp</a>
+    over Cloudflare AI Search; the corpus reindexes when this repo merges to main.
+  </p>
+
+  <div id="blog-ask"></div>
+
+  <p class="hint muted">
+    Example: &ldquo;How does The Hollow Grid federation work?&rdquo; or
+    &ldquo;What is Postern?&rdquo;
+  </p>
+</BaseLayout>
+
+<link rel="stylesheet" href="/ask-widget.css" />
+
+<script
+  is:inline
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+></script>
+<script
+  is:inline
+  defer
+  src="/ask-widget.js"
+  data-endpoint={SEARCH_ENDPOINT}
+  data-target="#blog-ask"
+  data-label="Search the blog"
+  data-placeholder="Ask about a post, project, or design decision"
+  data-sitekey={TURNSTILE_SITEKEY}
+></script>
+
+<style>
+  .lede {
+    color: var(--muted);
+    margin-top: -0.5rem;
+  }
+  .hint {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+  }
+  .muted { color: var(--muted); }
+</style>

@@ -111,7 +111,7 @@ Custom-domain or binding changes go in `wrangler.jsonc`. After editing bindings,
 
 ## Common adds (when you want them)
 
-- **Search**: Cloudflare Workers + Pagefind, or use a simple JSON index built at build time.
+- **Search**: Cloudflare AI Search via [search-mcp](https://github.com/skyphusion-labs/search-mcp) (`/search/` page, corpus sync on merge to `main`).
 - **Comments**: Giscus (GitHub Discussions backend) or self-hosted Cactus (Matrix).
 - **Analytics**: Cloudflare Web Analytics (free, privacy-preserving, no JS cookies). Enable in CF dashboard, paste one script tag in BaseLayout.
 - **Newsletter**: Buttondown or Resend, both have generous free tiers.
