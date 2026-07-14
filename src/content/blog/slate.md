@@ -9,7 +9,7 @@ draft: false
 
 Every film in the Vivijure stack starts as a conversation. **Slate** is the Discord side of that: a collaborative screenwriter assistant that lives in channel with your crew, keeps a machine-readable storyboard brief in the background, and hands the finished bundle to [Vivijure](https://github.com/skyphusion-labs/vivijure) when you say ship it.
 
-Slate does not render anything. It does not own GPU logic. The [Vivijure studio](https://vivijure.skyphusion.org/welcome) is the single source of truth from bundle assembly through finished film delivery back to the channel.
+Slate does not render anything. It does not own GPU logic. The [Vivijure studio](https://demo.vivijure.com) is the single source of truth from bundle assembly through finished film delivery back to the channel.
 
 ## What it does in channel
 
