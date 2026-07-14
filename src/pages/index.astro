@@ -6,7 +6,7 @@ import { webSiteJsonLd } from '../lib/seo';
 const site = Astro.site?.href ?? 'https://skyphusion.net';
 
 // Featured post slug. Set to null to hide the Featured section entirely.
-const FEATURED_SLUG: string | null = 'vivijure-talking-character';
+const FEATURED_SLUG: string | null = 'vivijure-run-anywhere';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -59,7 +59,7 @@ const posts = allPosts
         <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
       </p>
       <p class="featured-summary">
-        Vivijure Speaks: a talking character rendered through the studio UI, lip-synced on a self-hosted GPU module, with three orchestration bugs fixed before any user hit them.
+        The Vivijure control panel is no longer Cloudflare-only: run it on Workers, on a home box, or on any cloud server with Docker. Same studio API, shared core, agents via MCP.
       </p>
     </section>
   )}
