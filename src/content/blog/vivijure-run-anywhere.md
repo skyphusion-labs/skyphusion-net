@@ -56,7 +56,7 @@ This is still a single-operator trust model. Keep it on a network you control. T
 
 If you want the edge path, that is [vivijure-cf](https://github.com/skyphusion-labs/vivijure-cf). It is the Workers host: D1, R2, service-bound module workers, the studio UI under `public/`, and the guided deploy script. It also consumes `@skyphusion-labs/vivijure-core` at `^0.9.5`, same as the local host. Recent work there includes direct core imports (no shim layer), MCP consumed from the extracted package, and a `CORE_ONLY_DEPLOY` switch so you can redeploy the control plane without touching an independently managed module fleet.
 
-My live demo still sits at [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome). Cloudflare remains a great door. It is just no longer the only door.
+My live demo still sits at [demo.vivijure.com](https://demo.vivijure.com). Cloudflare remains a great door. It is just no longer the only door.
 
 ## The rest of the constellation did not move
 
@@ -102,6 +102,6 @@ There is still rough edge. Vivijure is not a polished public release yet. Standi
 - Self-hosted host: [vivijure-local](https://github.com/skyphusion-labs/vivijure-local) ([quickstart](https://github.com/skyphusion-labs/vivijure-local/blob/main/docs/quickstart.md))
 - Shared core: [vivijure-core](https://github.com/skyphusion-labs/vivijure-core)
 - Agent MCP: [vivijure-mcp](https://github.com/skyphusion-labs/vivijure-mcp)
-- Live demo: [vivijure.skyphusion.org/welcome](https://vivijure.skyphusion.org/welcome)
+- Live demo: [demo.vivijure.com](https://demo.vivijure.com)
 
 Everything above is free software under AGPL-3.0, built by me, Conrad Rockenhaus, with the [Skyphusion Labs](https://skyphusion.org) crew. The studio was always meant to be yours. The control panel finally got the same memo.

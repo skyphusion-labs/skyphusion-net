@@ -42,7 +42,7 @@ export const PRODUCT_URLS = [
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
   'https://vivijure.com',
-  'https://vivijure.skyphusion.org/welcome',
+  'https://demo.vivijure.com',
   'https://hollow.skyphusion.org',
   'https://dustfall.skyphusion.org',
   'https://common-thread.skyphusion.org',
