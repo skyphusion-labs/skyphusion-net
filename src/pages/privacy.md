@@ -34,6 +34,10 @@ get read) and nothing else.
 - **Self-hosted**, so no analytics vendor receives any of it. There is no third party in this path to
   sell it to, and we do not sell or share it.
 - It is not used to profile or identify individual readers.
+- **How long we keep it: indefinitely, for now.** Umami has no built-in expiry for collected
+  data, and we run no job that prunes it, so these aggregate records sit in our database until
+  we delete them by hand. We would rather tell you that than quote you a tidy retention window
+  we do not actually enforce. If we start pruning, this notice changes with it.
 
 Any content blocker will stop the script from loading. The site works fine without it.
 
