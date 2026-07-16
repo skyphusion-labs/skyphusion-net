@@ -19,6 +19,11 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: deps
+    ignore:
+      # wrangler >=4.111 rejects the legacy_env field that @astrojs/cloudflare
+      # still emits (skyphusion-net#56); drop this once the adapter stops emitting it.
+      - dependency-name: "wrangler"
+        versions: [">=4.111.0"]
     groups:
       vitest-toolchain:
         patterns:
