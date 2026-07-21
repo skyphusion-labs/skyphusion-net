@@ -12,6 +12,7 @@ export const PUBLIC_RECORD_URL = 'https://rockenhaus.net/' as const;
 
 export const SOCIAL_PROFILES = [
   `https://x.com/${X_USERNAME}`,
+  'https://www.linkedin.com/in/skyphusion/',
   'https://facebook.com/skyphusion',
   'https://instagram.com/skyphusion',
   'https://github.com/skyphusion',
