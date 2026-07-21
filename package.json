@@ -1,7 +1,7 @@
 {
   "name": "skyphusion-net",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Engineering blog of Conrad Rockenhaus at skyphusion.net. Astro 7 on Cloudflare Workers.",
   "license": "MIT",
   "private": true,
