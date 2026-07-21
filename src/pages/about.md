@@ -55,6 +55,7 @@ The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` i
 - The code: [github.com/skyphusion-labs](https://github.com/skyphusion-labs)
 - Vivijure demo: [demo.vivijure.com](https://demo.vivijure.com)
 - X: [x.com/skyphusion](https://x.com/skyphusion) (verified)
+- LinkedIn: [linkedin.com/in/skyphusion](https://www.linkedin.com/in/skyphusion/)
 - Facebook: [facebook.com/skyphusion](https://facebook.com/skyphusion) (Meta Verified)
 - Instagram: [instagram.com/skyphusion](https://instagram.com/skyphusion) (Meta Verified)
 - Email: [conrad@skyphusion.org](mailto:conrad@skyphusion.org)
