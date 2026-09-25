@@ -28,10 +28,10 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.2.0",
+    "@astrojs/cloudflare": "^14.3.3",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "7.2.8"
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "7.3.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
