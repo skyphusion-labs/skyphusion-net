@@ -36,9 +36,9 @@
     // the DOM API below so attribute values are never concatenated into innerHTML.
     root.innerHTML =
       '<form class="vjask-form">' +
-      '  <label class="vjask-label" for="vjask-inpuT"></label>' +
+      '  <label class="vjask-label" for="vjask-input"></label>' +
       '  <div class="vjask-row">' +
-      '    <input id="vjask-inpuT" class="vjask-input" type="text" autocomplete="off" maxlength="2000" />' +
+      '    <input id="vjask-input" class="vjask-input" type="text" autocomplete="off" maxlength="2000" />' +
       '    <button class="vjask-btn" type="submit">Ask</button>' +
       "  </div>" +
       (sitekey ? '  <div class="vjask-turnstile-slot"></div>' : "") +
@@ -47,7 +47,7 @@
       "</form>";
 
     var form = root.querySelector(".vjask-form");
-    var input = root.querySelector(".vjask-inpuT");
+    var input = root.querySelector(".vjask-input");
     var btn = root.querySelector(".vjask-btn");
     var answer = root.querySelector(".vjask-answer");
     var sources = root.querySelector(".vjask-sources");
