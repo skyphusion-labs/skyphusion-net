@@ -72,6 +72,28 @@ Internal agents use the separate MCP Worker (`search-internal.vivijure.com`) and
 
 Operator detail: [search-mcp/docs/skyphusion/OPERATOR.md](https://github.com/skyphusion-labs/search-mcp/blob/main/docs/skyphusion/OPERATOR.md).
 
+#### Ask widget: pinned copy and drift check
+
+`public/ask-widget.js` is a copy of the canonical widget in
+[`@skyphusion/search-mcp`](https://github.com/skyphusion-labs/search-mcp) (`public/ask-widget.js`),
+never hand-edited. The version it tracks is declared in `scripts/ask-widget.canonical.json`. The
+`ask-widget-drift` CI job runs `node scripts/check-ask-widget.mjs`, which fetches that exact version
+from the npm registry and fails unless the copy equals it plus the ONE declared divergence in
+`scripts/ask-widget.divergence.diff`, and also fails if the declared version does not exist.
+
+The declared divergence is the Turnstile mount only: the copy calls `turnstile.render()` explicitly
+(polling up to 15s for a late-loading script, resetting by widget id) for the dynamically injected
+slot (2080c22), where the canonical emits a `cf-turnstile` div and relies on implicit render. Site text is configured by `data-*` attributes in
+`src/pages/search.astro`. `ask-widget.css` is site theming and is not checked. The diff file is the
+whole waiver: it stays small and any other change to the copy fails CI.
+
+To bump: set `version` in `scripts/ask-widget.canonical.json`; refresh the copy with
+`node scripts/check-ask-widget.mjs --fetch > public/ask-widget.js`; re-apply the divergence with
+`patch public/ask-widget.js scripts/ask-widget.divergence.diff` (if it no longer applies, redo the
+Turnstile edit by hand); regenerate the diff with
+`node scripts/check-ask-widget.mjs --diff > scripts/ask-widget.divergence.diff`; run Vitest; commit
+all together. Fix widget bugs upstream in search-mcp, release, then bump here.
+
 ### Comments (Giscus)
 
 Post pages include `<Giscus />`. Configuration is in `src/config/giscus.ts` (repo, category IDs, `pathname` mapping, `noborder_dark` theme). Requires GitHub Discussions on `skyphusion-labs/skyphusion-net` and the [Giscus GitHub App](https://github.com/apps/giscus) installed on that repo.
@@ -166,6 +188,7 @@ Set `draft: true` to exclude a post from build, listings, RSS, and sitemap.
 | Workflow | Trigger | Role |
 | --- | --- | --- |
 | `ci.yml` | PR / push | typecheck, build, Vitest smoke; **deploy on push to `main`** |
+| `ci.yml` job `ask-widget-drift` | PR / push | `public/ask-widget.js` matches the declared `@skyphusion/search-mcp` version (see Search) |
 | `coverage.yml` | PR / push | the org ruleset's `coverage` check context |
 | `corpus-notify.yml` | push to `main` | Dispatches `corpus-sync` on search-mcp (not a merge gate) |
 
@@ -178,6 +201,7 @@ skyphusion-net/
 ├── astro.config.mjs              # site URL, sitemap, Shiki, Cloudflare adapter
 ├── wrangler.jsonc                # Worker name, ASSETS binding, custom domains
 ├── scripts/post-lastmod.mjs      # sitemap lastmod from markdown frontmatter
+├── scripts/check-ask-widget.mjs  # drift check: ask-widget copy vs pinned search-mcp version
 ├── public/
 │   ├── ask-widget.{js,css}       # search-mcp embed (vanilla, no build step)
 │   ├── favicon.svg, og-default.svg, robots.txt

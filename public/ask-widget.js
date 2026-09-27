@@ -16,6 +16,12 @@
   var label = script.getAttribute("data-label") || "Ask";
   var placeholder = script.getAttribute("data-placeholder") || "Ask a question about the docs";
   var sitekey = script.getAttribute("data-sitekey") || "";
+  // Optional corpus manifest: maps an R2 object key to a human title, a URL,
+  // and a page number, so sources render as citations instead of raw keys.
+  var manifestUrl = script.getAttribute("data-manifest") || "";
+  var emptyText =
+    script.getAttribute("data-empty-text") ||
+    "Nothing in the indexed corpus addresses that.";
 
   function ready(fn) {
     if (document.readyState !== "loading") fn();
@@ -92,6 +98,97 @@
       }
     }
 
+
+    // ---- corpus manifest -------------------------------------------------
+    //
+    // Without a manifest the widget can only show the R2 object key, which is
+    // an implementation detail ("repo/docs/DEPLOY.md"). With one it can show
+    // what a reader actually needs: the document title, a link, and a page.
+    //
+    // Entries are matched by exact key first, then by SUFFIX. Suffix matching
+    // matters because the sync prefixes every object with its repo name, so the
+    // key in R2 is "<repo>/<path>" while a corpus producer naturally writes its
+    // manifest in terms of its own paths. Suffix matching lets the producer stay
+    // ignorant of how the sync namespaces things.
+    var manifest = null;
+    var manifestIndex = null;
+
+    function indexManifest(data) {
+      var entries = [];
+      if (Array.isArray(data)) entries = data;
+      else if (data && Array.isArray(data.pages)) entries = data.pages;
+      else if (data && Array.isArray(data.objects)) entries = data.objects;
+      var byKey = {};
+      entries.forEach(function (e) {
+        if (e && typeof e.key === "string") byKey[e.key] = e;
+      });
+      return { byKey: byKey, entries: entries };
+    }
+
+    function loadManifest() {
+      if (!manifestUrl) return Promise.resolve(null);
+      if (manifest) return Promise.resolve(manifest);
+      return fetch(manifestUrl)
+        .then(function (r) {
+          return r.ok ? r.json() : null;
+        })
+        .then(function (data) {
+          if (!data) return null;
+          manifest = data;
+          manifestIndex = indexManifest(data);
+          return data;
+        })
+        .catch(function () {
+          // A missing or broken manifest must not break answers. Degrade to
+          // showing raw keys rather than failing the request.
+          return null;
+        });
+    }
+
+    function lookup(key) {
+      if (!manifestIndex) return null;
+      if (manifestIndex.byKey[key]) return manifestIndex.byKey[key];
+      for (var i = 0; i < manifestIndex.entries.length; i++) {
+        var e = manifestIndex.entries[i];
+        if (e && typeof e.key === "string" && key.indexOf(e.key) >= 0) {
+          var at = key.length - e.key.length;
+          if (at >= 0 && key.slice(at) === e.key) return e;
+        }
+      }
+      return null;
+    }
+
+    function citationNode(key) {
+      var entry = lookup(key);
+      var li = document.createElement("li");
+      if (!entry) {
+        li.textContent = key;
+        return li;
+      }
+      var label = entry.title || key;
+      if (entry.url) {
+        var a = document.createElement("a");
+        a.setAttribute("href", entry.url);
+        a.textContent = label;
+        li.appendChild(a);
+      } else {
+        li.appendChild(document.createTextNode(label));
+      }
+      var bits = [];
+      if (entry.page) {
+        bits.push("page " + entry.page + (entry.total_pages ? " of " + entry.total_pages : ""));
+      }
+      if (entry.case_number) bits.push("case " + entry.case_number);
+      if (entry.filed_date) bits.push("filed " + entry.filed_date);
+      if (bits.length) {
+        var span = document.createElement("span");
+        span.className = "vjask-source-meta";
+        span.textContent = " (" + bits.join(", ") + ")";
+        li.appendChild(span);
+      }
+      return li;
+    }
+
     function renderSources(chunks) {
       var seen = {};
       var items = [];
@@ -103,51 +200,64 @@
         }
       });
       if (!items.length) return;
-      sources.innerHTML = "<li class='vjask-sources-title'>Sources</li>" +
-        items.map(function (k) {
-          return "<li>" + k.replace(/[&<>]/g, function (ch) {
-            return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[ch];
-          }) + "</li>";
-        }).join("");
+      sawSources = true;
+      // Built via the DOM API rather than innerHTML: entries come from the
+      // corpus manifest, and concatenating them into markup would be an
+      // injection path through a data file.
+      sources.textContent = "";
+      var title = document.createElement("li");
+      title.className = "vjask-sources-title";
+      title.textContent = "Sources";
+      sources.appendChild(title);
+      items.forEach(function (k) {
+        sources.appendChild(citationNode(k));
+      });
       sources.hidden = false;
     }
 
     function handleEvent(block) {
-      var isChunks = /(^|\n)event:\s*chunks/.test(block);
-      var isError = /(^|\n)event:\s*error/.test(block);
-      // SSE: an event may carry several data: lines; the payload is them joined by "\n".
-      var lines = block.split("\n").filter(function (l) {
-        return l.indexOf("data:") === 0;
+      // One SSE event block: an optional "event:" name plus one or more "data:" lines,
+      // which the SSE spec joins with "\n". An error event throws so the request's
+      // catch shows it: an upstream failure must never read as an empty corpus.
+      var name = "";
+      var lines = [];
+      block.split("\n").forEach(function (line) {
+        var f = line.match(/^(event|data):\s?(.*)$/);
+        if (!f) return;
+        if (f[1] === "event") name = f[2].trim();
+        else lines.push(f[2]);
       });
       if (!lines.length) {
-        if (isError) throw new Error("stream error");
+        if (name === "error") throw new Error("stream error");
         return;
       }
-      var payload = lines
-        .map(function (l) {
-          return l.replace(/^data:\s?/, "");
-        })
-        .join("\n")
-        .trim();
+      var payload = lines.join("\n").trim();
       if (payload === "[DONE]") return;
       var data;
       try {
         data = JSON.parse(payload);
       } catch (e) {
-        if (isError) throw new Error("stream error");
+        if (name === "error") throw new Error("stream error");
         return;
       }
-      if (isError || (data && data.error)) {
-        var e = data && data.error;
-        throw new Error((e && e.message) || (typeof e === "string" && e) || "stream error");
+      if (name === "error" || (data && data.error)) {
+        var err = data && data.error;
+        throw new Error(
+          (typeof err === "string" && err) ||
+            (err && err.message) ||
+            (data && data.message) ||
+            "stream error",
+        );
       }
-      if (isChunks) {
+      if (name === "chunks") {
         renderSources(data);
         return;
       }
       var delta = data && data.choices && data.choices[0] && data.choices[0].delta;
       if (delta && delta.content) answer.textContent += delta.content;
     }
+
+    var sawSources = false;
 
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
@@ -156,8 +266,10 @@
       btn.disabled = true;
       answer.textContent = "";
       sources.hidden = true;
-      sources.innerHTML = "";
+      sources.textContent = "";
+      sawSources = false;
 
+      loadManifest().then(function () {
       fetch(endpoint, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -180,10 +292,9 @@
           function pump() {
             return reader.read().then(function (r) {
               if (r.done) {
-                // Flush a final event that arrived without a trailing blank line, and never
-                // finish on a blank answer: a stream that ends with no content is an error.
+                // Flush what is left: the final event may lack its trailing blank line.
+                buf += decoder.decode();
                 if (buf.trim()) handleEvent(buf);
-                if (!answer.textContent.trim()) throw new Error("empty response");
                 return;
               }
               buf += decoder.decode(r.value, { stream: true });
@@ -199,6 +310,12 @@
           answer.textContent = "Sorry, something went wrong (" + err.message + ").";
         })
         .finally(function () {
+          // No retrieved sources means nothing in the corpus matched. Say that
+          // outright rather than leaving a plausible-looking unsourced answer
+          // on screen.
+          if (!sawSources && !answer.textContent.trim()) {
+            answer.textContent = emptyText;
+          }
           btn.disabled = false;
           if (sitekey && window.turnstile && root._vjaskTurnstileWidgetId) {
             try {
@@ -207,6 +324,7 @@
             } catch (e) {}
           }
         });
+      });
     });
   });
 })();
