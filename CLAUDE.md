@@ -27,11 +27,11 @@ npm run generate-types   # wrangler types (regenerates the gitignored worker-con
 
 `npm run typecheck` (`astro check`) is the gate. There is a small smoke suite (`blog.test.ts`,
 Vitest) that asserts the homepage and a recent post render 200; it fetches `http://localhost:4321`,
-so it needs a server already running (`npm run dev`, or the `astro preview` the coverage workflow
+so it needs a server already running (`npm run dev`, or the static `serve dist/client` that `ci.yml`
 starts). CI is **GitHub Actions** on GitHub-hosted `ubuntu-latest` (public repo, fork-safe): push/PR
-typecheck (`typecheck.yml`), build + `wrangler deploy` on `main` (`ci.yml`), Vitest coverage
-(`code-coverage-ts.yml`), and `corpus-notify.yml` (dispatches search-mcp `corpus-sync` on merge to
-`main`; not a required check). GitHub Actions is the entire CI/CD pipeline; there is no other build
+typecheck, build and Vitest, plus `wrangler deploy` on `main` (`ci.yml`); `coverage.yml` (the org
+ruleset's `coverage` check context); and `corpus-notify.yml` (dispatches search-mcp `corpus-sync` on
+merge to `main`; not a required check). GitHub Actions is the entire CI/CD pipeline; there is no other build
 system.
 
 ## Architecture
