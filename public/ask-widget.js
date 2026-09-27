@@ -114,15 +114,32 @@
 
     function handleEvent(block) {
       var isChunks = /(^|\n)event:\s*chunks/.test(block);
-      var m = block.match(/(^|\n)data:\s?(.*)$/s);
-      if (!m) return;
-      var payload = m[2].trim();
+      var isError = /(^|\n)event:\s*error/.test(block);
+      // SSE: an event may carry several data: lines; the payload is them joined by "\n".
+      var lines = block.split("\n").filter(function (l) {
+        return l.indexOf("data:") === 0;
+      });
+      if (!lines.length) {
+        if (isError) throw new Error("stream error");
+        return;
+      }
+      var payload = lines
+        .map(function (l) {
+          return l.replace(/^data:\s?/, "");
+        })
+        .join("\n")
+        .trim();
       if (payload === "[DONE]") return;
       var data;
       try {
         data = JSON.parse(payload);
       } catch (e) {
+        if (isError) throw new Error("stream error");
         return;
+      }
+      if (isError || (data && data.error)) {
+        var e = data && data.error;
+        throw new Error((e && e.message) || (typeof e === "string" && e) || "stream error");
       }
       if (isChunks) {
         renderSources(data);
@@ -162,7 +179,13 @@
           var buf = "";
           function pump() {
             return reader.read().then(function (r) {
-              if (r.done) return;
+              if (r.done) {
+                // Flush a final event that arrived without a trailing blank line, and never
+                // finish on a blank answer: a stream that ends with no content is an error.
+                if (buf.trim()) handleEvent(buf);
+                if (!answer.textContent.trim()) throw new Error("empty response");
+                return;
+              }
               buf += decoder.decode(r.value, { stream: true });
               var parts = buf.split("\n\n");
               buf = parts.pop();
