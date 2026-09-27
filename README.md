@@ -165,9 +165,8 @@ Set `draft: true` to exclude a post from build, listings, RSS, and sitemap.
 
 | Workflow | Trigger | Role |
 | --- | --- | --- |
-| `typecheck.yml` | PR / push | `astro check` (required gate, fork-safe) |
 | `ci.yml` | PR / push | typecheck, build, Vitest smoke; **deploy on push to `main`** |
-| `code-coverage-ts.yml` | PR / push | Vitest coverage against preview server |
+| `coverage.yml` | PR / push | the org ruleset's `coverage` check context |
 | `corpus-notify.yml` | push to `main` | Dispatches `corpus-sync` on search-mcp (not a merge gate) |
 
 Deploy secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` on the repo. `account_id` is never hardcoded in `wrangler.jsonc`.
