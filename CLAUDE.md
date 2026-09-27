@@ -51,7 +51,10 @@ system.
   (`analytics.skyphusion.org`). Nav includes `/search/`.
 - **Comments**: `src/components/Giscus.astro` on post pages; config in `src/config/giscus.ts`
   (GitHub Discussions on `skyphusion-labs/skyphusion-net`, `pathname` mapping).
-- **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp.
+- **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp. The JS is a
+  pinned copy: never hand-edit it; `scripts/ask-widget.canonical.json` declares the tracked
+  `@skyphusion/search-mcp` version and the `ask-widget-drift` CI job enforces it (README, "Ask widget:
+  pinned copy and drift check", has the bump procedure and the one declared Turnstile divergence).
   Browser POSTs to `https://search.vivijure.com/ask` (query Worker → `skyphusion-public` AI Search).
   Turnstile gate; blog Origin gets a blog-tuned system prompt on the Worker. This repo is in the
   search-mcp corpus (`SKYPHUSION_TARGETS_JSON`); `.github/workflows/corpus-notify.yml` dispatches
