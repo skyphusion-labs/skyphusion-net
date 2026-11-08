@@ -13,6 +13,10 @@
 - Org code: https://github.com/skyphusion-labs
 
 ## Key posts
+- WordPress on Cloudflare (matrix and Workers for Platforms framework): https://skyphusion.net/blog/wordpress-on-cloudflare/
+- Skyphusion AI for WordPress (v0.6.3): https://skyphusion.net/blog/skyphusion-ai/
+- Zaraz Consent must-use drop-in (v0.1.0): https://skyphusion.net/blog/zaraz-consent/
+- Postern v1.7.0 read scope: https://skyphusion.net/blog/postern-v1-7/
 - Prism 1.0 product line: https://skyphusion.net/blog/prism-v1/
 - Postern v1.4.1 identity-bound credentials: https://skyphusion.net/blog/postern-identity-bound/
 - Prism public signup / BYOK: https://skyphusion.net/blog/prism-public/

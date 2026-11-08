@@ -2,6 +2,7 @@
 title: "Postern v1.4.1: each agent reads and sends as itself"
 description: "Postern is at v1.4.1. v1.4.0 bound read and send to a person, not a shared mailbox god-token; v1.4.1 fixes the webmail attachment-send race. Conrad Rockenhaus covers identity-bound registry credentials, MCP multi-person setup, the projection census that keeps IMAP honest, and what still stays estate-wide on purpose."
 pubDate: 2026-08-04
+updatedDate: 2026-11-08
 tags: ["cloudflare", "email", "smtp", "mcp", "side-project"]
 draft: false
 ---
@@ -78,6 +79,8 @@ Live read-only demo: [demo.posternonline.com](https://demo.posternonline.com). M
 
 Own install: [DEPLOY.md](https://github.com/skyphusion-labs/postern/blob/main/DEPLOY.md) and the acceptance smoke in `inbound/smoke.mjs`.
 
-Code: [github.com/skyphusion-labs/postern](https://github.com/skyphusion-labs/postern). Current release: [v1.4.1](https://github.com/skyphusion-labs/postern/releases/tag/v1.4.1) (identity line: [v1.4.0](https://github.com/skyphusion-labs/postern/releases/tag/v1.4.0)).
+Code: [github.com/skyphusion-labs/postern](https://github.com/skyphusion-labs/postern). This post covers the identity line at [v1.4.1](https://github.com/skyphusion-labs/postern/releases/tag/v1.4.1) ([v1.4.0](https://github.com/skyphusion-labs/postern/releases/tag/v1.4.0)).
+
+*Update, November 2026:* the release is [v1.7.0](https://github.com/skyphusion-labs/postern/releases/tag/v1.7.0). Organize became its own scope in v1.5.0, thread reads are paged in v1.6.0, and a read-scoped agent credential reads the deployment mailbox. That default is the subject of [Postern v1.7.0](/blog/postern-v1-7/).
 
 Earlier posts: [Postern introduction](/blog/postern/), [v1.0.0 milestone](/blog/postern-v1/).

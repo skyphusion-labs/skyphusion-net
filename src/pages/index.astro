@@ -6,7 +6,7 @@ import { webSiteJsonLd } from '../lib/seo';
 const site = Astro.site?.href ?? 'https://skyphusion.net';
 
 // Featured post slug. Set to null to hide the Featured section entirely.
-const FEATURED_SLUG: string | null = 'postern-identity-bound';
+const FEATURED_SLUG: string | null = 'wordpress-on-cloudflare';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -48,7 +48,7 @@ const posts = allPosts
     <p>
       <a href="/projects/">View all projects</a>
       <span class="sep">/</span>
-      multimodal AI, film studio, Discord roadies, OSINT attribution, federated MUD, searchable email on Workers.
+      multimodal AI, film studio, WordPress on Cloudflare, Discord roadies, OSINT attribution, federated MUD, searchable email on Workers.
     </p>
   </section>
 
@@ -59,7 +59,7 @@ const posts = allPosts
         <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
       </p>
       <p class="featured-summary">
-        Postern is at v1.4.1. Each agent and human gets a credential bound to one identity for read and send, not a shared mailbox god-token. Projection census keeps the doors honest.
+        A measured matrix of WordPress and WooCommerce on Cloudflare, then a Workers for Platforms framework: content sites in a Durable Object, stores that take orders in a Container, provisioned by one command.
       </p>
     </section>
   )}

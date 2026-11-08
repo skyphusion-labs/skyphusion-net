@@ -188,11 +188,35 @@ export const PROJECTS: Project[] = [
   {
     name: 'Postern',
     description:
-      'Self-hostable mailbox on Cloudflare: send and receive, searchable storage, webmail and IMAP, plus a Go SMTP relay for legacy callers. Identity-bound credentials so agents send and read as themselves (v1.4.1).',
+      'Self-hostable mailbox on Cloudflare: send and receive, searchable storage, webmail and IMAP, plus a Go SMTP relay for legacy callers. v1.7.0 pages thread reads, splits organize into its own scope, and lets a read-scoped agent credential read the deployment mailbox.',
     repo: 'https://github.com/skyphusion-labs/postern',
     demo: 'https://demo.posternonline.com/webmail',
-    post: '/blog/postern-identity-bound/',
+    post: '/blog/postern-v1-7/',
     tags: ['cloudflare', 'email', 'smtp', 'go'],
+  },
+  {
+    name: 'Skyphusion AI',
+    description:
+      'GPL WordPress plugin for Workers AI, AI Gateway, and AI Search on the site owner\'s own Cloudflare account. Visitor search, a WordPress AI Client provider, and optional assistant jobs. Plugin fee is zero (v0.6.3).',
+    repo: 'https://github.com/skyphusion-labs/skyphusion-ai',
+    post: '/blog/skyphusion-ai/',
+    tags: ['cloudflare', 'wordpress', 'woocommerce', 'ai'],
+  },
+  {
+    name: 'Zaraz Consent',
+    description:
+      'GPL must-use WordPress drop-in that reopens the Cloudflare Zaraz consent modal and reads the cf_consent cookie. It does not gate scripts. Zaraz can gate only Zaraz tools (v0.1.0).',
+    repo: 'https://github.com/skyphusion-labs/zaraz-consent',
+    post: '/blog/zaraz-consent/',
+    tags: ['cloudflare', 'wordpress'],
+  },
+  {
+    name: 'WordPress on Cloudflare',
+    description:
+      'GPL research matrix and Workers for Platforms framework: many WordPress sites and WooCommerce stores on your own account, provisioned by one command or by a Worker. A cell counts only after a deploy and a test.',
+    repo: 'https://github.com/skyphusion-labs/wordpress-on-cloudflare',
+    post: '/blog/wordpress-on-cloudflare/',
+    tags: ['cloudflare', 'wordpress', 'woocommerce', 'php'],
   },
   {
     name: 'security-audit',
