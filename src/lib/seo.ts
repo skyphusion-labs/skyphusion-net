@@ -1,7 +1,7 @@
 export const SITE_NAME = 'skyphusion.net';
 export const AUTHOR_NAME = 'Conrad Rockenhaus';
 export const AUTHOR_EMAIL = 'conrad@skyphusion.org';
-export const X_USERNAME = 'skyphusion';
+export const X_USERNAME = 'rockrockenhaus';
 export const DEFAULT_OG_IMAGE = '/og-default.png';
 export const DEFAULT_OG_IMAGE_WIDTH = 1200;
 export const DEFAULT_OG_IMAGE_HEIGHT = 630;

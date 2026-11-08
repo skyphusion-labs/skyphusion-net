@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, sep } from 'node:path';
 
 /**
  * Build a pathname → lastmod map from blog markdown frontmatter.
@@ -9,14 +9,20 @@ export function buildPostLastmodMap(contentDir = './src/content/blog') {
   /** @type {Map<string, Date>} */
   const map = new Map();
 
-  for (const file of readdirSync(contentDir)) {
-    if (!file.endsWith('.md')) continue;
+  // The collection glob is **/*.md, so walk subdirectories too; the entry id is the
+  // path under the content dir without the extension.
+  const files = readdirSync(contentDir, { recursive: true })
+    .map(String)
+    .filter((f) => f.endsWith('.md'));
 
+  for (const file of files) {
     const content = readFileSync(join(contentDir, file), 'utf8');
-    const slug = file.replace(/\.md$/, '');
-    const pubMatch = content.match(/^pubDate:\s*(\S+)/m);
-    const updMatch = content.match(/^updatedDate:\s*(\S+)/m);
-    const draftMatch = content.match(/^draft:\s*true/m);
+    const slug = relative('.', file).split(sep).join('/').replace(/\.md$/, '');
+    // Match inside the frontmatter block only, never the post body.
+    const fm = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
+    const pubMatch = fm.match(/^pubDate:\s*(\S+)/m);
+    const updMatch = fm.match(/^updatedDate:\s*(\S+)/m);
+    const draftMatch = fm.match(/^draft:\s*true/m);
 
     if (draftMatch) continue;
 

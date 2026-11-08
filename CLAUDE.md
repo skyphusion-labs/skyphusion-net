@@ -27,11 +27,11 @@ npm run generate-types   # wrangler types (regenerates the gitignored worker-con
 
 `npm run typecheck` (`astro check`) is the gate. There is a small smoke suite (`blog.test.ts`,
 Vitest) that asserts the homepage and a recent post render 200; it fetches `http://localhost:4321`,
-so it needs a server already running (`npm run dev`, or the `astro preview` the coverage workflow
+so it needs a server already running (`npm run dev`, or the static `serve dist/client` that `ci.yml`
 starts). CI is **GitHub Actions** on GitHub-hosted `ubuntu-latest` (public repo, fork-safe): push/PR
-typecheck (`typecheck.yml`), build + `wrangler deploy` on `main` (`ci.yml`), Vitest coverage
-(`code-coverage-ts.yml`), and `corpus-notify.yml` (dispatches search-mcp `corpus-sync` on merge to
-`main`; not a required check). GitHub Actions is the entire CI/CD pipeline; there is no other build
+typecheck, build and Vitest, plus `wrangler deploy` on `main` (`ci.yml`); `coverage.yml` (the org
+ruleset's `coverage` check context); and `corpus-notify.yml` (dispatches search-mcp `corpus-sync` on
+merge to `main`; not a required check). GitHub Actions is the entire CI/CD pipeline; there is no other build
 system.
 
 ## Architecture
@@ -51,7 +51,10 @@ system.
   (`analytics.skyphusion.org`). Nav includes `/search/`.
 - **Comments**: `src/components/Giscus.astro` on post pages; config in `src/config/giscus.ts`
   (GitHub Discussions on `skyphusion-labs/skyphusion-net`, `pathname` mapping).
-- **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp.
+- **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp. The JS is a
+  pinned copy: never hand-edit it; `scripts/ask-widget.canonical.json` declares the tracked
+  `@skyphusion/search-mcp` version and the `ask-widget-drift` CI job enforces it (README, "Ask widget:
+  pinned copy and drift check", has the bump procedure and the one declared Turnstile divergence).
   Browser POSTs to `https://search.vivijure.com/ask` (query Worker → `skyphusion-public` AI Search).
   Turnstile gate; blog Origin gets a blog-tuned system prompt on the Worker. This repo is in the
   search-mcp corpus (`SKYPHUSION_TARGETS_JSON`); `.github/workflows/corpus-notify.yml` dispatches

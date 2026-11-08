@@ -28,23 +28,23 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.2.0",
+    "@astrojs/cloudflare": "^14.4.2",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.0"
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "7.4.2"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@vitest/coverage-istanbul": "^4.1.10",
+    "@astrojs/check": "^0.9.12",
+    "@vitest/coverage-istanbul": "^5.0.5",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10",
-    "wrangler": "~4.110.0"
+    "vitest": "^5.0.2",
+    "wrangler": "~4.141.0"
   },
   "overrides": {
-    "fast-uri": "3.1.5",
+    "fast-uri": "3.1.8",
     "undici": "7.29.0",
-    "js-yaml": "4.3.1",
+    "js-yaml": "4.3.2",
     "yaml": "2.9.0",
-    "sharp": "0.35.3"
+    "sharp": "0.35.4"
   }
 }
