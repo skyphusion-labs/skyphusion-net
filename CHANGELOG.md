@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- **docs(blog):** posts for WordPress on Cloudflare, Skyphusion AI v0.6.3, Zaraz Consent v0.1.0, and Postern v1.7.0. Homepage featured slot is the WordPress post.
+- **docs(blog):** posts for WordPress on Cloudflare, Skyphusion AI v0.6.3, Zaraz Consent v0.1.0, and Postern v1.7.0. Homepage featured slot is the WordPress post. The WordPress post opens with why that project is the one: keep the CMS, leave the LAMP box, scale to zero and serve from the edge.
 
 - **deps:** `astro` 7.4.7 and `@astrojs/cloudflare` 14.4.6. The open Dependabot PR stopped at 7.4.4 and 14.4.3.
 
