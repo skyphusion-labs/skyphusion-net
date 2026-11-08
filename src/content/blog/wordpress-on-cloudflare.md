@@ -1,10 +1,17 @@
 ---
 title: "WordPress on Cloudflare: measure every approach, then provision the one that holds"
-description: "wordpress-on-cloudflare is a GPL-2.0 research matrix and a Workers for Platforms framework. A cell counts only after a real deploy and a test. Content sites run PHP and SQLite in a Durable Object. Stores that take orders run in a Container."
+description: "I like the WordPress CMS and I do not want the LAMP box under it. wordpress-on-cloudflare is the attempt to put that CMS on Cloudflare: scale to zero when idle, edge performance when a page can be cached, measured before it is claimed."
 pubDate: 2026-11-08T20:00:00.000Z
+updatedDate: 2026-11-08T23:30:00.000Z
 tags: ["cloudflare", "wordpress", "woocommerce", "php"]
 draft: false
 ---
+
+WordPress has always had a place with me. I like the CMS: the editor, the plugins, a store or a magazine a person can actually run. What I have never liked is the LAMP backend. A machine that stays on, Apache or nginx, MySQL, and a PHP process sitting there whether anyone is reading or not.
+
+This project is the attempt to keep that CMS and drop that backend. Workers, Durable Objects, Containers, and Workers for Platforms are the first Cloudflare pieces that make the trade real. A content site should scale to zero while it is idle, and a page that can be cached should come from the edge. A WooCommerce store that takes an order still needs a container, because the isolate runs out of memory once a cart becomes a checkout. The CMS stays WordPress either way.
+
+Almost nobody else is working on this. The people building the edge do not care about WordPress, and the people running WordPress are busy keeping the box alive. I care, which is the whole reason the repository exists. This blog is Astro, on purpose. The sites I want someone else to be able to run, with a CMS they already know, are the ones this work is for.
 
 [wordpress-on-cloudflare](https://github.com/skyphusion-labs/wordpress-on-cloudflare) is two things in one GPL-2.0 repository. The first is a matrix of ways to run WordPress, and WooCommerce, on Cloudflare. The second is the framework that matrix produced: many sites on your own Workers for Platforms account, each one provisioned by a command or by a Worker. It is a framework you run. It is a research log. It has no signup and no hosted plan.
 
