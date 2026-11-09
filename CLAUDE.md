@@ -38,7 +38,7 @@ system.
 
 - **Content collection** (`src/content.config.ts`): a `blog` collection via a glob loader over
   `src/content/blog/**/*.md`. The Zod `schema` is the source of truth for frontmatter -- `title`,
-  `description`, `pubDate` (required), plus optional `updatedDate`, `tags[]`, and `draft`. Changing
+  `description`, `pubDate` (required), plus optional `updatedDate`, `tags[]`, `image`, and `draft`. Changing
   allowed frontmatter means editing this schema.
 - **Routing**: `src/pages/blog/[...slug].astro` generates one page per post (`params.slug = post.id`,
   the filename). `getCollection('blog', ({data}) => !data.draft)` is the standard query -- every
@@ -87,9 +87,8 @@ not in listings or RSS).
 
 - **No em-dashes (U+2014) or en-dashes (U+2013) anywhere** (markdown, source, comments). Use commas,
   semicolons, parentheses, or `--`.
-- **Handle / username is `skyphusion`** across all services.
-- **Minimal runtime deps**; Astro + the two official integrations (rss, sitemap) is the whole stack.
-  Justify any new one. `tsconfig.json` extends `astro/tsconfigs/strict`.
+- **Handle / username is `skyphusion`** on GitHub and the other services. X links on this site are `https://x.com/rockrockenhaus` (`src/lib/seo.ts`, `src/pages/about.md`, `src/pages/index.astro`). `x.com/skyphusion` does not resolve.
+- **Minimal runtime deps.** Direct dependencies are `astro`, `@astrojs/cloudflare`, `@astrojs/rss`, and `@astrojs/sitemap` (`package.json`). Justify any new one. `tsconfig.json` extends `astro/tsconfigs/strict`.
 - **Mirror every `wrangler.jsonc` binding in a hand-authored `Env`** if Worker code ever reads
   bindings; runtime types come from `wrangler types` (the generated `worker-configuration.d.ts` is
   gitignored, regenerate with `npm run generate-types`).
