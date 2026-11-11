@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "Privacy, skyphusion.net"
-description: "How skyphusion.net handles data: no analytics, GitHub-backed comments, and a search box that does not keep your questions. We do not want your data."
+description: "How skyphusion.net handles data: no analytics, no comments, and a search box that does not keep your questions. We do not want your data."
 ---
 
 # Privacy
@@ -18,8 +18,8 @@ There is no account here, no sign-up, no newsletter, and no form that asks who y
 blog is anonymous: we set no cookies of our own, and there is no advertising, ad-tech, profiling, or
 third-party tracker on the page.
 
-Two things on this site touch data, and both are described below in full: the comment box and the
-search box. Nothing else does.
+One thing on this site touches data, and it is described below in full: the search box. Nothing
+else does. There is no comment box.
 
 ## Analytics: none
 
@@ -27,27 +27,7 @@ This site loads no analytics script and sets no analytics cookie. Nothing counts
 (It used to load a self-hosted, cookieless Umami script; that service is retired and the script tag
 is gone from every page.)
 
-## 1. Comments (GitHub, and this one leaves our hands)
-
-Blog posts carry a comment box powered by **giscus**. This is the one place where a genuine third
-party is in the path, so be clear-eyed about it:
-
-- The comment box loads a script from **giscus.app** and is backed by **GitHub Discussions** on the
-  public `skyphusion-labs/skyphusion-net` repository.
-- **Commenting requires you to sign in and authorize giscus with your GitHub account.** If you never
-  comment, you never sign in, and no GitHub account is associated with your reading.
-- **Comments you post are public**, permanently, on GitHub. They are a GitHub Discussion, not a
-  private message to us. Your GitHub username and avatar appear next to them.
-- Loading the comment box means **giscus.app and GitHub receive the request** (including your IP
-  address and which post you are reading). That processing is theirs, under **GitHub's** privacy
-  policy, not ours. We receive no comment data separately: your comment lives in GitHub, and we read
-  it there like anyone else.
-- You edit or delete your comments on GitHub, where they live. We cannot delete them for you, and we
-  do not hold a copy to delete.
-
-If you would rather not load giscus at all, block `giscus.app`; the post itself reads normally.
-
-## 2. Search (your question is not kept)
+## Search (your question is not kept)
 
 The [search page](/search/) sends your question to **search.vivijure.com**, a Cloudflare Worker we run
 ([search-mcp](https://github.com/skyphusion-labs/search-mcp), source public). What happens to it:

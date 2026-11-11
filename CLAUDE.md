@@ -50,8 +50,7 @@ system.
   pages theme from; `AboutLayout.astro` is the shell for the markdown pages (about, privacy) and reads their
   frontmatter. No analytics script loads anywhere. Nav includes `/search/`. `scripts/check-links.mjs`
   gates the built site in CI (links, trailing slashes, retired hosts, titles, descriptions).
-- **Comments**: `src/components/Giscus.astro` on post pages; config in `src/config/giscus.ts`
-  (GitHub Discussions on `skyphusion-labs/skyphusion-net`, `pathname` mapping).
+- **Comments**: none. Giscus was removed (#153); `giscus.app` is on the link gate's forbidden list.
 - **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp. The JS is a
   pinned copy: never hand-edit it; `scripts/ask-widget.canonical.json` declares the tracked
   `@skyphusion/search-mcp` version and the `ask-widget-drift` CI job enforces it (README, "Ask widget:

@@ -1,7 +1,7 @@
 // Controls for scripts/check-links.mjs (skyphusion-net#153): the gate must pass a clean page and
 // fail each defect it exists to catch. Pure: no build, no server, no network.
 import { describe, it, expect } from 'vitest';
-import { checkPage, RETIRED_HOSTS } from './scripts/check-links.mjs';
+import { checkPage, RETIRED_HOSTS, FORBIDDEN_HOSTS } from './scripts/check-links.mjs';
 
 const BUILT = new Set(['blog/postern/index.html', 'privacy/index.html', 'rss.xml', 'index.html']);
 const exists = (p: string) => BUILT.has(p);
@@ -36,12 +36,18 @@ describe('check-links', () => {
     }
   });
 
-  it('fails a link to every retired host', () => {
+  it('fails any mention of a retired host, linked or as plain text', () => {
     for (const host of RETIRED_HOSTS) {
-      expect(checkPage('/x/', page(`<a href="https://${host}/a">d</a>`), exists)).toEqual([
-        `/x/: links retired host ${host} (https://${host}/a)`,
-      ]);
+      expect(checkPage('/x/', page(`<a href="https://${host}/a">d</a>`), exists)).toEqual([`/x/: names retired host ${host}`]);
+      expect(checkPage('/x/', page(`<p>Play at ${host} today.</p>`), exists)).toEqual([`/x/: names retired host ${host}`]);
     }
+  });
+
+  it('fails any reference to a forbidden third party, such as the Giscus loader', () => {
+    expect(FORBIDDEN_HOSTS).toContain('giscus.app');
+    expect(checkPage('/x/', page('<script src="https://giscus.app/client.js" async></script>'), exists)).toEqual([
+      '/x/: references forbidden host giscus.app',
+    ]);
   });
 
   it('fails an empty title and a missing description', () => {
