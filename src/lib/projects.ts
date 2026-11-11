@@ -22,7 +22,6 @@ export const PROJECTS: Project[] = [
     description:
       'Metered commercial plane for Prism: enroll, plan entitlements, prepaid balance, rate limits, and OpenAI-shaped doors. Does not store prompts. Native iOS/Android talk here.',
     repo: 'https://github.com/skyphusion-labs/prism-control-plane',
-    demo: 'https://play-proxy.skyphusion.org',
     post: '/blog/prism-v1/',
     tags: ['cloudflare', 'ai', 'llm'],
   },
@@ -47,7 +46,6 @@ export const PROJECTS: Project[] = [
     description:
       'MIT MCP door for the Prism playground: agents get full HTTP /api/* parity (chat, multimodal, RAG, compact, jobs). Session cookie stays on the Worker.',
     repo: 'https://github.com/skyphusion-labs/prism-mcp',
-    demo: 'https://prism-mcp.skyphusion.org',
     post: '/blog/prism-v1/',
     tags: ['cloudflare', 'ai', 'llm', 'mcp'],
   },
@@ -56,7 +54,6 @@ export const PROJECTS: Project[] = [
     description:
       'Self-hosted AI film studio on Cloudflare Workers: planner UI, cast, render orchestration, and a module host. Rent GPU time by the second, run on your own card, call cloud i2v APIs, and keep assembly on CPU containers you host.',
     repo: 'https://github.com/skyphusion-labs/vivijure',
-    demo: 'https://demo.vivijure.com',
     post: '/blog/vivijure-constellation/',
     tags: ['vivijure', 'ai', 'gpu', 'cloudflare', 'runpod', 'diffusion'],
   },
@@ -129,7 +126,6 @@ export const PROJECTS: Project[] = [
     description:
       'Methodology paper plus Workers implementation for sockpuppet attribution from public behavioral signals: archive, extract, reason, export evidence packets.',
     repo: 'https://github.com/skyphusion-labs/common-thread',
-    demo: 'https://common-thread.skyphusion.org',
     post: '/blog/common-thread/',
     tags: ['cloudflare', 'ai', 'osint'],
   },
@@ -147,7 +143,6 @@ export const PROJECTS: Project[] = [
     description:
       'Rust Choir: Go world-server port of The Hollow Grid. Same smoke suite and wire protocol, fleet-hosted at rustchoir.skyphusion.org.',
     repo: 'https://github.com/skyphusion-labs/hollow-grid-go',
-    demo: 'https://rustchoir.skyphusion.org',
     post: '/blog/hollow-grid-ports/',
     tags: ['go', 'mud', 'federation', 'websockets'],
   },
@@ -156,7 +151,6 @@ export const PROJECTS: Project[] = [
     description:
       'Verdigris Spool: Python world-server port of The Hollow Grid. Conformance-green on the shared smoke suite; live at verdigris.skyphusion.org.',
     repo: 'https://github.com/skyphusion-labs/hollow-grid-py',
-    demo: 'https://verdigris.skyphusion.org',
     post: '/blog/hollow-grid-ports/',
     tags: ['python', 'mud', 'federation', 'websockets'],
   },
@@ -165,7 +159,6 @@ export const PROJECTS: Project[] = [
     description:
       'Ferrite Wastes: C world-server port of The Hollow Grid on bare metal, same hub federation contract as the TypeScript and language ports.',
     repo: 'https://github.com/skyphusion-labs/hollow-grid-c',
-    demo: 'https://ferrite.skyphusion.org',
     post: '/blog/hollow-grid-ports/',
     tags: ['c', 'mud', 'federation'],
   },
@@ -190,7 +183,7 @@ export const PROJECTS: Project[] = [
     description:
       'Self-hostable mailbox on Cloudflare: send and receive, searchable storage, webmail and IMAP, plus a Go SMTP relay for legacy callers. v1.7.0 pages thread reads, splits organize into its own scope, and lets a read-scoped agent credential read the deployment mailbox.',
     repo: 'https://github.com/skyphusion-labs/postern',
-    demo: 'https://demo.posternonline.com/webmail',
+    demo: 'https://demo.posternonline.com/',
     post: '/blog/postern-v1-7/',
     tags: ['cloudflare', 'email', 'smtp', 'go'],
   },

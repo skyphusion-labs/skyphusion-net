@@ -3,7 +3,7 @@
 > Engineering blog by Conrad Rockenhaus / Skyphusion Labs.
 
 ## Primary products
-- Vivijure (self-hosted AI film studio): https://vivijure.com
+- Vivijure (self-hosted AI film studio): https://vivijure.dev
 - Postern (mailbox for humans and agents): https://github.com/skyphusion-labs/postern
 - Prism (multimodal AI playground, 1.0 line): https://play.skyphusion.org
 - Prism control plane: https://play-proxy.skyphusion.org · https://github.com/skyphusion-labs/prism-control-plane

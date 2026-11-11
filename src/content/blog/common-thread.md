@@ -39,7 +39,7 @@ Ingest can run through Apify upload jobs (Twitter, Reddit, Instagram scrapers) w
 - Optional Workers VPC containers for Apify JSON ingest and PDF export
 - TypeScript, Wrangler, Vitest with the Workers pool
 
-Public UI: [common-thread.skyphusion.org](https://common-thread.skyphusion.org). API: [common-thread-backend.skyphusion.org](https://common-thread-backend.skyphusion.org). Contact the team before leaning on the hosted API in your own project.
+Public UI: common-thread.skyphusion.org. API: common-thread-backend.skyphusion.org. Contact the team before leaning on the hosted API in your own project.
 
 v1 is in active stabilization. The paper is the authority; code cites paper sections.
 

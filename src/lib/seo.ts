@@ -21,7 +21,7 @@ export const SOCIAL_PROFILES = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
-  'https://vivijure.com',
+  'https://vivijure.dev',
 ] as const;
 
 export const PRODUCT_URLS = [
@@ -44,13 +44,12 @@ export const PRODUCT_URLS = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
-  'https://vivijure.com',
-  'https://demo.vivijure.com',
+  'https://vivijure.dev',
+  'https://posternonline.com',
   'https://play.skyphusion.org',
   'https://demo.posternonline.com',
   'https://hollow.skyphusion.org',
   'https://dustfall.skyphusion.org',
-  'https://common-thread.skyphusion.org',
 ] as const;
 
 /** Normalize Astro.site (often trailing slash) so joins never produce //path. */

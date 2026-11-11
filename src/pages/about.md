@@ -10,7 +10,7 @@ I'm **Conrad Rockenhaus**: independent developer, infrastructure operator, and N
 
 ## What I build
 
-The flagship is **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio I wrote with my crew at [Skyphusion Labs](https://skyphusion.org). Storyboard, cast, render orchestration on Cloudflare Workers, swappable GPU backends (your own iron, RunPod by the second, or cloud i2v APIs), and a [CPU container media stack](https://github.com/skyphusion-labs/vivijure/tree/main/containers) so concat, mux, and finishing work stay off the GPU bill. **Free, AGPL-3.0, not for sale, never gated.** Meet it at [demo.vivijure.com](https://demo.vivijure.com).
+The flagship is **[Vivijure](https://github.com/skyphusion-labs/vivijure)**, a self-hosted AI film studio I wrote with my crew at [Skyphusion Labs](https://skyphusion.org). Storyboard, cast, render orchestration on Cloudflare Workers, swappable GPU backends (your own iron, RunPod by the second, or cloud i2v APIs), and a [CPU container media stack](https://github.com/skyphusion-labs/vivijure-cf/tree/main/containers) so concat, mux, and finishing work stay off the GPU bill. **Free, AGPL-3.0, not for sale, never gated.** Meet it at [vivijure.dev](https://vivijure.dev).
 
 Around that sits **[Prism](https://github.com/skyphusion-labs/prism)** (multimodal AI playground), **[Postern](https://github.com/skyphusion-labs/postern)** (email for humans and agents), **[The Hollow Grid](https://github.com/skyphusion-labs/the-hollow-grid)** (federated MUD), **[Common Thread](https://github.com/skyphusion-labs/common-thread)** (OSINT attribution), and more. All open source. All yours to fork.
 
@@ -53,7 +53,7 @@ The split is simple: `skyphusion.net` is my engineering blog; `skyphusion.org` i
 - My GitHub landing page: [github.skyphusion.net](https://github.skyphusion.net)
 - GitHub profile: [github.com/skyphusion](https://github.com/skyphusion)
 - The code: [github.com/skyphusion-labs](https://github.com/skyphusion-labs)
-- Vivijure demo: [demo.vivijure.com](https://demo.vivijure.com)
+- Vivijure: [vivijure.dev](https://vivijure.dev)
 - X: [x.com/rockrockenhaus](https://x.com/rockrockenhaus) (verified)
 - LinkedIn: [linkedin.com/in/skyphusion](https://www.linkedin.com/in/skyphusion/)
 - Facebook: [facebook.com/skyphusion](https://facebook.com/skyphusion) (Meta Verified)
