@@ -97,13 +97,6 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   )}
 
-  <!-- Umami OSS marketing analytics (self-hosted). website-id: fleet-chezmoi/system/umami/websites.json -->
-  <script
-    is:inline
-    defer
-    src="https://analytics.skyphusion.org/script.js"
-    data-website-id="a67a0d45-5496-403f-adb1-b52792987260"
-  ></script>
 </head>
 <body>
   <header>
@@ -130,9 +123,7 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
       <span class="sep">/</span>
       <a href="https://github.skyphusion.net">github.skyphusion.net</a>
       <span class="sep">/</span>
-      <a href="https://vivijure.com">vivijure.com</a>
-      <span class="sep">/</span>
-      <a href="https://demo.vivijure.com">Vivijure demo</a>
+      <a href="https://vivijure.dev">vivijure.dev</a>
       <span class="sep">/</span>
       <a href="https://x.com/rockrockenhaus">@rockrockenhaus</a>
       <span class="sep">/</span>
@@ -140,8 +131,8 @@ const imageAlt = ogImage ? description : DEFAULT_OG_IMAGE_ALT;
       <span class="sep">/</span>
       <a href="https://rockenhaus.net">Public court record</a>
     </p>
-    <p>&copy; {new Date().getFullYear()} Conrad Rockenhaus <span class="sep">/</span> <a href="/rss.xml">RSS</a> <span class="sep">/</span> <a href="/privacy">Privacy</a> <span class="sep">/</span> <a href="mailto:conrad@skyphusion.org">conrad@skyphusion.org</a></p>
-    <p class="footer-analytics">Cookieless analytics (self-hosted) for aggregate traffic only; no individual tracking or ad-tech.</p>
+    <p>&copy; {new Date().getFullYear()} Conrad Rockenhaus <span class="sep">/</span> <a href="/rss.xml">RSS</a> <span class="sep">/</span> <a href="/privacy/">Privacy</a> <span class="sep">/</span> <a href="mailto:conrad@skyphusion.org">conrad@skyphusion.org</a></p>
+    <p class="footer-analytics">No analytics, no tracking, no ad-tech.</p>
   </footer>
 </body>
 </html>

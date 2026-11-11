@@ -47,8 +47,9 @@ system.
   and `blog/tags/`.
 - **Layout**: `src/layouts/BaseLayout.astro` holds the header, footer, global styles, and the
   `:root` CSS variables (`--bg`, `--fg`, `--accent`, `--border`, `--muted`, `--code-bg`) that all
-  pages theme from; `AboutLayout.astro` is the about page shell. Umami analytics loads here
-  (`analytics.skyphusion.org`). Nav includes `/search/`.
+  pages theme from; `AboutLayout.astro` is the shell for the markdown pages (about, privacy) and reads their
+  frontmatter. No analytics script loads anywhere. Nav includes `/search/`. `scripts/check-links.mjs`
+  gates the built site in CI (links, trailing slashes, retired hosts, titles, descriptions).
 - **Comments**: `src/components/Giscus.astro` on post pages; config in `src/config/giscus.ts`
   (GitHub Discussions on `skyphusion-labs/skyphusion-net`, `pathname` mapping).
 - **Search**: `src/pages/search.astro` embeds `public/ask-widget.{js,css}` from search-mcp. The JS is a

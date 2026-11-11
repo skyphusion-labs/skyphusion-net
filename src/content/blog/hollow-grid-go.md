@@ -89,7 +89,7 @@ Three worlds now share one Grid Hub:
 |-------|-----|--------|
 | The Hollow Grid | [hollow.skyphusion.org](https://hollow.skyphusion.org) | TypeScript / Workers |
 | Dustfall | [dustfall.skyphusion.org](https://dustfall.skyphusion.org) | TypeScript / Workers |
-| **Rust Choir** | [rustchoir.skyphusion.org](https://rustchoir.skyphusion.org) | **Go / fleet container** |
+| **Rust Choir** | rustchoir.skyphusion.org | **Go / fleet container** |
 
 Make a character in one, `travel` to another, and name, level, and standing follow through the hub registry. [`mud-bots`](/blog/mud-bots/) load-tests all three; fleet layout lives in the org's runbooks.
 
@@ -131,4 +131,4 @@ The Hollow Grid was always meant to be forked, ported, and extended. The TypeScr
 
 The moral spine, the no-silent-lies movement rule, the federation treated as canon: all of it ported intact. The network that outlived its makers now has a node written in Go, asking what the Grid will remember.
 
-Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). Play: [rustchoir.skyphusion.org](https://rustchoir.skyphusion.org).
+Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). Play: rustchoir.skyphusion.org.

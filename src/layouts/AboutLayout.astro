@@ -3,7 +3,9 @@ import BaseLayout from './BaseLayout.astro';
 import { personJsonLd } from '../lib/seo';
 
 const site = Astro.site?.href ?? 'https://skyphusion.net';
-const { title, description } = Astro.props;
+// A markdown page (about.md, privacy.md) hands its frontmatter to this layout as
+// Astro.props.frontmatter; reading only top-level props left <title> empty on both pages.
+const { title, description } = Astro.props.frontmatter ?? Astro.props;
 ---
 
 <BaseLayout title={title} description={description} jsonLd={personJsonLd(site)}>

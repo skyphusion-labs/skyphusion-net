@@ -1,10 +1,14 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { PROJECTS } from '../lib/projects';
 import { breadcrumbJsonLd, projectsJsonLd, siteOrigin, tagPath } from '../lib/seo';
 
 const site = Astro.site?.href ?? 'https://skyphusion.net';
 const origin = siteOrigin(site);
+// A tag page exists only for tags that some published post carries; any other project tag is
+// shown as plain text, so the page never links a 404 (skyphusion-net#153).
+const postTags = new Set((await getCollection('blog', ({ data }) => !data.draft)).flatMap((p) => p.data.tags ?? []));
 const jsonLd = [
   projectsJsonLd(site, PROJECTS),
   breadcrumbJsonLd([
@@ -23,7 +27,7 @@ const jsonLd = [
     Open source tools from <a href="https://skyphusion.org">Skyphusion Labs</a> and
     <a href="https://github.com/skyphusion-labs">github.com/skyphusion-labs</a>, built on Cloudflare Workers,
     self-hosted GPU, and boring infrastructure. Flagship:
-    <a href="https://demo.vivijure.com">Vivijure</a>, a free AGPL-3.0 AI film studio.
+    <a href="https://vivijure.dev">Vivijure</a>, a free AGPL-3.0 AI film studio.
     Write-ups are linked on the projects that have one.
   </p>
 
@@ -48,9 +52,13 @@ const jsonLd = [
           )}
         </p>
         <p class="tags">
-          {project.tags.map((tag) => (
-            <a href={tagPath(tag)} class="tag">#{tag}</a>
-          ))}
+          {project.tags.map((tag) =>
+            postTags.has(tag) ? (
+              <a href={tagPath(tag)} class="tag">#{tag}</a>
+            ) : (
+              <span class="tag">#{tag}</span>
+            )
+          )}
         </p>
       </li>
     ))}

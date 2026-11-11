@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- **fix(site): audit fixes (#153).**
+  - The analytics tag is removed: its host, analytics.skyphusion.org, no longer resolves. The privacy notice and the footer now say the site loads no analytics.
+  - /about/ and /privacy/ get their titles and descriptions. Their layout read top-level props, and a markdown page passes its frontmatter as `Astro.props.frontmatter`.
+  - Links to hosts that no longer resolve are removed. The text stays, so posts read the same. The hosts are demo.vivijure.com, common-thread, rustchoir, verdigris and ferrite.
+  - The Vivijure links in the layout, home, about and projects pages point at https://vivijure.dev. The CPU container links point at vivijure-cf/containers.
+  - Internal links carry their trailing slash, so no internal link pays a 307.
+  - The projects page links a tag only when a post carries it.
+  - `scripts/check-links.mjs` gates the built site in CI.
+
 - **docs(blog):** posts for WordPress on Cloudflare, Skyphusion AI v0.6.3, Zaraz Consent v0.1.0, and Postern v1.7.0. Homepage featured slot is the WordPress post. The WordPress post opens with why that project is the one: keep the CMS, leave the LAMP box, scale to zero and serve from the edge.
 
 - **deps:** `astro` 7.4.7 and `@astrojs/cloudflare` 14.4.6. The open Dependabot PR stopped at 7.4.4 and 14.4.3.

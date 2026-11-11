@@ -14,7 +14,7 @@ Engineering blog of [Conrad Rockenhaus](https://github.com/skyphusion) at **http
 | SEO (canonical, OG/Twitter, JSON-LD) | **Installed** | `src/lib/seo.ts`, `BaseLayout.astro` |
 | Related posts (tag overlap) | **Installed** | `src/lib/posts.ts`, post template |
 | Giscus comments | **Installed** | `src/components/Giscus.astro`, `src/config/giscus.ts` |
-| Umami analytics (self-hosted, cookieless) | **Installed** | `BaseLayout.astro` → `analytics.skyphusion.org` |
+| Analytics | **None** | Umami was removed (its host no longer resolves); the site loads no analytics script |
 | AI Search ask widget | **Installed** | `/search/`, `public/ask-widget.{js,css}` |
 | `www` → apex redirect | **Installed** | Edge Dynamic Redirect; `src/middleware.ts` is a fallback for non-static paths only |
 | Retired `cf-email-relay` post | **Installed** | `src/content/blog/cf-email-relay.md` (banner points at Postern). Not a 301: the live deploy is assets-only, so Worker middleware never runs. |
@@ -36,7 +36,6 @@ Monthly infra cost for the site itself: **$0** on Cloudflare Workers free tier. 
 │  /blog/*          markdown → Astro content collection → static pages    │
 │  /search/         ask-widget.js ──POST──► search.vivijure.com/ask     │
 │  post pages       Giscus ──► GitHub Discussions (skyphusion-labs repo)  │
-│  all pages        Umami script ──► analytics.skyphusion.org             │
 └─────────────────────────────────────────────────────────────────────────┘
          merge to main
               │
@@ -98,9 +97,13 @@ all together. Fix widget bugs upstream in search-mcp, release, then bump here.
 
 Post pages include `<Giscus />`. Configuration is in `src/config/giscus.ts` (repo, category IDs, `pathname` mapping, `noborder_dark` theme). Requires GitHub Discussions on `skyphusion-labs/skyphusion-net` and the [Giscus GitHub App](https://github.com/apps/giscus) installed on that repo.
 
-### Analytics (Umami)
+### Analytics
 
-One deferred script in `BaseLayout.astro` points at self-hosted Umami (`analytics.skyphusion.org`). Aggregate traffic only; no ad-tech cookies. Website id is catalogued in `fleet-chezmoi/system/umami/websites.json`.
+None. The site loads no analytics script. The self-hosted Umami tag was removed in skyphusion-net#153, because its host no longer resolves. Privacy is the primary goal: do not add third-party analytics, trackers or tag managers.
+
+### Link check
+
+`scripts/check-links.mjs` runs in CI after the build, over `dist/client`. It fails on an internal link to a page or file the build did not produce, an internal page link without its trailing slash (each one cost a 307), a link to a host in `RETIRED_HOSTS`, and a page with an empty title or no description. `check-links.test.ts` holds its controls.
 
 ### SEO and feeds
 

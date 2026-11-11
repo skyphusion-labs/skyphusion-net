@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "Privacy, skyphusion.net"
-description: "How skyphusion.net handles data: cookieless self-hosted analytics, GitHub-backed comments, and a search box that does not keep your questions. We do not want your data."
+description: "How skyphusion.net handles data: no analytics, GitHub-backed comments, and a search box that does not keep your questions. We do not want your data."
 ---
 
 # Privacy
@@ -18,29 +18,16 @@ There is no account here, no sign-up, no newsletter, and no form that asks who y
 blog is anonymous: we set no cookies of our own, and there is no advertising, ad-tech, profiling, or
 third-party tracker on the page.
 
-Three things on this site do touch data, and all three are described below in full: aggregate
-analytics, the comment box, and the search box. Nothing else does.
+Two things on this site touch data, and both are described below in full: the comment box and the
+search box. Nothing else does.
 
-## 1. Analytics (self-hosted, cookieless)
+## Analytics: none
 
-Every page loads a script from **analytics.skyphusion.org**. That is **Umami**, an open-source
-analytics tool we run ourselves, on our own infrastructure, for aggregate traffic counts (which posts
-get read) and nothing else.
+This site loads no analytics script and sets no analytics cookie. Nothing counts who reads what.
+(It used to load a self-hosted, cookieless Umami script; that service is retired and the script tag
+is gone from every page.)
 
-- **Cookieless**: no cookie, no persistent identifier following you between visits.
-- It records the page you viewed, the page that referred you, and the coarse technical details your
-  browser volunteers (browser, operating system, device type, and a country derived from your IP
-  address at request time).
-- **Self-hosted**, so no analytics vendor receives any of it. There is no third party in this path to
-  sell it to, and we do not sell or share it.
-- It is not used to profile or identify individual readers.
-- **How long we keep it: 90 days.** Umami has no built-in data expiry at the version we run,
-  so we enforce this window ourselves: a daily job deletes analytics rows older than 90 days
-  from our database. If we change that retention period, this notice changes with it.
-
-Any content blocker will stop the script from loading. The site works fine without it.
-
-## 2. Comments (GitHub, and this one leaves our hands)
+## 1. Comments (GitHub, and this one leaves our hands)
 
 Blog posts carry a comment box powered by **giscus**. This is the one place where a genuine third
 party is in the path, so be clear-eyed about it:
@@ -60,9 +47,9 @@ party is in the path, so be clear-eyed about it:
 
 If you would rather not load giscus at all, block `giscus.app`; the post itself reads normally.
 
-## 3. Search (your question is not kept)
+## 2. Search (your question is not kept)
 
-The [search page](/search) sends your question to **search.vivijure.com**, a Cloudflare Worker we run
+The [search page](/search/) sends your question to **search.vivijure.com**, a Cloudflare Worker we run
 ([search-mcp](https://github.com/skyphusion-labs/search-mcp), source public). What happens to it:
 
 - Your question is checked by **Cloudflare Turnstile** (an anti-bot challenge) before it is answered.

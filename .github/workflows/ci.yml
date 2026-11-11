@@ -38,6 +38,12 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
+      # skyphusion-net#153: the built site links only pages and files the build produced, every
+      # internal page link carries its trailing slash (no 307), no link points at a retired host,
+      # and every page has a title and a description. No network, so it cannot flap.
+      - name: Built site links, titles and descriptions
+        run: node scripts/check-links.mjs dist/client
+
       # Fully prerendered site: serve dist/client statically. `astro preview` with
       # the Cloudflare adapter does not reliably bind :4321 in CI, which flakes
       # blog.test.ts (ECONNREFUSED) and blocks the deploy job.

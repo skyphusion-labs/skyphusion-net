@@ -18,8 +18,8 @@ The reference TypeScript worlds still live on Workers:
 | --- | --- | --- |
 | The Hollow Grid | [hollow.skyphusion.org](https://hollow.skyphusion.org) | TypeScript / Durable Objects |
 | Dustfall | [dustfall.skyphusion.org](https://dustfall.skyphusion.org) | TypeScript / Durable Objects |
-| **Rust Choir** | [rustchoir.skyphusion.org](https://rustchoir.skyphusion.org) | **Go** (`hollow-grid-go`) |
-| **Verdigris Spool** | [verdigris.skyphusion.org](https://verdigris.skyphusion.org) | **Python** (`hollow-grid-py`) |
+| **Rust Choir** | rustchoir.skyphusion.org | **Go** (`hollow-grid-go`) |
+| **Verdigris Spool** | verdigris.skyphusion.org | **Python** (`hollow-grid-py`) |
 
 Make a character in any of them, type `travel` to another, and name, level, and standing follow through the hub registry. [`mud-bots`](/blog/mud-bots/) load-tests all four; the shared backend is still `grid-hub.skyphusion.org`.
 
@@ -89,4 +89,4 @@ The Hollow Grid was always meant to be forked, ported, and extended. The TypeScr
 
 The moral spine, the no-silent-lies movement rule, the federation treated as canon: all of it ported intact. The network that outlived its makers now has a memory node in Go and a suspension node in Python, asking what you did and what you deferred.
 
-Play: [rustchoir.skyphusion.org](https://rustchoir.skyphusion.org) · [verdigris.skyphusion.org](https://verdigris.skyphusion.org). Code: [hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go) · [hollow-grid-py](https://github.com/skyphusion-labs/hollow-grid-py). Wire spec: [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid).
+Play: rustchoir.skyphusion.org · verdigris.skyphusion.org. Code: [hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go) · [hollow-grid-py](https://github.com/skyphusion-labs/hollow-grid-py). Wire spec: [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid).
