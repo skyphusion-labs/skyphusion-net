@@ -22,7 +22,7 @@ const { tag, posts } = Astro.props;
 const site = Astro.site?.href ?? 'https://skyphusion.net';
 const tagUrl = `${site}/blog/tags/${encodeURIComponent(tag)}/`;
 const title = `Posts tagged "${tag}", skyphusion.net`;
-const description = `${posts.length} post${posts.length === 1 ? '' : 's'} tagged "${tag}" on skyphusion.net`;
+const description = `${posts.length} post${posts.length === 1 ? '' : 's'} tagged "${tag}" on skyphusion.net: engineering notes on open source from Skyphusion Labs.`;
 const jsonLd = breadcrumbJsonLd([
   { name: 'Home', url: site },
   { name: 'Blog', url: `${site}/blog/` },

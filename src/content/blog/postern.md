@@ -1,6 +1,8 @@
 ---
 title: "Postern: a mailbox on Cloudflare for humans and agents"
+seoTitle: "Postern: a mailbox on Cloudflare for humans and agents"
 description: "Postern replaces our retired send-only cf-email-relay with a full mailbox: inbound via Email Routing, outbound via Email Sending, D1 and R2 storage, FTS and optional semantic search, webmail and read-only IMAP, a Go SMTP relay for legacy callers, and one structured API that agents and humans both use."
+seoDescription: "Postern replaces the retired cf-email-relay with a full mailbox on Cloudflare: inbound and outbound mail, search, webmail, IMAP, one API for agents and humans."
 pubDate: 2026-06-25
 updatedDate: 2026-07-05
 tags: ["cloudflare", "email", "smtp", "go", "side-project"]

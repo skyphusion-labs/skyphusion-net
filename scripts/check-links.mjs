@@ -6,7 +6,7 @@
 //   - any mention, linked or not, of a host on RETIRED_HOSTS (it no longer resolves; Conrad
 //     2026-11-11: delete the hostname and say the service is offline) or FORBIDDEN_HOSTS
 //     (a third party the site must never load again, such as giscus.app);
-//   - a page with an empty <title> or no meta description.
+//   - a page with an empty <title>, or no meta description, or one over 160 characters.
 // Exit 2 when it cannot measure (no dist, or no HTML in it).
 // Usage: node scripts/check-links.mjs [distDir]
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
@@ -46,6 +46,7 @@ export function checkPage(page, html, exists) {
   if (!title) problems.push(`${page}: empty <title>`);
   const desc = [...html.matchAll(/<meta\b[^>]*>/gi)].map((m) => m[0]).find((t) => (attr(t, "name") || "").toLowerCase() === "description");
   if (!desc || !(attr(desc, "content") || "").trim()) problems.push(`${page}: no meta description`);
+  else if ((attr(desc, "content") || "").length > 160) problems.push(`${page}: meta description is ${(attr(desc, "content") || "").length} characters, over 160`);
   const lower = html.toLowerCase();
   for (const host of RETIRED_HOSTS) if (lower.includes(host)) problems.push(`${page}: names retired host ${host}`);
   for (const host of FORBIDDEN_HOSTS) if (lower.includes(host)) problems.push(`${page}: references forbidden host ${host}`);

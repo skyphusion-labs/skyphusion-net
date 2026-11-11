@@ -1,6 +1,8 @@
 ---
 title: "WordPress on Cloudflare: measure every approach, then provision the one that holds"
+seoTitle: "WordPress on Cloudflare: measure every approach first"
 description: "I like the WordPress CMS and I do not want the LAMP box under it. wordpress-on-cloudflare is the attempt to put that CMS on Cloudflare: scale to zero when idle, edge performance when a page can be cached, measured before it is claimed."
+seoDescription: "I like the WordPress CMS and I do not want the LAMP box under it. wordpress-on-cloudflare puts that CMS on Cloudflare: scale to zero, measured before claimed."
 pubDate: 2026-11-08T20:00:00.000Z
 updatedDate: 2026-11-08T23:30:00.000Z
 tags: ["cloudflare", "wordpress", "woocommerce", "php"]

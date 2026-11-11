@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- **feat(blog): search snippets fit, every page has a lastmod, an Atom feed, and posts link their projects (#153).**
+  - Every post whose description ran past 160 characters (all 23) gets an `seoDescription` for the meta, og and twitter description and the BlogPosting JSON-LD. It is taken from the post's own description: whole sentences where they fit, otherwise its own clauses cut down. The on-page dek is unchanged. The schema caps it at 160, and the build fails over that.
+  - Every post gets an `seoTitle` of 60 characters or fewer (schema-enforced) for the `<title>` and og/twitter title, at Conrad's request. Each leads with the project or keyword and is taken from the post's own title and description. The on-page h1, the JSON-LD headline and the breadcrumb keep the full title. The post page appends ", skyphusion.net" outside the 60.
+  - The remaining vivijure.com self-references point at https://vivijure.dev: two `sameAs` entries in `src/lib/seo.ts`, and the product-site link in the vivijure-run-anywhere post. The README's Search Console list adds vivijure.dev and keeps vivijure.com as its own property. (These were folded in from #152.)
+  - The home, /blog/, /about/, /projects/ and tag-page descriptions now run 70 to 160 characters. `scripts/check-links.mjs` fails a description over 160.
+  - The sitemap carries `lastmod` for all 59 URLs (`scripts/site-lastmod.mjs`): listing pages by their newest post, tag pages by their newest tagged post, and static pages by their last commit, only in a full clone (ci.yml checks out with full history).
+  - `/atom.xml`: an Atom 1.0 feed beside RSS, advertised in the page head.
+  - Each post links the projects it covers, from `src/lib/projects.ts` (`ProjectLinks.astro`).
+
 - **feat(site): the projects page covers the current lineup (#153).**
   - New cards: Postern (with posternonline.com and the demo), Vivijure (with vivijure.dev, the OSS home) plus vivijure-cf, vivijure-local, vivijure-core and vivijure-mcp, GGC (ggc.sh), and a short teaser for the forex trading bot in development (no link).
   - Each one-liner is taken from the project's own README or GitHub description.

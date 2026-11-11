@@ -1,6 +1,8 @@
 ---
 title: "The film that learned to talk, and the three bugs it hit first"
+seoTitle: "Vivijure Speaks: a talking film character and three bugs"
 description: "The fourth Vivijure showcase, Vivijure Speaks: a talking character lip-synced to its own dialogue and upscaled, rendered start to finish on a self-hosted GPU with nobody steering it. Two shots, about two and a half seconds, and voiced. The honest part is that it came out silent once, and then a from-scratch re-fire found two more orchestration bugs before any user could. Notes on the three control-plane and backend fixes that gave it a voice."
+seoDescription: "Vivijure Speaks: a talking character lip-synced to its own dialogue and upscaled on a self-hosted GPU, and the three bugs it hit before it had a voice."
 pubDate: 2026-06-22
 updatedDate: 2026-07-05
 image: "https://assets.skyphusion.net/vivijure/showcase/vivijure-speaks.jpg"

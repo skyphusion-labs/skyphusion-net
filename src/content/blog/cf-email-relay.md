@@ -1,6 +1,8 @@
 ---
 title: "cf-email-relay: transactional email on Cloudflare, plus an SMTP bridge (retired)"
+seoTitle: "cf-email-relay (retired): Cloudflare email and SMTP bridge"
 description: "A small two-part utility for sending transactional email through Cloudflare Email Sending: a Worker with a service-binding RPC and a token-gated HTTP endpoint, and a tiny Go SMTP relay that bridges the services that can only speak SMTP. Notes on the one-validation-path design, why the SMTP bridge is the genuinely useful part, the container wrinkle that made the relay multi-listen, and wiring Jenkins and Uptime Kuma to send through it."
+seoDescription: "A two-part utility for transactional email through Cloudflare Email Sending: a Worker with RPC and HTTP, and a tiny Go SMTP relay for SMTP-only services."
 pubDate: 2026-06-05
 tags: ["cloudflare", "email", "smtp", "go", "side-project"]
 ---

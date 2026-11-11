@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
+import ProjectLinks from '../../components/ProjectLinks.astro';
 import { relatedPosts } from '../../lib/posts';
 import {
   absoluteUrl,
@@ -30,7 +31,7 @@ const image = post.data.image ? absoluteUrl(post.data.image, site) : undefined;
 const jsonLd = [
   blogPostingJsonLd({
     title: post.data.title,
-    description: post.data.description,
+    description: post.data.seoDescription ?? post.data.description,
     url,
     pubDate: post.data.pubDate,
     updatedDate: post.data.updatedDate,
@@ -45,8 +46,8 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title={`${post.data.title}, skyphusion.net`}
-  description={post.data.description}
+  title={`${post.data.seoTitle ?? post.data.title}, skyphusion.net`}
+  description={post.data.seoDescription ?? post.data.description}
   ogType="article"
   ogImage={post.data.image}
   jsonLd={jsonLd}
@@ -79,6 +80,7 @@ const jsonLd = [
     </header>
     <Content />
   </article>
+  <ProjectLinks postPath={`/blog/${post.id}/`} />
   <RelatedPosts posts={related} />
   <p class="back"><a href="/blog/">&larr; All posts</a></p>
 </BaseLayout>

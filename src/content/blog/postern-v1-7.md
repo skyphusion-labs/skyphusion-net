@@ -1,6 +1,8 @@
 ---
 title: "Postern v1.7.0: a read-scoped agent sees the mailbox it was hired to read"
+seoTitle: "Postern v1.7.0: a read-scoped agent sees only its mailbox"
 description: "Postern moved from v1.4.1 to v1.7.0 in October 2026. v1.5.0 made organize its own token scope. v1.6.0 paged thread reads and added GET /api/whoami. v1.7.0 lets a read-scoped agent credential read mail addressed to the humans on the deployment, on by default."
+seoDescription: "Postern moved from v1.4.1 to v1.7.0 in October 2026. v1.5.0 made organize its own token scope. v1.6.0 paged thread reads and added GET /api/whoami."
 pubDate: 2026-11-08T17:00:00.000Z
 tags: ["cloudflare", "email", "smtp", "mcp"]
 draft: false

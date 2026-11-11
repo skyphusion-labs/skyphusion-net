@@ -167,7 +167,7 @@ export function webSiteJsonLd(site: string) {
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
         'https://skyphusion.net',
-        'https://vivijure.com',
+        'https://vivijure.dev',
         'https://play.skyphusion.org',
       ],
     },
@@ -211,7 +211,7 @@ export function personJsonLd(site: string) {
         'https://github.com/skyphusion-labs',
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
-        'https://vivijure.com',
+        'https://vivijure.dev',
       ],
     },
   };
