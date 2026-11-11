@@ -103,4 +103,4 @@ The constellation looks like a lot of repos, and it is, on purpose. Each engine 
 
 Every piece of it is AGPL-3.0: if you run a modified version as a network service, you owe your users the corresponding source. For a studio whose whole pitch is "no subscription, no account wall, no lock-in," that is the right license.
 
-The live studio my crew and I run has its front door at demo.vivijure.com. The code, all of it, is under [github.com/skyphusion-labs](https://github.com/skyphusion-labs) (landing page: [github.skyphusion.org](https://github.skyphusion.org)), built by me, Conrad Rockenhaus, and the [Skyphusion Labs](https://skyphusion.org) team. The full public release is close; when it lands, the announcement will be here.
+The public demo studio is offline; the OSS site is [vivijure.dev](https://vivijure.dev/). The code, all of it, is under [github.com/skyphusion-labs](https://github.com/skyphusion-labs) (landing page: [github.skyphusion.org](https://github.skyphusion.org)), built by me, Conrad Rockenhaus, and the [Skyphusion Labs](https://skyphusion.org) team. The full public release is close; when it lands, the announcement will be here.
