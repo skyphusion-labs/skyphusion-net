@@ -38,9 +38,7 @@ export const PRODUCT_URLS = [
   'https://github.com/skyphusion-labs/vivijure-backend',
   'https://github.com/skyphusion-labs/vivijure-local-12gb',
   'https://github.com/skyphusion-labs/vivijure-local-16gb',
-  'https://github.com/skyphusion-labs/vivijure-musetalk',
   'https://github.com/skyphusion-labs/vivijure-upscale',
-  'https://github.com/skyphusion-labs/vivijure-audio-upscale',
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
@@ -219,7 +217,10 @@ export function personJsonLd(site: string) {
   };
 }
 
-export function projectsJsonLd(site: string, projects: { name: string; description: string; repo: string }[]) {
+export function projectsJsonLd(
+  site: string,
+  projects: { name: string; description: string; repo?: string; site?: string; demo?: string; language?: string }[],
+) {
   const origin = siteOrigin(site);
   return {
     '@context': 'https://schema.org',
@@ -230,11 +231,15 @@ export function projectsJsonLd(site: string, projects: { name: string; descripti
       '@type': 'ListItem',
       position: index + 1,
       item: {
-        '@type': 'SoftwareSourceCode',
+        // A project with public source is SoftwareSourceCode; one without (private, or not yet
+        // public) is described only by name and text. The language is GitHub's measured primary
+        // language, never assumed.
+        '@type': project.repo ? 'SoftwareSourceCode' : 'SoftwareApplication',
         name: project.name,
         description: project.description,
-        codeRepository: project.repo,
-        programmingLanguage: 'TypeScript',
+        ...(project.site || project.repo ? { url: project.site ?? project.repo } : {}),
+        ...(project.repo ? { codeRepository: project.repo } : {}),
+        ...(project.language ? { programmingLanguage: project.language } : {}),
         author: {
           '@type': 'Person',
           name: AUTHOR_NAME,

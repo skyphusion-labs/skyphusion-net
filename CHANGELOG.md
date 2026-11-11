@@ -10,6 +10,14 @@
   - `/atom.xml`: an Atom 1.0 feed beside RSS, advertised in the page head.
   - Each post links the projects it covers, from `src/lib/projects.ts` (`ProjectLinks.astro`).
 
+- **feat(site): the projects page covers the current lineup (#153).**
+  - New cards: Postern (with posternonline.com and the demo), Vivijure (with vivijure.dev, the OSS home) plus vivijure-cf, vivijure-local, vivijure-core and vivijure-mcp, GGC (ggc.sh), and a short teaser for the forex trading bot in development (no link).
+  - Each one-liner is taken from the project's own README or GitHub description.
+  - Archived repos (vivijure-musetalk, vivijure-audio-upscale) are dropped.
+  - A card can carry extra links (the 16GB backend; Prism iOS and Android; the Hollow Grid Python, C and assembly ports).
+  - The JSON-LD stops calling every project TypeScript: `programmingLanguage` is GitHub's measured primary language, `codeRepository` appears only for public source, and `url` prefers the project's own site.
+  - `projects.test.ts` checks that the trading bot entry never gets a link, that no archived repository is listed, and that repository links stay in the public org.
+
 - **fix(site): offline hosts are named as offline, and Giscus is removed (#153).** Conrad, 2026-11-11.
   - Hostnames that do not resolve are deleted wherever they appeared (demo.vivijure.com, common-thread, common-thread-backend, rustchoir, verdigris). Each place now says the service is offline. The Hollow Grid language worlds are "offline, moving to containers". Common Thread's hosted UI and API are "offline, moving to a container with Hyperdrive". The Vivijure demo is offline, and those lines point at https://vivijure.dev/. Measured results (for example Rust Choir's 158 ok as of July 9) keep their numbers and lose only the hostname.
   - Giscus comments are removed: `Giscus.astro`, `src/config/giscus.ts` and the include on post pages. The repository never had a discussion, and the widget loaded a third party on every post. The privacy notice no longer describes a comment box.
