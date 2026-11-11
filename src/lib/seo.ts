@@ -21,7 +21,7 @@ export const SOCIAL_PROFILES = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
-  'https://vivijure.com',
+  'https://vivijure.dev',
 ] as const;
 
 export const PRODUCT_URLS = [
@@ -44,7 +44,7 @@ export const PRODUCT_URLS = [
   'https://skyphusion.org',
   'https://github.skyphusion.org',
   'https://github.skyphusion.net',
-  'https://vivijure.com',
+  'https://vivijure.dev',
   'https://demo.vivijure.com',
   'https://play.skyphusion.org',
   'https://demo.posternonline.com',
@@ -170,7 +170,7 @@ export function webSiteJsonLd(site: string) {
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
         'https://skyphusion.net',
-        'https://vivijure.com',
+        'https://vivijure.dev',
         'https://play.skyphusion.org',
       ],
     },
@@ -214,7 +214,7 @@ export function personJsonLd(site: string) {
         'https://github.com/skyphusion-labs',
         'https://github.skyphusion.org',
         'https://github.skyphusion.net',
-        'https://vivijure.com',
+        'https://vivijure.dev',
       ],
     },
   };

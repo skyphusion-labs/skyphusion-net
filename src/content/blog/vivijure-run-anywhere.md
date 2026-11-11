@@ -96,7 +96,7 @@ There is still rough edge. Vivijure is not a polished public release yet. Standi
 
 ## Where to go
 
-- Product site: [vivijure.com](https://vivijure.com)
+- Product site: [vivijure.dev](https://vivijure.dev)
 - Constellation map: [github.com/skyphusion-labs/vivijure](https://github.com/skyphusion-labs/vivijure)
 - Cloudflare host: [vivijure-cf](https://github.com/skyphusion-labs/vivijure-cf)
 - Self-hosted host: [vivijure-local](https://github.com/skyphusion-labs/vivijure-local) ([quickstart](https://github.com/skyphusion-labs/vivijure-local/blob/main/docs/quickstart.md))
