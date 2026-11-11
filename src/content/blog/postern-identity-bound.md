@@ -1,6 +1,7 @@
 ---
 title: "Postern v1.4.1: each agent reads and sends as itself"
 description: "Postern is at v1.4.1. v1.4.0 bound read and send to a person, not a shared mailbox god-token; v1.4.1 fixes the webmail attachment-send race. Conrad Rockenhaus covers identity-bound registry credentials, MCP multi-person setup, the projection census that keeps IMAP honest, and what still stays estate-wide on purpose."
+seoDescription: "Postern v1.4.1: v1.4.0 bound read and send to a person, not a shared mailbox god-token; v1.4.1 fixes the webmail attachment-send race."
 pubDate: 2026-08-04
 updatedDate: 2026-11-08
 tags: ["cloudflare", "email", "smtp", "mcp", "side-project"]

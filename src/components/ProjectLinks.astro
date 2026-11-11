@@ -1,0 +1,43 @@
+---
+// "This post covers" block on a post page: every project whose `post` is this post, linked to the
+// project itself. The reverse link (project card to write-up) is on /projects/. skyphusion-net#153.
+import { PROJECTS } from '../lib/projects';
+
+interface Props {
+  postPath: string;
+}
+const { postPath } = Astro.props;
+type Linkable = { name: string; repo?: string; demo?: string; site?: string; post?: string };
+const covered = (PROJECTS as Linkable[])
+  .filter((p) => p.post === postPath)
+  .map((p) => ({ name: p.name, url: p.site ?? p.demo ?? p.repo }))
+  .filter((p): p is { name: string; url: string } => Boolean(p.url));
+---
+{covered.length > 0 && (
+  <aside class="project-links" aria-label="Projects this post covers">
+    <p>
+      This post covers:{' '}
+      {covered.map((p, i) => (
+        <>
+          {i > 0 && ', '}
+          <a href={p.url}>{p.name}</a>
+        </>
+      ))}
+      . <a href="/projects/">All projects</a>
+    </p>
+  </aside>
+)}
+
+<style>
+  .project-links {
+    margin: 2rem 0 1rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  .project-links p {
+    margin: 0;
+  }
+</style>

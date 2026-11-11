@@ -1,6 +1,7 @@
 ---
 title: "Common Thread: sockpuppet attribution from public signals"
 description: "Common Thread pairs a twelve-section methodology paper with a Cloudflare Workers reference implementation: archive public social artifacts, extract deterministic behavioral features, and emit calibrated cluster-level attribution claims with full chain of custody. For journalists, OSINT practitioners, and researchers who need reproducible investigations without platform-internal data."
+seoDescription: "Common Thread pairs a methodology paper with a Cloudflare Workers reference implementation for calibrated, cluster-level attribution with chain of custody."
 pubDate: 2026-06-25
 updatedDate: 2026-07-05
 tags: ["cloudflare", "ai", "osint", "side-project"]

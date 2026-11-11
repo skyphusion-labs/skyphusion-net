@@ -1,6 +1,7 @@
 ---
 title: "Skyphusion AI: Workers AI and AI Search on your WordPress site, fee zero"
 description: "Skyphusion AI for Cloudflare is a GPL WordPress plugin. Visitors get AI Search on the merchant's own Cloudflare account. WordPress gets an AI Client provider. The plugin fee is zero, the token stays off the page, and v0.6.3 is the current release."
+seoDescription: "Skyphusion AI for Cloudflare is a GPL WordPress plugin. Visitors get AI Search on the merchant's own Cloudflare account. WordPress gets an AI Client provider."
 pubDate: 2026-11-08T19:00:00.000Z
 tags: ["cloudflare", "wordpress", "woocommerce", "ai"]
 draft: false

@@ -1,6 +1,7 @@
 ---
 title: "The Hollow Grid: a federated MUD on Cloudflare Workers and Durable Objects"
 description: "Introducing The Hollow Grid, a multiplayer MUD that runs entirely on Cloudflare Workers and Durable Objects: one Durable Object holds a whole world, WebSocket hibernation lets it sleep at $0 when empty, and a single alarm drives all of time. It is also a small federation, where separate world deployments share one backend Grid (one faction war, one character that travels between worlds) over a service-binding RPC contract. Notes on the design rules that make it testable, the structured event channel that drives the client, a bot, and the tests alike, the cross-Worker bug that taught us how service bindings really behave, and the human-and-AI collaboration that built it."
+seoDescription: "The Hollow Grid is a multiplayer MUD on Cloudflare Workers and Durable Objects: one Durable Object holds a world, sleeps at $0 when empty, and worlds federate."
 pubDate: 2026-06-06
 updatedDate: 2026-07-05
 tags: ["cloudflare", "durable-objects", "websockets", "mud", "serverless", "federation", "side-project"]

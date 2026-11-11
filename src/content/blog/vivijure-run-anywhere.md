@@ -1,6 +1,7 @@
 ---
 title: "Vivijure runs anywhere now: Cloudflare, your home box, or any cloud server"
 description: "The Vivijure control panel is no longer Cloudflare-only. Conrad Rockenhaus walks the constellation after the host split: vivijure-cf on Workers, vivijure-local on Docker (home PC or any cloud VM), vivijure-core unifying both, vivijure-mcp for agents, plus Slate, RunPod, own-GPU doors, and the finish engines. Same studio API either way."
+seoDescription: "The Vivijure control panel is no longer Cloudflare-only: vivijure-cf on Workers, vivijure-local on Docker, vivijure-core under both. Same studio API either way."
 pubDate: 2026-07-13
 tags: ["vivijure", "ai", "gpu", "cloudflare", "docker", "self-hosted", "homelab", "mcp", "side-project"]
 draft: false

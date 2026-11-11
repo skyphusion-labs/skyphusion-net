@@ -1,6 +1,7 @@
 ---
 title: "Prism 1.0: playground, control plane, phones, and MCP"
 description: "Prism is a product line at 1.0: AGPL playground and metered control plane, iOS and Android clients, MIT MCP for agents, ~93 models, and honest gaps. Conrad Rockenhaus maps the doors, hosts, and repos."
+seoDescription: "Prism is a product line at 1.0: AGPL playground and metered control plane, iOS and Android clients, MIT MCP for agents, ~93 models, and honest gaps."
 pubDate: 2026-08-07
 tags: ["cloudflare", "ai", "llm", "rag", "workflows", "mcp", "side-project"]
 draft: false

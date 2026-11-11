@@ -44,6 +44,13 @@ describe('check-links', () => {
     }
   });
 
+  it('fails a meta description over 160 characters', () => {
+    const long = 'x'.repeat(161);
+    expect(checkPage('/x/', page('', `<title>t</title><meta name="description" content="${long}">`), exists)).toEqual([
+      '/x/: meta description is 161 characters, over 160',
+    ]);
+  });
+
   it('fails an empty title and a missing description', () => {
     expect(checkPage('/x/', page('', '<title></title>'), exists)).toEqual(['/x/: empty <title>', '/x/: no meta description']);
   });

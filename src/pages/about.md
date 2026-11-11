@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "About Conrad Rockenhaus, skyphusion.net"
-description: "Conrad Rockenhaus builds free AGPL open source software with Skyphusion Labs: the Vivijure AI film studio, Prism, Postern, The Hollow Grid, and more. Engineering blog at skyphusion.net."
+description: "Conrad Rockenhaus builds free AGPL open source software with Skyphusion Labs: the Vivijure AI film studio, Prism, Postern, The Hollow Grid, and more."
 ---
 
 # About

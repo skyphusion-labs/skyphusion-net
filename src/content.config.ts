@@ -6,6 +6,9 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    // The meta and og description when `description` (the on-page dek) runs past what a search
+    // snippet shows. 160 characters at most (skyphusion-net#153).
+    seoDescription: z.string().max(160).optional(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),

@@ -1,6 +1,7 @@
 ---
 title: "Postern v1.0.0: the mailbox is real"
 description: "Postern tagged v1.0.0 on July 9, 2026: the first production-ready release of the self-hostable Cloudflare mailbox for humans and agents. Notes on what the tag means, the five-week path from send-only cf-email-relay to a full store with webmail and IMAP, the acceptance smoke that gates the release, and the honest cost of making real mail clients happy."
+seoDescription: "Postern tagged v1.0.0 on July 9, 2026: the first production-ready release of the self-hostable Cloudflare mailbox for humans and agents."
 pubDate: 2026-07-09
 tags: ["cloudflare", "email", "smtp", "go", "side-project"]
 draft: false

@@ -2,9 +2,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 import cloudflare from '@astrojs/cloudflare';
-import { buildPostLastmodMap } from './scripts/post-lastmod.mjs';
+import { buildSiteLastmodMap } from './scripts/site-lastmod.mjs';
 
-const postLastmod = buildPostLastmodMap();
+// lastmod for every page, not only posts (skyphusion-net#153).
+const siteLastmod = buildSiteLastmodMap();
 
 export default defineConfig({
   site: 'https://skyphusion.net',
@@ -12,7 +13,7 @@ export default defineConfig({
     sitemap({
       serialize(item) {
         const pathname = new URL(item.url).pathname;
-        const lastmod = postLastmod.get(pathname);
+        const lastmod = siteLastmod.get(pathname);
 
         if (lastmod) {
           return { ...item, lastmod: lastmod.toISOString() };

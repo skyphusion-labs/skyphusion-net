@@ -1,6 +1,7 @@
 ---
 title: "Building Prism: multimodal AI on Cloudflare Workers"
 description: "Architecture and lessons from Prism, a multimodal AI playground as a single Cloudflare Worker: 35 chat models across five providers, voice chat, RAG, projects, Discord ingestion, web search, SSE streaming, Workflows for durable video and music jobs, and a public demo mode where each user brings their own AI Gateway credentials."
+seoDescription: "Architecture and lessons from Prism, a multimodal AI playground as a single Cloudflare Worker: chat, voice, RAG, projects, streaming and durable media jobs."
 pubDate: 2026-05-23
 updatedDate: 2026-07-05
 tags: ["cloudflare", "ai", "rag", "workflows", "llm", "side-project"]

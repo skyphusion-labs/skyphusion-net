@@ -1,6 +1,7 @@
 ---
 title: "The Grid speaks Go and Python: Rust Choir and Verdigris Spool ship"
 description: "hollow-grid-go and hollow-grid-py are complete world-server ports of The Hollow Grid. Both pass the upstream smoke.mjs conformance suite, run in production on the fleet as Rust Choir and Verdigris Spool, and prove the wire protocol survives a language change. Notes on the scoreboard method, what each node asks players, and how four worlds now share one Grid Hub."
+seoDescription: "hollow-grid-go and hollow-grid-py are complete world-server ports of The Hollow Grid. Both pass the upstream conformance suite and keep the wire protocol."
 pubDate: 2026-07-13
 tags: ["go", "mud", "federation", "websockets", "side-project"]
 draft: false

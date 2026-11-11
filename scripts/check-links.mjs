@@ -4,7 +4,7 @@
 //   - an internal link to a page or file that the build did not produce;
 //   - an internal page link without its trailing slash (each one cost a 307 on the live site);
 //   - a link to a host on RETIRED_HOSTS (it no longer resolves; keep the text, drop the link);
-//   - a page with an empty <title> or no meta description.
+//   - a page with an empty <title>, or no meta description, or one over 160 characters.
 // Exit 2 when it cannot measure (no dist, or no HTML in it).
 // Usage: node scripts/check-links.mjs [distDir]
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
@@ -42,6 +42,7 @@ export function checkPage(page, html, exists) {
   if (!title) problems.push(`${page}: empty <title>`);
   const desc = [...html.matchAll(/<meta\b[^>]*>/gi)].map((m) => m[0]).find((t) => (attr(t, "name") || "").toLowerCase() === "description");
   if (!desc || !(attr(desc, "content") || "").trim()) problems.push(`${page}: no meta description`);
+  else if ((attr(desc, "content") || "").length > 160) problems.push(`${page}: meta description is ${(attr(desc, "content") || "").length} characters, over 160`);
   for (const m of html.matchAll(/<(a|link)\b[^>]*>/gi)) {
     const tag = m[0];
     if (m[1].toLowerCase() === "link" && !/rel=["'](alternate|stylesheet|icon|canonical)/i.test(tag)) continue;

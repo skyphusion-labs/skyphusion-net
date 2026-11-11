@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- **feat(blog): search snippets fit, every page has a lastmod, an Atom feed, and posts link their projects (#153).**
+  - Every post whose description ran past 160 characters (all 23) gets an `seoDescription` for the meta, og and twitter description and the BlogPosting JSON-LD. It is taken from the post's own description: whole sentences where they fit, otherwise its own clauses cut down. The on-page dek is unchanged. The schema caps it at 160, and the build fails over that.
+  - Titles are unchanged: shortening them meant dropping the words that make them findable, and long titles are only truncated in results.
+  - The home, /blog/, /about/, /projects/ and tag-page descriptions now run 70 to 160 characters. `scripts/check-links.mjs` fails a description over 160.
+  - The sitemap carries `lastmod` for all 59 URLs (`scripts/site-lastmod.mjs`): listing pages by their newest post, tag pages by their newest tagged post, and static pages by their last commit, only in a full clone (ci.yml checks out with full history).
+  - `/atom.xml`: an Atom 1.0 feed beside RSS, advertised in the page head.
+  - Each post links the projects it covers, from `src/lib/projects.ts` (`ProjectLinks.astro`).
+
 - **fix(site): audit fixes (#153).**
   - The analytics tag is removed: its host, analytics.skyphusion.org, no longer resolves. The privacy notice and the footer now say the site loads no analytics.
   - /about/ and /privacy/ get their titles and descriptions. Their layout read top-level props, and a markdown page passes its frontmatter as `Astro.props.frontmatter`.

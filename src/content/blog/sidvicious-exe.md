@@ -1,6 +1,7 @@
 ---
 title: "SidVicious_exe: a punk rock Discord roadie on Cloudflare"
 description: "SidVicious_exe is a self-hosted Discord roadie forked from Slate with the film stack removed: Claude via AI Gateway, web search, a Vectorize knowledge base, and image generation across Workers AI and gateway models, with a deliberately irreverent personality."
+seoDescription: "SidVicious_exe is a self-hosted Discord roadie forked from Slate: Claude via AI Gateway, web search, a Vectorize knowledge base, and image generation."
 pubDate: 2026-06-25
 updatedDate: 2026-07-05
 tags: ["discord", "ai", "cloudflare", "side-project"]

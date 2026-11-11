@@ -14,7 +14,7 @@ for (const post of posts) {
 
 const tags = [...tagCounts.entries()].sort(([a], [b]) => a.localeCompare(b));
 ---
-<BaseLayout title="Tags, skyphusion.net" description="Browse posts by tag on skyphusion.net">
+<BaseLayout title="Tags, skyphusion.net" description="Browse every skyphusion.net post by tag: Cloudflare, AI, email, film, MUDs, WordPress and more, from the open source projects of Skyphusion Labs.">
   <h1>Tags</h1>
   {tags.length === 0 ? (
     <p class="muted">No tags yet.</p>

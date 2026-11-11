@@ -1,6 +1,7 @@
 ---
 title: "security-audit: an adversarial LLM gate you can run on every PR"
 description: "Skyphusion Labs published @skyphusion/security-audit: adversarial LLM reviews of GitHub PRs and full repos through Cloudflare Workers AI and AI Gateway. Conrad Rockenhaus covers pr vs repo mode, the public/private data boundary, redact hygiene that must not eat real code, and why a gate must be able to go red."
+seoDescription: "Skyphusion Labs published @skyphusion/security-audit: adversarial LLM reviews of GitHub PRs and full repos through Cloudflare Workers AI and AI Gateway."
 pubDate: 2026-08-04
 tags: ["cloudflare", "ai", "side-project"]
 draft: false

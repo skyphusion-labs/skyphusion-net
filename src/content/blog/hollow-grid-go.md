@@ -1,6 +1,7 @@
 ---
 title: "The Hollow Grid, in Go: Rust Choir ships"
 description: "hollow-grid-go is a from-scratch Go port of the Hollow Grid world server. It passes the upstream smoke.mjs conformance suite, runs in production as Rust Choir (the third federated world on the Grid), and proves the wire protocol is language-agnostic. Notes on the phase-by-phase scoreboard, the login cascade that started broken, federation bugs that echoed the TypeScript service-binding lesson, and what still has rough edges."
+seoDescription: "hollow-grid-go is a from-scratch Go port of the Hollow Grid world server."
 pubDate: 2026-07-09
 tags: ["go", "mud", "federation", "websockets", "side-project"]
 draft: false
