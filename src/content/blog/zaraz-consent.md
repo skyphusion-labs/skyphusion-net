@@ -1,5 +1,6 @@
 ---
 title: "Zaraz Consent: one button, Cloudflare's modal, and a hard limit"
+seoTitle: "Zaraz Consent for WordPress: reopen Cloudflare's modal"
 description: "zaraz-consent v0.1.0 is a GPL must-use WordPress drop-in. It reopens the Cloudflare Zaraz consent modal and reads the cf_consent cookie. It does not gate scripts. Zaraz can gate only Zaraz tools, and a modal over unassigned tools gates nothing."
 seoDescription: "zaraz-consent v0.1.0 is a GPL must-use WordPress drop-in. It reopens the Cloudflare Zaraz consent modal and reads the cf_consent cookie."
 pubDate: 2026-11-08T18:00:00.000Z

@@ -1,5 +1,6 @@
 ---
 title: "The Vivijure constellation: every engine in my open source AI film studio"
+seoTitle: "Vivijure: every engine in the open source AI film studio"
 description: "A full tour of the Vivijure constellation by Conrad Rockenhaus of Skyphusion Labs: the vivijure Studio control plane, CPU media containers on your own iron, the Slate Discord screenwriter, the vivijure-backend RunPod GPU engine, the vivijure-local-12gb and vivijure-local-16gb consumer GPU doors, cloud i2v modules, and the vivijure-musetalk, vivijure-upscale, and vivijure-audio-upscale finish engines. All AGPL-3.0, all on GitHub, and after a two-week hardening sprint the studio is almost ready for full public release."
 seoDescription: "A tour of the Vivijure constellation: Studio control plane, CPU media containers, the Slate screenwriter, the RunPod GPU engine, own-GPU doors, finish engines."
 pubDate: 2026-07-05

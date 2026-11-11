@@ -1,5 +1,6 @@
 ---
 title: "Vivijure runs anywhere now: Cloudflare, your home box, or any cloud server"
+seoTitle: "Vivijure runs anywhere: Cloudflare, a home box, any cloud"
 description: "The Vivijure control panel is no longer Cloudflare-only. Conrad Rockenhaus walks the constellation after the host split: vivijure-cf on Workers, vivijure-local on Docker (home PC or any cloud VM), vivijure-core unifying both, vivijure-mcp for agents, plus Slate, RunPod, own-GPU doors, and the finish engines. Same studio API either way."
 seoDescription: "The Vivijure control panel is no longer Cloudflare-only: vivijure-cf on Workers, vivijure-local on Docker, vivijure-core under both. Same studio API either way."
 pubDate: 2026-07-13
@@ -97,7 +98,7 @@ There is still rough edge. Vivijure is not a polished public release yet. Standi
 
 ## Where to go
 
-- Product site: [vivijure.com](https://vivijure.com)
+- Product site: [vivijure.dev](https://vivijure.dev/)
 - Constellation map: [github.com/skyphusion-labs/vivijure](https://github.com/skyphusion-labs/vivijure)
 - Cloudflare host: [vivijure-cf](https://github.com/skyphusion-labs/vivijure-cf)
 - Self-hosted host: [vivijure-local](https://github.com/skyphusion-labs/vivijure-local) ([quickstart](https://github.com/skyphusion-labs/vivijure-local/blob/main/docs/quickstart.md))

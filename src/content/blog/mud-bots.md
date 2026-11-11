@@ -1,5 +1,6 @@
 ---
 title: "mud-bots: AI inhabitants that make real moral choices in The Hollow Grid"
+seoTitle: "mud-bots: AI players that make moral choices in a MUD"
 description: "mud-bots is my open source suite of AI players for The Hollow Grid, the Cloudflare Workers MUD from Skyphusion Labs. Open-source models on Workers AI log in like human players, read the structured event channel, and face the game's real moral choices: free the caged or take the loot, defend the refugee or join the strong. Notes from Conrad Rockenhaus on the thesis, the two bots that chose well from opposite directions, and why the bots double as live QA."
 seoDescription: "mud-bots is my open source suite of AI players for The Hollow Grid, the Cloudflare Workers MUD from Skyphusion Labs."
 pubDate: 2026-07-05

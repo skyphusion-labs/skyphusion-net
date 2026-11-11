@@ -1,5 +1,6 @@
 ---
 title: "Slate: co-writing films in Discord, shipping them to Vivijure"
+seoTitle: "Slate: co-write films in Discord, render them in Vivijure"
 description: "Slate is the Discord front door to Vivijure: a collaborative screenwriter assistant that keeps a structured storyboard brief in channel, generates portraits and thumbnails, searches the web and a knowledge base, and submits finished bundles to the Vivijure studio API when the crew is ready."
 seoDescription: "Slate is the Discord front door to Vivijure: a screenwriter assistant that keeps a storyboard in channel and submits finished bundles to the studio API."
 pubDate: 2026-06-25

@@ -1,5 +1,6 @@
 ---
 title: "Prism is open: sign up, bring your own Cloudflare AI Gateway"
+seoTitle: "Prism public signup: bring your own Cloudflare AI Gateway"
 description: "play.skyphusion.org is a public Prism deploy now: first-party accounts, no Cloudflare Access wall, and mandatory per-user BYOK. Conrad Rockenhaus explains AUTH_MODE=public, fail-closed billing, what self-host still looks like, and how the model catalog grew after the cutover."
 seoDescription: "play.skyphusion.org is a public Prism deploy now: first-party accounts, no Cloudflare Access wall, and mandatory per-user BYOK."
 pubDate: 2026-08-04

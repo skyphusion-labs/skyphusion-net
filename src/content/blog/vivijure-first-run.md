@@ -1,5 +1,6 @@
 ---
 title: "Vivijure's first full run, and the stall that fixed itself"
+seoTitle: "Vivijure's first full film run, rendered end to end"
 description: "The first film rendered end to end on Vivijure Studio: NEON HALFLIFE, a silent 1080p ten-shot cyberpunk render on a self-hosted GPU. The point is not the picture; it is that the first unattended run came out clean (zero clips dropped) and then healed its own finish-phase stall across a session restart with nobody watching. Notes on why the studio ships silent by default, and why a system recovering itself is the milestone worth showing."
 seoDescription: "The first film rendered end to end on Vivijure Studio: NEON HALFLIFE, a silent 1080p ten-shot cyberpunk render on a self-hosted GPU."
 pubDate: 2026-06-19

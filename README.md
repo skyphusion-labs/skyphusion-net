@@ -112,7 +112,7 @@ None. The site loads no analytics script. The self-hosted Umami tag was removed 
 - **RSS:** all non-draft posts via `@astrojs/rss`.
 - **Sitemap:** `@astrojs/sitemap` with `lastmod` from frontmatter via `scripts/post-lastmod.mjs` (`/sitemap-index.xml`).
 - **llms.txt:** `public/llms.txt` at `/llms.txt`.
-- **Google Search Console (operator):** add property `https://skyphusion.net/`, verify by DNS TXT or HTML file under `public/`, then submit `https://skyphusion.net/sitemap-index.xml`. Repeat for `https://skyphusion.org/` (`/sitemap.xml`) and `https://vivijure.com/` (`/sitemap.xml`) if not already claimed. Domain properties prefer DNS verification once per zone.
+- **Google Search Console (operator):** add property `https://skyphusion.net/`, verify by DNS TXT or HTML file under `public/`, then submit `https://skyphusion.net/sitemap-index.xml`. Repeat for `https://skyphusion.org/` (`/sitemap.xml`), `https://vivijure.dev/` (`/sitemap.xml`, the OSS site's home), and `https://vivijure.com/` as a separate property, if not already claimed. Domain properties prefer DNS verification once per zone.
 
 ## Stack
 

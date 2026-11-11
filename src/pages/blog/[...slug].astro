@@ -46,7 +46,7 @@ const jsonLd = [
 ];
 ---
 <BaseLayout
-  title={`${post.data.title}, skyphusion.net`}
+  title={`${post.data.seoTitle ?? post.data.title}, skyphusion.net`}
   description={post.data.seoDescription ?? post.data.description}
   ogType="article"
   ogImage={post.data.image}
