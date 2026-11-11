@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- **feat(site): the projects page covers the current lineup (#153).**
+  - New cards: Postern (with posternonline.com and the demo), Vivijure (with vivijure.dev, the OSS home) plus vivijure-cf, vivijure-local, vivijure-core and vivijure-mcp, GGC (ggc.sh), and a short teaser for the forex trading bot in development (no link).
+  - Each one-liner is taken from the project's own README or GitHub description.
+  - Archived repos (vivijure-musetalk, vivijure-audio-upscale) are dropped.
+  - A card can carry extra links (the 16GB backend; Prism iOS and Android; the Hollow Grid Python, C and assembly ports).
+  - The JSON-LD stops calling every project TypeScript: `programmingLanguage` is GitHub's measured primary language, `codeRepository` appears only for public source, and `url` prefers the project's own site.
+  - `projects.test.ts` checks that the trading bot entry never gets a link, that no archived repository is listed, and that repository links stay in the public org.
+
 - **fix(site): audit fixes (#153).**
   - The analytics tag is removed: its host, analytics.skyphusion.org, no longer resolves. The privacy notice and the footer now say the site loads no analytics.
   - /about/ and /privacy/ get their titles and descriptions. Their layout read top-level props, and a markdown page passes its frontmatter as `Astro.props.frontmatter`.
