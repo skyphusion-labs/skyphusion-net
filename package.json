@@ -25,7 +25,8 @@
     "astro": "astro",
     "typecheck": "astro check",
     "generate-types": "wrangler types",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.6",
