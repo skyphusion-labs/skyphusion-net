@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Giscus from '../../components/Giscus.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import ProjectLinks from '../../components/ProjectLinks.astro';
 import { relatedPosts } from '../../lib/posts';
@@ -83,7 +82,6 @@ const jsonLd = [
   </article>
   <ProjectLinks postPath={`/blog/${post.id}/`} />
   <RelatedPosts posts={related} />
-  <Giscus />
   <p class="back"><a href="/blog/">&larr; All posts</a></p>
 </BaseLayout>
 

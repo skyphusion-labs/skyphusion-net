@@ -13,16 +13,9 @@ It is not the only stack someone might want.
 
 **[hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go)** is a from-scratch Go port of the *world half*: a single autonomous game world that speaks the language-agnostic wire protocol in [`the-hollow-grid/docs/protocol.md`](https://github.com/skyphusion-labs/the-hollow-grid/blob/main/docs/protocol.md) and joins the federation as a node when `GRID_HUB_URL` is set. Existing clients work unchanged: `wscat`, [`mud-bots`](/blog/mud-bots/)'s `bot.mjs`, and the upstream `smoke.mjs` suite all connect to `/ws` the same way they connect to hollow.skyphusion.org.
 
-The port's definition of done was never "feature parity by eye." It was **green on `smoke.mjs`**, phase by phase, asserting on `@event` lines and never on English prose. As of **July 9, 2026**, production **Rust Choir** (`wss://rustchoir.skyphusion.org/ws`) scores **158 ok / 0 fail / 1 skip** against live hub and Dustfall. The lone skip is a holding-pit warden grace wall-clock wait that slow CI boxes time out on; the game behavior is implemented.
+The port's definition of done was never "feature parity by eye." It was **green on `smoke.mjs`**, phase by phase, asserting on `@event` lines and never on English prose. As of **July 9, 2026**, production **Rust Choir** scored **158 ok / 0 fail / 1 skip** against live hub and Dustfall. The lone skip is a holding-pit warden grace wall-clock wait that slow CI boxes time out on; the game behavior is implemented.
 
-You can play it now:
-
-```sh
-wscat -c wss://rustchoir.skyphusion.org/ws
-curl -sf https://rustchoir.skyphusion.org/health/deep
-```
-
-Or pull the GHCR image and run your own node: `ghcr.io/skyphusion-labs/hollow-grid-go:latest`.
+Rust Choir is offline, moving to containers. To run a node yourself, pull the GHCR image: `ghcr.io/skyphusion-labs/hollow-grid-go:latest`.
 
 ## Why port at all
 
@@ -74,7 +67,7 @@ The [original Hollow Grid write-up](/blog/the-hollow-grid/) told the story of ex
 
 **Hub push drops under load.** Cross-player `tell`/`reply` and gridcasts were lost when a session's 64-slot push buffer filled during federation traffic (`fix(transport): block on hub push instead of dropping`). The fix was to block delivery until the session reads the message, not to drop silently when the buffer is full. Same lesson, different runtime: async boundaries punish assumptions that worked in-process.
 
-The **smoke parity week** (July 8) was a chain of these: listen preferring local node memory for echoes when the hub is remote, kapo join morality and dais redemption arc, mob respawn on the world tick, reliable tell without blocking broadcasts, tide-gated medic behavior matching upstream, warden grace window and antidote affordance for the holding-pit rescue. Each fix was driven by pointing `smoke.mjs` at `wss://rustchoir.skyphusion.org/ws` with `DUSTFALL_URL` set, not by guessing.
+The **smoke parity week** (July 8) was a chain of these: listen preferring local node memory for echoes when the hub is remote, kapo join morality and dais redemption arc, mob respawn on the world tick, reliable tell without blocking broadcasts, tide-gated medic behavior matching upstream, warden grace window and antidote affordance for the holding-pit rescue. Each fix was driven by pointing `smoke.mjs` at the production Rust Choir node with `DUSTFALL_URL` set, not by guessing.
 
 CI had its own archaeology, and a lesson I keep relearning. The repo started with a Jenkins pipeline on mindcrime. Jenkins is free software and I ran it for years, but I got sick of spending my time troubleshooting Jenkins instead of building. Agents offline, plugin rot, queue stalls, "why did this job not fire" at 2am: that is not CI, that is a second job. When mindcrime was decommissioned, I did not mourn it. The Jenkinsfile dropped ([#8](https://github.com/skyphusion-labs/hollow-grid-go/pull/8)), release image builds moved to GitHub Actions with GHCR push and auto-dispatch of `rust-choir-roll` to the fleet ([#30](https://github.com/skyphusion-labs/hollow-grid-go/pull/30)), and the scoreboard stayed the same. Only the plumbing moved.
 
@@ -90,11 +83,11 @@ Three worlds now share one Grid Hub:
 |-------|-----|--------|
 | The Hollow Grid | [hollow.skyphusion.org](https://hollow.skyphusion.org) | TypeScript / Workers |
 | Dustfall | [dustfall.skyphusion.org](https://dustfall.skyphusion.org) | TypeScript / Workers |
-| **Rust Choir** | rustchoir.skyphusion.org | **Go / fleet container** |
+| **Rust Choir** | offline, moving to containers | **Go** |
 
 Make a character in one, `travel` to another, and name, level, and standing follow through the hub registry. [`mud-bots`](/blog/mud-bots/) load-tests all three; fleet layout lives in the org's runbooks.
 
-Production env (never commit tokens): `WORLD_URL=wss://rustchoir.skyphusion.org/ws`, `GRID_HUB_URL=https://grid-hub.skyphusion.org/rpc`, plus `GRID_HUB_TOKEN` from secrets escrow.
+Production env (never commit tokens): `WORLD_URL=wss://<your-world-host>/ws`, `GRID_HUB_URL=https://grid-hub.skyphusion.org/rpc`, plus `GRID_HUB_TOKEN` from secrets escrow.
 
 ## What is still rough
 
@@ -132,4 +125,4 @@ The Hollow Grid was always meant to be forked, ported, and extended. The TypeScr
 
 The moral spine, the no-silent-lies movement rule, the federation treated as canon: all of it ported intact. The network that outlived its makers now has a node written in Go, asking what the Grid will remember.
 
-Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). Play: rustchoir.skyphusion.org.
+Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). Rust Choir itself is offline, moving to containers.

@@ -13,7 +13,7 @@ Engineering blog of [Conrad Rockenhaus](https://github.com/skyphusion) at **http
 | XML sitemap + per-post `lastmod` | **Installed** | `/sitemap-index.xml`, `scripts/post-lastmod.mjs` |
 | SEO (canonical, OG/Twitter, JSON-LD) | **Installed** | `src/lib/seo.ts`, `BaseLayout.astro` |
 | Related posts (tag overlap) | **Installed** | `src/lib/posts.ts`, post template |
-| Giscus comments | **Installed** | `src/components/Giscus.astro`, `src/config/giscus.ts` |
+| Comments | **None** | Giscus was removed (no discussion was ever posted); `giscus.app` is on the link gate's forbidden list |
 | Analytics | **None** | Umami was removed (its host no longer resolves); the site loads no analytics script |
 | AI Search ask widget | **Installed** | `/search/`, `public/ask-widget.{js,css}` |
 | `www` → apex redirect | **Installed** | Edge Dynamic Redirect; `src/middleware.ts` is a fallback for non-static paths only |
@@ -35,7 +35,6 @@ Monthly infra cost for the site itself: **$0** on Cloudflare Workers free tier. 
 ├─────────────────────────────────────────────────────────────────────────┤
 │  /blog/*          markdown → Astro content collection → static pages    │
 │  /search/         ask-widget.js ──POST──► search.vivijure.com/ask     │
-│  post pages       Giscus ──► GitHub Discussions (skyphusion-labs repo)  │
 └─────────────────────────────────────────────────────────────────────────┘
          merge to main
               │
@@ -93,9 +92,9 @@ Turnstile edit by hand); regenerate the diff with
 `node scripts/check-ask-widget.mjs --diff > scripts/ask-widget.divergence.diff`; run Vitest; commit
 all together. Fix widget bugs upstream in search-mcp, release, then bump here.
 
-### Comments (Giscus)
+### Comments
 
-Post pages include `<Giscus />`. Configuration is in `src/config/giscus.ts` (repo, category IDs, `pathname` mapping, `noborder_dark` theme). Requires GitHub Discussions on `skyphusion-labs/skyphusion-net` and the [Giscus GitHub App](https://github.com/apps/giscus) installed on that repo.
+None. Giscus was removed in skyphusion-net#153: the repository never had a discussion, and the widget loaded a third party (giscus.app and GitHub) on every post. `scripts/check-links.mjs` lists `giscus.app` in `FORBIDDEN_HOSTS`, so CI fails if it comes back. GitHub Discussions stays enabled on the repository; that is a setting, not code.
 
 ### Analytics
 
@@ -137,7 +136,7 @@ None. The site loads no analytics script. The self-hosted Umami tag was removed 
 | `/about/` | `src/pages/about.md` | About page |
 | `/projects/` | `src/pages/projects.astro` | Curated project cards |
 | `/blog/` | `src/pages/blog/index.astro` | All posts |
-| `/blog/<slug>/` | `src/pages/blog/[...slug].astro` | Post + related + Giscus |
+| `/blog/<slug>/` | `src/pages/blog/[...slug].astro` | Post + related posts |
 | `/blog/tags/` | `src/pages/blog/tags/index.astro` | Tag index |
 | `/blog/tags/<tag>/` | `src/pages/blog/tags/[tag].astro` | Posts per tag |
 | `/search/` | `src/pages/search.astro` | AI Search ask widget |
@@ -211,8 +210,7 @@ skyphusion-net/
 ├── src/
 │   ├── content.config.ts         # blog collection Zod schema
 │   ├── content/blog/*.md         # posts
-│   ├── config/giscus.ts          # Giscus widget IDs
-│   ├── components/               # Giscus, RelatedPosts
+│   ├── components/               # RelatedPosts
 │   ├── layouts/                # BaseLayout, AboutLayout
 │   ├── lib/                    # seo.ts, projects.ts, posts.ts
 │   ├── middleware.ts             # www fallback only; does not run on prerendered HTML
@@ -238,7 +236,6 @@ Custom domains are in `wrangler.jsonc` (`skyphusion.net`, `www.skyphusion.net`).
 | Homepage hero / featured post | `src/pages/index.astro` (`FEATURED_SLUG`) |
 | Project cards | `src/lib/projects.ts` |
 | Colors / typography | `:root` variables in `BaseLayout.astro` |
-| Giscus mapping | `src/config/giscus.ts` |
 | Search endpoint / Turnstile key | `src/pages/search.astro` |
 | Allowed frontmatter fields | `src/content.config.ts` |
 | SEO defaults | `src/lib/seo.ts` |

@@ -3,7 +3,9 @@
 // No network, so it cannot flap. Exit 1 on any problem, listed by page:
 //   - an internal link to a page or file that the build did not produce;
 //   - an internal page link without its trailing slash (each one cost a 307 on the live site);
-//   - a link to a host on RETIRED_HOSTS (it no longer resolves; keep the text, drop the link);
+//   - any mention, linked or not, of a host on RETIRED_HOSTS (it no longer resolves; Conrad
+//     2026-11-11: delete the hostname and say the service is offline) or FORBIDDEN_HOSTS
+//     (a third party the site must never load again, such as giscus.app);
 //   - a page with an empty <title>, or no meta description, or one over 160 characters.
 // Exit 2 when it cannot measure (no dist, or no HTML in it).
 // Usage: node scripts/check-links.mjs [distDir]
@@ -19,6 +21,8 @@ export const RETIRED_HOSTS = [
   "verdigris.skyphusion.org",
   "ferrite.skyphusion.org",
 ];
+// Third parties the site must never reference again. Privacy is the primary goal (#153).
+export const FORBIDDEN_HOSTS = ["giscus.app"];
 const ORIGIN = "https://skyphusion.net";
 
 function walk(dir) {
@@ -43,6 +47,9 @@ export function checkPage(page, html, exists) {
   const desc = [...html.matchAll(/<meta\b[^>]*>/gi)].map((m) => m[0]).find((t) => (attr(t, "name") || "").toLowerCase() === "description");
   if (!desc || !(attr(desc, "content") || "").trim()) problems.push(`${page}: no meta description`);
   else if ((attr(desc, "content") || "").length > 160) problems.push(`${page}: meta description is ${(attr(desc, "content") || "").length} characters, over 160`);
+  const lower = html.toLowerCase();
+  for (const host of RETIRED_HOSTS) if (lower.includes(host)) problems.push(`${page}: names retired host ${host}`);
+  for (const host of FORBIDDEN_HOSTS) if (lower.includes(host)) problems.push(`${page}: references forbidden host ${host}`);
   for (const m of html.matchAll(/<(a|link)\b[^>]*>/gi)) {
     const tag = m[0];
     if (m[1].toLowerCase() === "link" && !/rel=["'](alternate|stylesheet|icon|canonical)/i.test(tag)) continue;
@@ -50,7 +57,6 @@ export function checkPage(page, html, exists) {
     if (!href || /^(mailto:|tel:|#|javascript:|data:)/i.test(href)) continue;
     let url;
     try { url = new URL(href, `${ORIGIN}/`); } catch { problems.push(`${page}: unparsable link ${href}`); continue; }
-    if (RETIRED_HOSTS.includes(url.hostname)) { problems.push(`${page}: links retired host ${url.hostname} (${href})`); continue; }
     if (url.origin !== ORIGIN) continue;
     const path = decodeURIComponent(url.pathname);
     if (extname(path)) { if (!exists(path.slice(1))) problems.push(`${page}: links missing file ${path}`); continue; }

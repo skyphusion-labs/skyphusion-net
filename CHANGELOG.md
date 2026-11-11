@@ -10,6 +10,11 @@
   - `/atom.xml`: an Atom 1.0 feed beside RSS, advertised in the page head.
   - Each post links the projects it covers, from `src/lib/projects.ts` (`ProjectLinks.astro`).
 
+- **fix(site): offline hosts are named as offline, and Giscus is removed (#153).** Conrad, 2026-11-11.
+  - Hostnames that do not resolve are deleted wherever they appeared (demo.vivijure.com, common-thread, common-thread-backend, rustchoir, verdigris). Each place now says the service is offline. The Hollow Grid language worlds are "offline, moving to containers". Common Thread's hosted UI and API are "offline, moving to a container with Hyperdrive". The Vivijure demo is offline, and those lines point at https://vivijure.dev/. Measured results (for example Rust Choir's 158 ok as of July 9) keep their numbers and lose only the hostname.
+  - Giscus comments are removed: `Giscus.astro`, `src/config/giscus.ts` and the include on post pages. The repository never had a discussion, and the widget loaded a third party on every post. The privacy notice no longer describes a comment box.
+  - `scripts/check-links.mjs` now fails on any mention of a retired host, linked or not, and on any reference to `giscus.app` (`FORBIDDEN_HOSTS`).
+
 - **fix(site): audit fixes (#153).**
   - The analytics tag is removed: its host, analytics.skyphusion.org, no longer resolves. The privacy notice and the footer now say the site loads no analytics.
   - /about/ and /privacy/ get their titles and descriptions. Their layout read top-level props, and a markdown page passes its frontmatter as `Astro.props.frontmatter`.

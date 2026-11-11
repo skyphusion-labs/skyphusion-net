@@ -141,7 +141,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'hollow-grid-go',
     description:
-      'Rust Choir: Go world-server port of The Hollow Grid. Same smoke suite and wire protocol, fleet-hosted at rustchoir.skyphusion.org.',
+      'Rust Choir: Go world-server port of The Hollow Grid. Same smoke suite and wire protocol, offline, moving to containers.',
     repo: 'https://github.com/skyphusion-labs/hollow-grid-go',
     post: '/blog/hollow-grid-ports/',
     tags: ['go', 'mud', 'federation', 'websockets'],
@@ -149,7 +149,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'hollow-grid-py',
     description:
-      'Verdigris Spool: Python world-server port of The Hollow Grid. Conformance-green on the shared smoke suite; live at verdigris.skyphusion.org.',
+      'Verdigris Spool: Python world-server port of The Hollow Grid. Conformance-green on the shared smoke suite; offline, moving to containers.',
     repo: 'https://github.com/skyphusion-labs/hollow-grid-py',
     post: '/blog/hollow-grid-ports/',
     tags: ['python', 'mud', 'federation', 'websockets'],
