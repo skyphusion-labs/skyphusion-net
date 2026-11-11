@@ -1,238 +1,251 @@
+// The projects page (/projects/) and its ItemList JSON-LD are built from this list.
+// Each one-liner is taken from the project's own README or GitHub description (read 2026-11-11,
+// skyphusion-net#153). Claim nothing the code does not do. Every URL here must answer: the link
+// gate (scripts/check-links.mjs) fails the build on a retired host.
 export type Project = {
   name: string;
   description: string;
-  repo: string;
+  /** Public source. Omit for a private or not-yet-public project: the page then shows no GitHub link. */
+  repo?: string;
+  /** The project's own site. */
+  site?: string;
+  /** A live instance a visitor can use. */
   demo?: string;
+  /** A write-up on this blog, as a site path with its trailing slash. */
   post?: string;
+  /** GitHub's measured primary language, when there is one. */
+  language?: string;
+  /** Shown as a badge. */
+  status?: 'in development';
+  /** More links for a card that covers several repositories. */
+  more?: { label: string; url: string }[];
   tags: string[];
 };
 
+const GH = 'https://github.com/skyphusion-labs/';
+
 export const PROJECTS: Project[] = [
   {
-    name: 'Prism',
+    name: 'Postern',
     description:
-      'Multimodal AI playground on Cloudflare Workers (1.0): public signup with per-user AI Gateway BYOK, ~93 models, chat, voice, RAG, projects, compact, streaming, and durable video/music jobs via Workflows.',
-    repo: 'https://github.com/skyphusion-labs/prism',
-    demo: 'https://play.skyphusion.org',
-    post: '/blog/prism-v1/',
-    tags: ['cloudflare', 'ai', 'llm', 'rag', 'workflows'],
-  },
-  {
-    name: 'Prism control plane',
-    description:
-      'Metered commercial plane for Prism: enroll, plan entitlements, prepaid balance, rate limits, and OpenAI-shaped doors. Does not store prompts. Native iOS/Android talk here.',
-    repo: 'https://github.com/skyphusion-labs/prism-control-plane',
-    post: '/blog/prism-v1/',
-    tags: ['cloudflare', 'ai', 'llm'],
-  },
-  {
-    name: 'Prism for iOS',
-    description:
-      'Native iOS client for Prism against the control plane: chat, image, video, audio, music, StoreKit credit packs.',
-    repo: 'https://github.com/skyphusion-labs/prism-ios',
-    post: '/blog/prism-v1/',
-    tags: ['cloudflare', 'ai', 'llm', 'ios'],
-  },
-  {
-    name: 'Prism for Android',
-    description:
-      'Native Android client for Prism against the control plane: same commercial contract as iOS.',
-    repo: 'https://github.com/skyphusion-labs/prism-android',
-    post: '/blog/prism-v1/',
-    tags: ['cloudflare', 'ai', 'llm', 'android'],
-  },
-  {
-    name: 'prism-mcp',
-    description:
-      'MIT MCP door for the Prism playground: agents get full HTTP /api/* parity (chat, multimodal, RAG, compact, jobs). Session cookie stays on the Worker.',
-    repo: 'https://github.com/skyphusion-labs/prism-mcp',
-    post: '/blog/prism-v1/',
-    tags: ['cloudflare', 'ai', 'llm', 'mcp'],
+      'Email for humans and agents: a self-hostable mailbox on Cloudflare that sends, receives, stores and searches mail, with one API for agents (including MCP) and IMAP and webmail for people. Each identity sends as itself.',
+    repo: `${GH}postern`,
+    site: 'https://posternonline.com/',
+    demo: 'https://demo.posternonline.com/',
+    post: '/blog/postern-v1-7/',
+    language: 'TypeScript',
+    tags: ['email', 'cloudflare', 'mcp', 'smtp', 'self-hosted'],
   },
   {
     name: 'Vivijure',
     description:
-      'Self-hosted AI film studio on Cloudflare Workers: planner UI, cast, render orchestration, and a module host. Rent GPU time by the second, run on your own card, call cloud i2v APIs, and keep assembly on CPU containers you host.',
-    repo: 'https://github.com/skyphusion-labs/vivijure',
+      'A self-hosted, AGPL-3.0 AI film studio: storyboard, cast, render orchestration and a module host. Run the control panel on Cloudflare (vivijure-cf) or on a home computer or any cloud server (vivijure-local).',
+    repo: `${GH}vivijure`,
+    site: 'https://vivijure.dev/',
     post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'cloudflare', 'runpod', 'diffusion'],
+    tags: ['vivijure', 'ai', 'film', 'cloudflare', 'self-hosted'],
   },
   {
-    name: 'Vivijure Backend',
+    name: 'vivijure-cf',
     description:
-      'The datacenter GPU render engine for Vivijure on RunPod: LoRA training, SDXL keyframes, Wan image-to-video, and a live release gate that renders before it promotes.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-backend',
+      'The Vivijure control panel on Cloudflare Workers: storyboard, cast, modules and render orchestration.',
+    repo: `${GH}vivijure-cf`,
     post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'runpod', 'diffusion'],
-  },
-  {
-    name: 'Vivijure Local 12GB',
-    description:
-      'Own-GPU render door for Vivijure: LTX-Video image-to-video on a single consumer card with a proven 12GB VRAM floor, reached over a Cloudflare tunnel.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-local-12gb',
-    post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'diffusion'],
-  },
-  {
-    name: 'Vivijure Local 16GB',
-    description:
-      'The fidelity own-GPU door for Vivijure: CogVideoX-5B-I2V on a single consumer card with a proven 16GB VRAM floor, measured on real silicon.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-local-16gb',
-    post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'diffusion'],
-  },
-  {
-    name: 'Vivijure MuseTalk',
-    description:
-      'Lip-sync finish engine for Vivijure: MuseTalk on a RunPod GPU takes a face clip and an audio track and returns a mouth that matches the words.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-musetalk',
-    post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'lip-sync', 'runpod'],
-  },
-  {
-    name: 'Vivijure Upscale',
-    description:
-      'Video upscale finish engine for Vivijure: 2x or 4x Real-ESRGAN on PyTorch/CUDA, GPU-bound with streamed frames and NVENC encoding.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-upscale',
-    post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'runpod'],
-  },
-  {
-    name: 'Vivijure Audio Upscale',
-    description:
-      'Speech cleanup finish engine for Vivijure: resemble-enhance on a RunPod GPU denoises and restores dialogue before lip-sync, so voices come out clear and full.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-audio-upscale',
-    post: '/blog/vivijure-constellation/',
-    tags: ['vivijure', 'ai', 'gpu', 'runpod'],
-  },
-  {
-    name: 'Slate',
-    description:
-      'Collaborative screenwriter assistant for Discord: storyboard brief, portraits, search, and render submission to Vivijure when the crew is ready.',
-    repo: 'https://github.com/skyphusion-labs/slate',
-    post: '/blog/slate/',
-    tags: ['vivijure', 'discord', 'ai', 'cloudflare', 'film'],
-  },
-  {
-    name: 'SidVicious_exe',
-    description:
-      'Punk rock Discord roadie on Cloudflare: Claude, web search, knowledge base, and image generation. Slate without the film stack.',
-    repo: 'https://github.com/skyphusion-labs/SidVicious_exe',
-    post: '/blog/sidvicious-exe/',
-    tags: ['discord', 'ai', 'cloudflare'],
-  },
-  {
-    name: 'Common Thread',
-    description:
-      'Methodology paper plus Workers implementation for sockpuppet attribution from public behavioral signals: archive, extract, reason, export evidence packets.',
-    repo: 'https://github.com/skyphusion-labs/common-thread',
-    post: '/blog/common-thread/',
-    tags: ['cloudflare', 'ai', 'osint'],
-  },
-  {
-    name: 'The Hollow Grid',
-    description:
-      'Multiplayer MUD on Cloudflare Workers and Durable Objects: federated worlds, shared character, $0 at idle.',
-    repo: 'https://github.com/skyphusion-labs/the-hollow-grid',
-    demo: 'https://hollow.skyphusion.org',
-    post: '/blog/the-hollow-grid/',
-    tags: ['cloudflare', 'durable-objects', 'mud', 'federation'],
-  },
-  {
-    name: 'hollow-grid-go',
-    description:
-      'Rust Choir: Go world-server port of The Hollow Grid. Same smoke suite and wire protocol, offline, moving to containers.',
-    repo: 'https://github.com/skyphusion-labs/hollow-grid-go',
-    post: '/blog/hollow-grid-ports/',
-    tags: ['go', 'mud', 'federation', 'websockets'],
-  },
-  {
-    name: 'hollow-grid-py',
-    description:
-      'Verdigris Spool: Python world-server port of The Hollow Grid. Conformance-green on the shared smoke suite; offline, moving to containers.',
-    repo: 'https://github.com/skyphusion-labs/hollow-grid-py',
-    post: '/blog/hollow-grid-ports/',
-    tags: ['python', 'mud', 'federation', 'websockets'],
-  },
-  {
-    name: 'hollow-grid-c',
-    description:
-      'Ferrite Wastes: C world-server port of The Hollow Grid on bare metal, same hub federation contract as the TypeScript and language ports.',
-    repo: 'https://github.com/skyphusion-labs/hollow-grid-c',
-    post: '/blog/hollow-grid-ports/',
-    tags: ['c', 'mud', 'federation'],
-  },
-  {
-    name: 'hollow-grid-asm',
-    description:
-      'Basalt Relay: x86-64 NASM world-server port of The Hollow Grid. Protocol-first; image builds gated until the NASM 3 / PIE path is clean.',
-    repo: 'https://github.com/skyphusion-labs/hollow-grid-asm',
-    post: '/blog/hollow-grid-ports/',
-    tags: ['assembly', 'mud', 'federation'],
-  },
-  {
-    name: 'mud-bots',
-    description:
-      'AI inhabitants for The Hollow Grid: open-source models on Workers AI log in like human players, face the game\'s real moral choices, and double as live QA.',
-    repo: 'https://github.com/skyphusion-labs/mud-bots',
-    post: '/blog/mud-bots/',
-    tags: ['mud', 'ai', 'cloudflare', 'llm'],
-  },
-  {
-    name: 'Postern',
-    description:
-      'Self-hostable mailbox on Cloudflare: send and receive, searchable storage, webmail and IMAP, plus a Go SMTP relay for legacy callers. v1.7.0 pages thread reads, splits organize into its own scope, and lets a read-scoped agent credential read the deployment mailbox.',
-    repo: 'https://github.com/skyphusion-labs/postern',
-    demo: 'https://demo.posternonline.com/',
-    post: '/blog/postern-v1-7/',
-    tags: ['cloudflare', 'email', 'smtp', 'go'],
-  },
-  {
-    name: 'Skyphusion AI',
-    description:
-      'GPL WordPress plugin for Workers AI, AI Gateway, and AI Search on the site owner\'s own Cloudflare account. Visitor search, a WordPress AI Client provider, and optional assistant jobs. Plugin fee is zero (v0.6.3).',
-    repo: 'https://github.com/skyphusion-labs/skyphusion-ai',
-    post: '/blog/skyphusion-ai/',
-    tags: ['cloudflare', 'wordpress', 'woocommerce', 'ai'],
-  },
-  {
-    name: 'Zaraz Consent',
-    description:
-      'GPL must-use WordPress drop-in that reopens the Cloudflare Zaraz consent modal and reads the cf_consent cookie. It does not gate scripts. Zaraz can gate only Zaraz tools (v0.1.0).',
-    repo: 'https://github.com/skyphusion-labs/zaraz-consent',
-    post: '/blog/zaraz-consent/',
-    tags: ['cloudflare', 'wordpress'],
-  },
-  {
-    name: 'WordPress on Cloudflare',
-    description:
-      'GPL research matrix and Workers for Platforms framework: many WordPress sites and WooCommerce stores on your own account, provisioned by one command or by a Worker. A cell counts only after a deploy and a test.',
-    repo: 'https://github.com/skyphusion-labs/wordpress-on-cloudflare',
-    post: '/blog/wordpress-on-cloudflare/',
-    tags: ['cloudflare', 'wordpress', 'woocommerce', 'php'],
-  },
-  {
-    name: 'security-audit',
-    description:
-      'Adversarial LLM security audits for GitHub PRs and repos via Cloudflare Workers AI and AI Gateway. Advisory CI layer with secret redaction and a public/private data boundary.',
-    repo: 'https://github.com/skyphusion-labs/security-audit',
-    post: '/blog/security-audit/',
-    tags: ['cloudflare', 'ai', 'side-project'],
-  },
-  {
-    name: 'search-mcp',
-    description:
-      'Cloudflare AI Search toolkit: MCP server, streaming /ask Worker, embeddable ask widget, and git-to-R2 corpus sync for docs and public code.',
-    repo: 'https://github.com/skyphusion-labs/search-mcp',
-    demo: 'https://skyphusion.net/search/',
-    tags: ['cloudflare', 'ai', 'mcp', 'rag'],
+    language: 'TypeScript',
+    tags: ['vivijure', 'cloudflare', 'workers'],
   },
   {
     name: 'vivijure-local',
     description:
-      'Self-hosted Vivijure control panel: Node, SQLite, S3/MinIO, Docker Compose. Same studio API as vivijure-cf without a Cloudflare account.',
-    repo: 'https://github.com/skyphusion-labs/vivijure-local',
+      'The same studio control panel on a home computer or any cloud server: Node, SQLite, and S3-compatible storage.',
+    repo: `${GH}vivijure-local`,
     post: '/blog/vivijure-run-anywhere/',
-    tags: ['vivijure', 'docker', 'self-hosted', 'homelab'],
+    language: 'TypeScript',
+    tags: ['vivijure', 'self-hosted', 'docker'],
+  },
+  {
+    name: 'vivijure-core',
+    description: 'Shared orchestration for both control panels: the module registry and the film pipeline.',
+    repo: `${GH}vivijure-core`,
+    language: 'TypeScript',
+    tags: ['vivijure'],
+  },
+  {
+    name: 'vivijure-mcp',
+    description: 'Drive the film studio API from an agent over MCP. Works with vivijure-cf and vivijure-local.',
+    repo: `${GH}vivijure-mcp`,
+    language: 'TypeScript',
+    tags: ['vivijure', 'mcp'],
+  },
+  {
+    name: 'vivijure-backend',
+    description:
+      'The RunPod GPU render engine for Vivijure: SDXL keyframes, Wan image-to-video, LoRA training and ffmpeg assembly. You deploy it on your own RunPod account.',
+    repo: `${GH}vivijure-backend`,
+    post: '/blog/vivijure-constellation/',
+    language: 'Python',
+    tags: ['vivijure', 'gpu', 'runpod'],
+  },
+  {
+    name: 'vivijure-upscale',
+    description: 'Real-ESRGAN CUDA video upscale, a finish module for Vivijure on RunPod.',
+    repo: `${GH}vivijure-upscale`,
+    language: 'Python',
+    tags: ['vivijure', 'gpu', 'runpod'],
+  },
+  {
+    name: 'vivijure-local-12gb and vivijure-local-16gb',
+    description:
+      'Own-GPU motion backends for Vivijure: LTX-Video on a 12GB card, and CogVideoX-5B on a 16GB card for higher fidelity.',
+    repo: `${GH}vivijure-local-12gb`,
+    more: [{ label: '16GB backend', url: `${GH}vivijure-local-16gb` }],
+    post: '/blog/vivijure-run-anywhere/',
+    language: 'Python',
+    tags: ['vivijure', 'gpu', 'homelab'],
+  },
+  {
+    name: 'Slate',
+    description:
+      'A Discord bot that co-writes a film with you and your friends in chat, then sends it to a Vivijure studio to be made into video.',
+    repo: `${GH}slate`,
+    post: '/blog/slate/',
+    language: 'JavaScript',
+    tags: ['vivijure', 'discord', 'film'],
+  },
+  {
+    name: 'Prism',
+    description:
+      'A multimodal AI playground on one Cloudflare Worker: public signup, bring your own AI Gateway, chat, voice, image, video and music, RAG and projects.',
+    repo: `${GH}prism`,
+    demo: 'https://play.skyphusion.org/',
+    post: '/blog/prism-v1/',
+    language: 'TypeScript',
+    tags: ['ai', 'llm', 'cloudflare', 'rag'],
+  },
+  {
+    name: 'prism-mcp',
+    description:
+      'MIT-licensed MCP door for the Prism playground: agents can chat, generate media, manage RAG documents and poll long jobs without a browser.',
+    repo: `${GH}prism-mcp`,
+    post: '/blog/prism-v1/',
+    language: 'TypeScript',
+    tags: ['mcp', 'ai', 'cloudflare'],
+  },
+  {
+    name: 'Prism control plane, iOS and Android',
+    description:
+      'The metered commercial door for Prism, and the native iOS and Android clients that talk to it. The plane does not store prompts.',
+    repo: `${GH}prism-control-plane`,
+    more: [
+      { label: 'iOS', url: `${GH}prism-ios` },
+      { label: 'Android', url: `${GH}prism-android` },
+    ],
+    post: '/blog/prism-v1/',
+    language: 'TypeScript',
+    tags: ['ai', 'llm', 'cloudflare'],
+  },
+  {
+    name: 'Skyphusion AI',
+    description:
+      'A free WordPress plugin for Cloudflare Workers AI, AI Gateway and AI Search: site search, an optional chat button, and a Cloudflare provider for the WordPress AI Client. Live on WordPress.org.',
+    repo: `${GH}skyphusion-ai`,
+    site: 'https://wordpress.org/plugins/skyphusion-ai/',
+    post: '/blog/skyphusion-ai/',
+    language: 'PHP',
+    tags: ['wordpress', 'woocommerce', 'ai', 'cloudflare'],
+  },
+  {
+    name: 'WordPress on Cloudflare',
+    description:
+      'A framework for running many WordPress sites and WooCommerce stores on your own Cloudflare Workers for Platforms account, and the measured research behind it.',
+    repo: `${GH}wordpress-on-cloudflare`,
+    post: '/blog/wordpress-on-cloudflare/',
+    tags: ['wordpress', 'woocommerce', 'cloudflare', 'php'],
+  },
+  {
+    name: 'Zaraz Consent',
+    description:
+      'A WordPress must-use drop-in that reopens the Cloudflare Zaraz consent modal and reads the consent cookie.',
+    repo: `${GH}zaraz-consent`,
+    post: '/blog/zaraz-consent/',
+    tags: ['wordpress', 'cloudflare'],
+  },
+  {
+    name: 'GGC',
+    description: 'The GGC store at ggc.sh: WooCommerce in a Cloudflare Container behind a Worker.',
+    site: 'https://ggc.sh/',
+    tags: ['woocommerce', 'wordpress', 'cloudflare'],
+  },
+  {
+    name: 'search-mcp',
+    description:
+      'A toolkit for Cloudflare AI Search: an MCP server for agents, a streaming /ask Worker with a docs widget, and git-to-R2 corpus sync. It powers the search on this site.',
+    repo: `${GH}search-mcp`,
+    demo: '/search/',
+    language: 'TypeScript',
+    tags: ['mcp', 'rag', 'cloudflare', 'ai'],
+  },
+  {
+    name: 'security-audit',
+    description: 'Adversarial LLM security audits for GitHub pull requests and repositories, on Workers AI and AI Gateway.',
+    repo: `${GH}security-audit`,
+    post: '/blog/security-audit/',
+    language: 'JavaScript',
+    tags: ['ai', 'cloudflare'],
+  },
+  {
+    name: 'Common Thread',
+    description:
+      'A methodology and reference implementation for sockpuppet attribution from observable behavior, for litigants, journalists and OSINT practitioners. It stops at cluster-level attribution and never identifies natural persons. The hosted service is offline, moving to a container with Hyperdrive.',
+    repo: `${GH}common-thread`,
+    post: '/blog/common-thread/',
+    language: 'TypeScript',
+    tags: ['osint', 'ai', 'cloudflare'],
+  },
+  {
+    name: 'The Hollow Grid',
+    description:
+      'A federated, post-apocalyptic MUD on Cloudflare Workers and Durable Objects. Separate worlds share one Grid. Play at hollow.skyphusion.org and dustfall.skyphusion.org.',
+    repo: `${GH}the-hollow-grid`,
+    demo: 'https://hollow.skyphusion.org/',
+    post: '/blog/the-hollow-grid/',
+    language: 'TypeScript',
+    tags: ['mud', 'cloudflare', 'durable-objects', 'federation'],
+  },
+  {
+    name: 'Hollow Grid world servers: Go, Python, C, assembly',
+    description:
+      'Ports of the Grid world server in four languages, each speaking the same wire protocol and passing the shared smoke suite. Their worlds are offline, moving to containers.',
+    repo: `${GH}hollow-grid-go`,
+    more: [
+      { label: 'Python', url: `${GH}hollow-grid-py` },
+      { label: 'C', url: `${GH}hollow-grid-c` },
+      { label: 'assembly', url: `${GH}hollow-grid-asm` },
+    ],
+    post: '/blog/hollow-grid-ports/',
+    tags: ['mud', 'go', 'federation', 'websockets'],
+  },
+  {
+    name: 'mud-bots',
+    description: 'AI players for The Hollow Grid: LLM bots on Workers AI that make moral choices from structured game state.',
+    repo: `${GH}mud-bots`,
+    post: '/blog/mud-bots/',
+    language: 'JavaScript',
+    tags: ['mud', 'ai', 'llm'],
+  },
+  {
+    name: 'SidVicious_exe',
+    description: 'A punk-rock Discord roadie: Claude, web search, a Vectorize knowledge base, and Workers AI image generation.',
+    repo: `${GH}SidVicious_exe`,
+    post: '/blog/sidvicious-exe/',
+    language: 'JavaScript',
+    tags: ['discord', 'ai', 'cloudflare'],
+  },
+  {
+    name: 'A forex trading bot',
+    description:
+      'We are building a trading bot that trades forex on MetaTrader 4. An exciting project in development; more to come.',
+    status: 'in development',
+    tags: [],
   },
 ];

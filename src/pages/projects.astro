@@ -1,13 +1,23 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { PROJECTS } from '../lib/projects';
+import { PROJECTS, type Project } from '../lib/projects';
 import { breadcrumbJsonLd, projectsJsonLd, siteOrigin, tagPath } from '../lib/seo';
 
 const site = Astro.site?.href ?? 'https://skyphusion.net';
 const origin = siteOrigin(site);
 // A tag page exists only for tags that some published post carries; any other project tag is
 // shown as plain text, so the page never links a 404 (skyphusion-net#153).
+// The links a card shows, in a fixed order; a card with no public source shows none of GitHub.
+function linksOf(p: Project): { label: string; url: string }[] {
+  return [
+    p.site ? { label: 'Website', url: p.site } : null,
+    p.demo ? { label: 'Live demo', url: p.demo } : null,
+    p.repo ? { label: 'GitHub', url: p.repo } : null,
+    ...(p.more ?? []),
+    p.post ? { label: 'Write-up', url: p.post } : null,
+  ].filter((x): x is { label: string; url: string } => x !== null);
+}
 const postTags = new Set((await getCollection('blog', ({ data }) => !data.draft)).flatMap((p) => p.data.tags ?? []));
 const jsonLd = [
   projectsJsonLd(site, PROJECTS),
@@ -19,7 +29,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Open source projects from Skyphusion Labs"
-  description="Vivijure AI film studio, Postern agent mailbox, Prism multimodal AI, WordPress on Cloudflare, Skyphusion AI, Hollow Grid, and the rest of the open source from Skyphusion Labs."
+  description="Open source from Skyphusion Labs: Postern email for humans and agents, the Vivijure AI film studio, Prism, Skyphusion AI for WordPress, and more."
   jsonLd={jsonLd}
 >
   <h1>Projects</h1>
@@ -36,22 +46,18 @@ const jsonLd = [
       <li>
         <h2>{project.name}</h2>
         <p class="description">{project.description}</p>
-        <p class="links">
-          <a href={project.repo}>GitHub</a>
-          {project.demo && (
-            <>
-              <span class="sep">/</span>
-              <a href={project.demo}>Live demo</a>
-            </>
-          )}
-          {project.post && (
-            <>
-              <span class="sep">/</span>
-              <a href={project.post}>Write-up</a>
-            </>
-          )}
-        </p>
-        <p class="tags">
+        {project.status && <p class="status">{project.status}</p>}
+        {linksOf(project).length > 0 && (
+          <p class="links">
+            {linksOf(project).map((link, i) => (
+              <>
+                {i > 0 && <span class="sep">/</span>}
+                <a href={link.url}>{link.label}</a>
+              </>
+            ))}
+          </p>
+        )}
+        {project.tags.length > 0 && <p class="tags">
           {project.tags.map((tag) =>
             postTags.has(tag) ? (
               <a href={tagPath(tag)} class="tag">#{tag}</a>
@@ -59,7 +65,7 @@ const jsonLd = [
               <span class="tag">#{tag}</span>
             )
           )}
-        </p>
+        </p>}
       </li>
     ))}
   </ul>
@@ -98,6 +104,15 @@ const jsonLd = [
   .sep {
     color: var(--border);
     margin: 0 0.5rem;
+  }
+  .status {
+    display: inline-block;
+    margin: 0 0 0.75rem 0;
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.125rem 0.5rem;
   }
   .tags {
     margin: 0;
