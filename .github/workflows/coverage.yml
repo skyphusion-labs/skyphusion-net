@@ -56,6 +56,29 @@ jobs:
           # setup-node errors on cache: npm without a lockfile, so only ask for it with one.
           cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
 
+      # blog.test.ts is an integration suite against the built site on :4321 (same as ci.yml):
+      # build, serve dist/client statically, wait for it. Without a server it fails fetch.
+      - name: Build site
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Start static preview server
+        run: npx --yes serve dist/client -l 4321 &
+
+      - name: Wait for preview server
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null 2>&1; then
+              echo "ready on attempt $i"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "preview never became ready"
+          exit 1
+
       - name: Select and run tests
         id: select
         run: |
