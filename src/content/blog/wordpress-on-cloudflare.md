@@ -1,8 +1,8 @@
 ---
-title: "WordPress on Cloudflare: measure every approach, then provision the one that holds"
-seoTitle: "WordPress on Cloudflare: measure every approach first"
-description: "I like the WordPress CMS and I do not want the LAMP box under it. wordpress-on-cloudflare is the attempt to put that CMS on Cloudflare: scale to zero when idle, edge performance when a page can be cached, measured before it is claimed."
-seoDescription: "I like the WordPress CMS and I do not want the LAMP box under it. wordpress-on-cloudflare puts that CMS on Cloudflare: scale to zero, measured before claimed."
+title: "Pagefeather: measure every approach, then provision the one that holds"
+seoTitle: "Pagefeather: measure every approach first"
+description: "I like the WordPress CMS and I do not want the LAMP box under it. Pagefeather is the attempt to put that CMS on Cloudflare: scale to zero when idle, edge performance when a page can be cached, measured before it is claimed."
+seoDescription: "I like the WordPress CMS and I do not want the LAMP box under it. Pagefeather puts that CMS on Cloudflare: scale to zero, measured before claimed."
 pubDate: 2026-11-08T20:00:00.000Z
 updatedDate: 2026-11-08T23:30:00.000Z
 tags: ["cloudflare", "wordpress", "woocommerce", "php"]
@@ -15,7 +15,7 @@ This project is the attempt to keep that CMS and drop that backend. Workers, Dur
 
 Almost nobody else is working on this. The people building the edge do not care about WordPress, and the people running WordPress are busy keeping the box alive. I care, which is the whole reason the repository exists. This blog is Astro, on purpose. The sites I want someone else to be able to run, with a CMS they already know, are the ones this work is for.
 
-[wordpress-on-cloudflare](https://github.com/skyphusion-labs/wordpress-on-cloudflare) is two things in one GPL-2.0 repository. The first is a matrix of ways to run WordPress, and WooCommerce, on Cloudflare. The second is the framework that matrix produced: many sites on your own Workers for Platforms account, each one provisioned by a command or by a Worker. It is a framework you run. It is a research log. It has no signup and no hosted plan.
+[Pagefeather](https://github.com/skyphusion-labs/pagefeather) is two things in one GPL-2.0 repository. The first is a matrix of ways to run WordPress, and WooCommerce, on Cloudflare. The second is the framework that matrix produced: many sites on your own Workers for Platforms account, each one provisioned by a command or by a Worker. It is a framework you run. It is a research log. It has no signup and no hosted plan.
 
 The method is the part worth copying even if you never deploy it. A cell is one of five marks:
 
@@ -59,15 +59,15 @@ WooCommerce, some plugins, and core upgrades rely on rollback. On plain `b-do` t
 
 ## What you actually provision
 
-The operator document is [docs/framework.md](https://github.com/skyphusion-labs/wordpress-on-cloudflare/blob/main/docs/framework.md). Two kinds of site share one dispatch namespace.
+The operator document is [docs/framework.md](https://github.com/skyphusion-labs/pagefeather/blob/main/docs/framework.md). Two kinds of site share one dispatch namespace.
 
 **`wp`** is `b-dosql`. PHP and its SQLite live in one Durable Object, deployed as a user Worker. Use it for a content site, or for a storefront whose shoppers browse and whose pages can come from the edge cache. The framework table says this kind is the wrong place for an order. The isolate has 128 MiB for everything. WooCommerce asks for more than that once a cart becomes a checkout.
 
 **`shop`** is `c1`. Stock WordPress and WooCommerce in a Container, SQLite on disk, Litestream copying the database to R2. Use it when the store takes orders. Measured on Paid: 12 of 12 store tests, checkout about 1.3 to 1.7 seconds, pages about 0.6 to 1.0 seconds, a cold start about 11 seconds, plugin suite 18 of 18. One container means one region, one writer, and the first visitor after a sleep waits.
 
-The research log and the framework do not tell the same checkout story. I am leaving the disagreement on the page. The README records a `b-dosql` checkout that fit, live, with the WebAssembly memory cap set to 99 (`x-wasm-mib`), under the 128 MiB isolate limit. `tests/woo.py` was 11 of 12 that day. The same log, updated 8 November 2026, records that uploading a product image on a Woo-warmed isolate does not fit. That write exceeds the same memory ceiling and needs the Container path ([issue #189](https://github.com/skyphusion-labs/wordpress-on-cloudflare/issues/189)). When you provision, follow the framework: orders go on `shop`. The Durable Object site is the content site.
+The research log and the framework do not tell the same checkout story. I am leaving the disagreement on the page. The README records a `b-dosql` checkout that fit, live, with the WebAssembly memory cap set to 99 (`x-wasm-mib`), under the 128 MiB isolate limit. `tests/woo.py` was 11 of 12 that day. The same log, updated 8 November 2026, records that uploading a product image on a Woo-warmed isolate does not fit. That write exceeds the same memory ceiling and needs the Container path ([issue #189](https://github.com/skyphusion-labs/pagefeather/issues/189)). When you provision, follow the framework: orders go on `shop`. The Durable Object site is the content site.
 
-Coming from a Linux box with Apache or nginx, PHP, and MySQL, start at [docs/from-lamp-to-wfp.md](https://github.com/skyphusion-labs/wordpress-on-cloudflare/blob/main/docs/from-lamp-to-wfp.md). It maps that stack onto this one, then sends you back to the framework for the commands.
+Coming from a Linux box with Apache or nginx, PHP, and MySQL, start at [docs/from-lamp-to-wfp.md](https://github.com/skyphusion-labs/pagefeather/blob/main/docs/from-lamp-to-wfp.md). It maps that stack onto this one, then sends you back to the framework for the commands.
 
 ## One function, two callers
 
@@ -92,4 +92,4 @@ One line is open on purpose. The per-site dispatcher and the shared outbound Wor
 
 On 8 November 2026, `main` picked up theme data held across requests, alt text for uploaded images through a Workers AI binding, the media-upload ceiling written down with a test that can be re-run, and WP-Cron plus outbound mail moved off the request path. Those commits do not promote a cell. A cell moves when `docs/results.md` names the command, the date, and the outcome.
 
-Code: [github.com/skyphusion-labs/wordpress-on-cloudflare](https://github.com/skyphusion-labs/wordpress-on-cloudflare). License: GPL-2.0.
+Code: [github.com/skyphusion-labs/pagefeather](https://github.com/skyphusion-labs/pagefeather). License: GPL-2.0.
