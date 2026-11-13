@@ -155,10 +155,10 @@ export const PROJECTS: Project[] = [
     tags: ['wordpress', 'woocommerce', 'ai', 'cloudflare'],
   },
   {
-    name: 'WordPress on Cloudflare',
+    name: 'Pagefeather',
     description:
       'A framework for running many WordPress sites and WooCommerce stores on your own Cloudflare Workers for Platforms account, and the measured research behind it.',
-    repo: `${GH}wordpress-on-cloudflare`,
+    repo: `${GH}pagefeather`,
     post: '/blog/wordpress-on-cloudflare/',
     tags: ['wordpress', 'woocommerce', 'cloudflare', 'php'],
   },
