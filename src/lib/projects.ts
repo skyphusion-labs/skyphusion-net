@@ -157,7 +157,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'Pagefeather',
     description:
-      'Many WordPress sites and WooCommerce stores on your own Workers for Platforms account. Each site is one Durable Object. Checkout runs there. The measured research matrix ships with the framework.',
+      'Many WordPress sites and WooCommerce stores on your own Workers for Platforms account. The default site is one Durable Object with checkout. Approach A scales out. The measured research matrix ships with the framework.',
     repo: `${GH}pagefeather`,
     post: '/blog/wordpress-on-cloudflare/',
     tags: ['wordpress', 'woocommerce', 'cloudflare', 'php'],

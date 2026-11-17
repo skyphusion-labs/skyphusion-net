@@ -79,7 +79,8 @@ Coming from a Linux box with Apache or nginx, PHP, and MySQL? Start at [docs/fro
 
 ```sh
 node deploy/provision/cli.mjs add --kind wp blog
-node deploy/provision/cli.mjs add --kind a store
+node deploy/provision/cli.mjs add --kind wp mystore
+node deploy/provision/cli.mjs add --kind a scaleout
 ```
 
 `add` is idempotent and touches only that site. For `wp` it creates the media bucket. It deploys the namespace script with that site's secrets in the same call. It writes the KV route.
