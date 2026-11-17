@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **docs(blog): Pagefeather store path is b-dosql, not a Container (#162).**
+  - The featured Pagefeather post matches current research: checkout on the Durable Object, C1 retired, approach A for scale-out, ggc.sh as the live example.
+  - Projects hub and home featured summary no longer say orders need a Container.
+
 - **feat(blog): search snippets fit, every page has a lastmod, an Atom feed, and posts link their projects (#153).**
   - Every post whose description ran past 160 characters (all 23) gets an `seoDescription` for the meta, og and twitter description and the BlogPosting JSON-LD. It is taken from the post's own description: whole sentences where they fit, otherwise its own clauses cut down. The on-page dek is unchanged. The schema caps it at 160, and the build fails over that.
   - Every post gets an `seoTitle` of 60 characters or fewer (schema-enforced) for the `<title>` and og/twitter title, at Conrad's request. Each leads with the project or keyword and is taken from the post's own title and description. The on-page h1, the JSON-LD headline and the breadcrumb keep the full title. The post page appends ", skyphusion.net" outside the 60.
