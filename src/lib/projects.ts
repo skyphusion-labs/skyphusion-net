@@ -157,7 +157,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'Pagefeather',
     description:
-      'A framework for running many WordPress sites and WooCommerce stores on your own Cloudflare Workers for Platforms account, and the measured research behind it.',
+      'Many WordPress sites and WooCommerce stores on your own Workers for Platforms account. Each site is one Durable Object. Checkout runs there. The measured research matrix ships with the framework.',
     repo: `${GH}pagefeather`,
     post: '/blog/wordpress-on-cloudflare/',
     tags: ['wordpress', 'woocommerce', 'cloudflare', 'php'],
@@ -172,7 +172,8 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'GGC',
-    description: 'The GGC store at ggc.sh: WooCommerce in a Cloudflare Container behind a Worker.',
+    description:
+      'The GGC store at ggc.sh: a WooCommerce example on Pagefeather b-dosql. There is no store Container.',
     site: 'https://ggc.sh/',
     tags: ['woocommerce', 'wordpress', 'cloudflare'],
   },
