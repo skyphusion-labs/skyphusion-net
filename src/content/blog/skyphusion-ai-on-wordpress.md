@@ -1,139 +1,125 @@
 ---
-title: "How Skyphusion AI plugs into a WordPress site"
-seoTitle: "How Skyphusion AI integrates with WordPress"
-description: "Where the free Skyphusion AI plugin hooks into WordPress and WooCommerce: search, the AI Client provider, shortcodes, editor tools, and what stays off until you turn it on."
-seoDescription: "How Skyphusion AI hooks into WordPress: visitor search, AI Client provider, WooCommerce stock text, shortcodes, editor tools, and opt-in jobs."
+title: "How Skyphusion AI fits on a normal WordPress site"
+seoTitle: "How Skyphusion AI fits on a WordPress site"
+description: "A plain walkthrough for WordPress and WooCommerce folks: where the free Skyphusion AI plugin shows up, what visitors see, and which tools stay off until you flip a switch."
+seoDescription: "Plain walkthrough of Skyphusion AI on WordPress: search box, shortcodes, WooCommerce stock text, editor helpers, and opt-in tools."
 pubDate: 2026-11-24T06:00:00.000Z
 tags: ["cloudflare", "wordpress", "woocommerce", "ai"]
 draft: false
 ---
 
-The [overview post](/blog/skyphusion-ai/) covers why the plugin exists and what Cloudflare bills. This post is about the WordPress side. It shows where [Skyphusion AI](https://wordpress.org/plugins/skyphusion-ai/) hooks in. It shows what visitors see. It shows what editors and other plugins can call.
+If you run WordPress on a normal host, this plugin is for you. Same story if you run WooCommerce on that stack. You install it from [WordPress.org](https://wordpress.org/plugins/skyphusion-ai/) like any other plugin. You open Settings. You paste a couple of values. You turn things on only when you want them.
 
-Current release: [v0.7.0](https://github.com/skyphusion-labs/skyphusion-ai/releases/tag/v0.7.0). License: GPL-2.0-or-later. Needs WordPress 6.4 and PHP 8.0.
+The [overview post](/blog/skyphusion-ai/) covers price and Cloudflare free-plan limits. This post is the WordPress tour. Current release: [v0.7.0](https://github.com/skyphusion-labs/skyphusion-ai/releases/tag/v0.7.0). Needs WordPress 6.4 and PHP 8.0. License: GPL-2.0-or-later.
 
-## The shape of the integration
+## What changes on your site (and what does not)
 
-The plugin does not replace your theme. It does not take over the cart. It registers pieces WordPress already understands.
+Skyphusion AI does not replace your theme. It does not take over checkout. It does not force a new editor.
 
-1. Settings under **Settings, then Skyphusion AI**.
-2. A public AI Search snippet for visitors.
-3. A provider on the [WordPress AI Client](https://make.wordpress.org/ai/).
-4. Shortcodes and optional admin jobs.
-5. Four read-only abilities for agents.
+It adds a settings page. It can add a search box for visitors. It can offer helpers in wp-admin. Other plugins can ask it for AI help when WordPress supports that. Almost every extra tool starts **off**. You flip a switch when you are ready.
 
-Almost every tool stays off until an admin turns it on. The public search box needs only an AI Search endpoint.
+You do need a Cloudflare account for the AI pieces. The plugin fee is still $0. Your content stays on your Cloudflare account, not on ours.
 
-## Connect the site once
+## First-time setup (about ten minutes)
 
-Do this before you expect search or model calls.
+Think of this like connecting a CDN or a mail plugin. You create the service once. Then you paste the address into WordPress.
 
-1. In Cloudflare, create an AI Search instance that crawls the site. Turn on its public endpoint.
-2. In WordPress, open Settings, then Skyphusion AI.
-3. Paste the endpoint (`https://something.search.ai.cloudflare.com/`).
-4. Choose the search box, keyboard search, and whether chat is on.
-5. Press Check connection.
-6. Open Settings, then Connectors. Save the Workers AI API token.
+1. In the Cloudflare dashboard, create an AI Search instance that crawls your site. Turn on the public endpoint.
+2. In WordPress, go to **Settings → Skyphusion AI**.
+3. Paste the endpoint URL (it looks like `https://something.search.ai.cloudflare.com/`).
+4. Turn on the search box. Decide about keyboard search (Ctrl+K / Command+K) and the chat button.
+5. Click **Check connection**.
+6. Go to **Settings → Connectors**. Save your Workers AI API token there.
 
-The page never holds that token. Workers AI reads `CLOUDFLARE_API_KEY` from the environment first. It then tries a PHP constant of the same name. It then uses the Connectors token through the AI Client registry. The settings screen says which source is in use. It does not show the token.
+That token never appears in the page HTML. The settings screen tells you which source is in use. It does not print the secret.
 
-Leave the gateway id blank to call `api.cloudflare.com`. Set a gateway id to send Workers AI through `gateway.ai.cloudflare.com`. AI Search chat does not use that gateway id.
+You can leave the optional “gateway” field blank. Blank is fine for most sites. Fill it in later only if you already use Cloudflare AI Gateway.
 
-## What visitors see
+## What your visitors notice
 
-### Search box and keyboard search
+### A familiar search box
 
-Visitors get a search box when you paste the endpoint. Ctrl+K or Command+K opens the same search. The shortcode is `[cloudflare_ai_search]`. You can place it only where that shortcode sits.
+After you paste the endpoint, visitors can search the site. You can drop the box with the shortcode `[cloudflare_ai_search]`, or let the plugin place it for you. Keyboard search is optional.
 
-The box is Cloudflare's own snippet. The page does not contain an API token. The card can show a product image, title, and description after AI Search crawls again.
+The search UI comes from Cloudflare. Your theme still owns the rest of the page. After Cloudflare crawls again, product cards can show image, title, and description.
 
-### Optional chat button
+### Chat is optional
 
-The chat button is off by default. When on, it answers in a sentence from the indexed site. It is not a help desk. It does not add a product to the cart.
+The chat button starts off. When you turn it on, it answers from your indexed pages. It is not a ticket desk. It will not add a product to the cart for someone.
 
-### Search results page
+### Normal search results stay normal
 
-WordPress and WooCommerce results stay as they are by default. One switch can print an AI Search answer above those results. That switch is off until you turn it on. A failed request never shows to the visitor. Cart and checkout can stay quiet when that option is on.
+Your usual WordPress or WooCommerce results stay as they are. One setting can put an AI answer above those results. That setting also starts off. Bad requests stay hidden from visitors. You can keep the box quiet on cart and checkout.
 
-## What the theme and other plugins get
+## Shortcodes you already know how to use
 
-### WordPress AI Client provider
+Same idea as any other plugin shortcode. Put them in a page, a block, or a template.
 
-On WordPress 7.0 and later, the plugin registers provider id `skyphusion-ai`. It covers text, vision, JSON, tools, images, and speech. Search and embeddings still run without those interfaces. This plugin does not take over another provider that already exists.
+| Shortcode | What it does |
+| --- | --- |
+| `[cloudflare_ai_search]` | The visitor search box |
+| `[skyphusion_ai_related]` | “Related” links from your stored pages |
+| `[skyphusion_ai_member_search]` | A simple page list for signed-in members in a role you choose |
+| `[skyphusion_ai_assistant]` | A site assistant that answers from your content |
+
+Related links use pages you already stored. Opening a post does not burn a fresh AI call for that list. Member search returns links, not a generated essay. Logged-out visitors keep normal search.
+
+## For theme and plugin developers
+
+On WordPress 7.0 and later, the plugin registers a provider named `skyphusion-ai` on the [WordPress AI Client](https://make.wordpress.org/ai/). Other code can ask for text, images, and similar jobs without talking to Cloudflare by hand.
 
 ```php
 wp_ai_client_prompt( 'Write a product summary.' )
   ->using_provider( 'skyphusion-ai' );
 ```
 
-Other code can also call helpers:
+You can also call a couple of helpers from PHP:
 
 ```php
 $vectors = cloudflare_ai_provider_embeddings( array( 'linen shirt' ) );
 $answer  = skyphusion_ai_query( 'shipping times' );
 ```
 
-`skyphusion_ai_query()` posts to the public AI Search chat path. It sends no token. A theme can translate one string with `skyphusion_ai_translate()`.
+`skyphusion_ai_query()` uses your public search endpoint. It does not put a token on the request. Themes can translate a string with `skyphusion_ai_translate()`.
 
-### Shortcodes for site features
+If you use WP-CLI, `wp skyphusion-ai status` and `wp skyphusion-ai smoke` are there for checks. Smoke only looks at WordPress. It does not call Cloudflare.
 
-| Shortcode | Role |
-| --- | --- |
-| `[cloudflare_ai_search]` | Visitor search box |
-| `[skyphusion_ai_related]` | Related pages from stored vectors |
-| `[skyphusion_ai_member_search]` | Page list for a signed-in role |
-| `[skyphusion_ai_assistant]` | Site assistant that answers from stored pages |
+## WooCommerce shops
 
-Related pages use vectors already stored in your Vectorize index. A page view does not call the embeddings model. Member search returns a list of pages. It does not generate a sentence. A logged-out visitor keeps normal search and spends no neurons on that shortcode.
+On a product page, the plugin prints stock as plain text in the page. Variations list attributes, SKU, price, and stock. That helps search engines that do not run JavaScript.
 
-### Read-only abilities
+It also adds SKU, stock status, and managed stock count to the meta description. Rank Math and Yoast both get that sentence. After the next crawl, the search dropdown can show it.
 
-The plugin registers `skyphusion-ai/search`, `skyphusion-ai/related`, `skyphusion-ai/member-search`, and `skyphusion-ai/status`. Install the WordPress MCP Adapter when a client should call them. This plugin does not open an MCP server. Related pages return an empty list for a private post, a password post, or a post the caller cannot read.
+Search results can show “N available.” under products that manage stock. Checkout stays a person. Nothing in this plugin adds items to the cart for a shopper.
 
-`wp skyphusion-ai smoke` checks that the AI Client provider is present. It does not call Cloudflare.
+## Helpful bits inside wp-admin
 
-## What WooCommerce gets
+These are for you and your editors. Each one is opt-in.
 
-On a single product page the plugin prints stock as plain text inside `main`. Each variation names attributes, SKU, price, and stock. Out-of-stock and hidden rows stay in that list. A crawler that does not run JavaScript can index them.
+**Store posts for smarter related content.** Press **Count the posts** before the first run. The plugin walks the library in small batches. Published posts can go into your Cloudflare vector store. The plugin skips password posts. You can exclude a post. If you remove the plugin later, that store stays in your Cloudflare account.
 
-The same page adds SKU, stock status, and the managed stock count to the meta description. Rank Math and Yoast both receive that sentence. After the next AI Search crawl, the dropdown can quote it.
+**Site assistant.** Off until you turn it on. It answers from your stored pages and cites them. Product answers can show image, SKU, and stock, then link to the product. Still no add-to-cart.
 
-Search results can print `N available.` under a product that manages stock. Checkout stays a person. The assistant and the chat button do not add items to the cart.
+**Empty alt text and empty SEO descriptions.** An hourly job can fill blanks only. It will not overwrite text you already wrote. It writes the same fields Yoast, Rank Math, All in One SEO, or SEOPress already use.
 
-## What editors get in wp-admin
+**Internal link ideas.** In the editor, the plugin can suggest a link when a phrase already matches another post. It does not change either post for you. It can also list published posts that nothing links to yet.
 
-### Embeddings into your Vectorize index
+**Optional llms.txt.** One checkbox publishes a small file at the home URL for AI crawlers. Untick it and it goes away.
 
-Press Count the posts before the first run. The count runs in small steps. Two embed steps never run at once. A published post can land in your Cloudflare Vectorize index. The plugin skips a password post. An editor can leave one post out. Deleting the plugin leaves the index in the Cloudflare account.
+## A daily AI budget you control
 
-### Site assistant
+Cloudflare measures some AI use in “neurons.” This plugin has a daily stop. That stop keeps a busy day from surprising you. The default is 10,000 neurons. That matches Cloudflare’s free daily allowance. You can raise it under Settings → Skyphusion AI.
 
-Off until you turn it on. It answers from stored pages and lists them. You can stream from PHP, or deploy an assistant Worker from the screen. A product answer shows image, SKU, stock status, and managed count. It links to the product. It does not add the product to the cart.
+The plugin does not count the public search box as a PHP neuron call. The chat button and the heavier admin tools are where spend shows up. Numbers and free-plan notes are in the [overview post](/blog/skyphusion-ai/#cloudflare-free-plans-and-their-limits).
 
-### Empty alt text and SEO backfill
+## What it will not do
 
-An hourly job can fill empty alt text and an empty SEO description. It does not replace text you wrote. It writes the field Yoast, Rank Math, All in One SEO, or SEOPress already uses.
+It will not rewrite your posts unless you turn on a backfill job. It will not act like a live chat help desk. It will not add products to carts. It will not send your site to Skyphusion. Your stored page data stays in your Cloudflare account.
 
-### Internal link suggestions
+## Try it
 
-The post editor can suggest an internal link when the phrase is already in the post. It can also suggest a return link when this title already appears as a whole word elsewhere. The editor does not change either page. The same screen lists published posts that nothing links to.
+1. Install [Skyphusion AI](https://wordpress.org/plugins/skyphusion-ai/) from the Plugins screen (or the [v0.7.0 zip](https://github.com/skyphusion-labs/skyphusion-ai/releases/tag/v0.7.0)).
+2. Paste the AI Search endpoint and save the API token under Connectors.
+3. Turn on one thing at a time. Start with the search box.
 
-### Optional `/llms.txt`
-
-Turn on Publish /llms.txt for AI crawlers when you want it. Unticking the box turns it off. The plugin serves that file only at the home path.
-
-## Neuron budget on the site
-
-The plugin stops Workers AI at a daily neuron budget. The default is 10,000 neurons. That matches the Cloudflare free allocation. Settings, then Skyphusion AI, can raise it. Embeddings, the site assistant, backfill, translation, vision, images, and speech share that budget unless you set a tool limit. The public search box is not a PHP neuron call in this plugin. Free-plan numbers live in the [overview post](/blog/skyphusion-ai/#cloudflare-free-plans-and-their-limits).
-
-## What this plugin does not do
-
-It does not edit posts by default. It does not install the MCP Adapter. It is not a help desk. It does not add items to a cart. It does not send the site to Skyphusion. Embeddings stay in your Cloudflare Vectorize index.
-
-## Where to start
-
-1. Install from [WordPress.org](https://wordpress.org/plugins/skyphusion-ai/) or the [v0.7.0 zip](https://github.com/skyphusion-labs/skyphusion-ai/releases/tag/v0.7.0).
-2. Connect AI Search and the Workers AI token as above.
-3. Turn on only the tools you want.
-
-Code: [github.com/skyphusion-labs/skyphusion-ai](https://github.com/skyphusion-labs/skyphusion-ai). Overview: [Skyphusion AI on the blog](/blog/skyphusion-ai/).
+Source: [github.com/skyphusion-labs/skyphusion-ai](https://github.com/skyphusion-labs/skyphusion-ai). More on cost and Cloudflare plans: [the overview](/blog/skyphusion-ai/).
