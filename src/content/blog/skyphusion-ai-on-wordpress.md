@@ -35,6 +35,10 @@ That token never appears in the page HTML. The settings screen tells you which s
 
 You can leave the optional “gateway” field blank. Blank is fine for most sites. Fill it in later only if you already use Cloudflare AI Gateway.
 
+![Settings, Skyphusion AI Connection tab on the ggc.sh demo store](/blog/skyphusion-ai/04-settings-connection.png)
+
+*Settings → Skyphusion AI on the [ggc.sh](https://ggc.sh/) demo store. Paste the AI Search address here. The screen says which token source Workers AI is using.*
+
 ## What your visitors notice
 
 ### A familiar search box
@@ -42,6 +46,10 @@ You can leave the optional “gateway” field blank. Blank is fine for most sit
 After you paste the endpoint, visitors can search the site. You can drop the box with the shortcode `[cloudflare_ai_search]`, or let the plugin place it for you. Keyboard search is optional.
 
 The search UI comes from Cloudflare. Your theme still owns the rest of the page. After Cloudflare crawls again, product cards can show image, title, and description.
+
+![GGC shop homepage with the Skyphusion AI search bar and chat button](/blog/skyphusion-ai/01-home-search.png)
+
+*Visitor view on ggc.sh: search at the top, optional chat button at the bottom right.*
 
 ### Chat is optional
 
@@ -88,6 +96,10 @@ If you use WP-CLI, `wp skyphusion-ai status` and `wp skyphusion-ai smoke` are th
 
 On a product page, the plugin prints stock as plain text in the page. Variations list attributes, SKU, price, and stock. That helps search engines that do not run JavaScript.
 
+![WordPress Pennant product page showing the Stock block with SKU](/blog/skyphusion-ai/03-product-stock.png)
+
+*Product page on ggc.sh. The Stock block prints SKU and status as plain text for crawlers.*
+
 It also adds SKU, stock status, and managed stock count to the meta description. Rank Math and Yoast both get that sentence. After the next crawl, the search dropdown can show it.
 
 Search results can show “N available.” under products that manage stock. Checkout stays a person. Nothing in this plugin adds items to the cart for a shopper.
@@ -97,6 +109,10 @@ Search results can show “N available.” under products that manage stock. Che
 These are for you and your editors. Each one is opt-in.
 
 **Store posts for smarter related content.** Press **Count the posts** before the first run. The plugin walks the library in small batches. Published posts can go into your Cloudflare vector store. The plugin skips password posts. You can exclude a post. If you remove the plugin later, that store stays in your Cloudflare account.
+
+![Embeddings tab with related-posts options and Run the embedding sync](/blog/skyphusion-ai/06-embeddings.png)
+
+*Embeddings tab on the same settings screen. Related posts and sync stay off until you choose them.*
 
 **Site assistant.** Off until you turn it on. It answers from your stored pages and cites them. Product answers can show image, SKU, and stock, then link to the product. Still no add-to-cart.
 
