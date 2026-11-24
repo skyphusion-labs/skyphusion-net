@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
 title: "Privacy, skyphusion.net"
-description: "How skyphusion.net handles data: no analytics, no comments, and a search box that does not keep your questions. We do not want your data."
+description: "How skyphusion.net handles data: no analytics and no comments. We do not want your data."
 ---
 
 # Privacy
@@ -18,8 +18,7 @@ There is no account here, no sign-up, no newsletter, and no form that asks who y
 blog is anonymous: we set no cookies of our own, and there is no advertising, ad-tech, profiling, or
 third-party tracker on the page.
 
-One thing on this site touches data, and it is described below in full: the search box. Nothing
-else does. There is no comment box.
+This site has no search box and no comment box. Nothing on the page sends your words to another service.
 
 ## Analytics: none
 
@@ -27,23 +26,9 @@ This site loads no analytics script and sets no analytics cookie. Nothing counts
 (It used to load a self-hosted, cookieless Umami script; that service is retired and the script tag
 is gone from every page.)
 
-## Search (your question is not kept)
+## Search
 
-The [search page](/search/) sends your question to **search.vivijure.com**, a Cloudflare Worker we run
-([search-mcp](https://github.com/skyphusion-labs/search-mcp), source public). What happens to it:
-
-- Your question is checked by **Cloudflare Turnstile** (an anti-bot challenge) before it is answered.
-  That check sends your IP address to Cloudflare.
-- Your IP address is used as an in-memory **rate-limit key** so one visitor cannot flood the service.
-  It is not stored in a database and not written to a record about you.
-- Your question is answered by **Cloudflare AI Search** over an index of this blog's own posts, with
-  a Cloudflare Workers AI model writing the answer. Your question and the answer stay inside
-  Cloudflare; we add no other AI vendor to this path.
-- **We do not keep your questions.** The service has no database, no key-value store, and no object
-  storage attached: the question is processed in flight to produce your answer and is then gone. We
-  do not log question text, and there is no search history under your name because there is no name.
-
-If you never use the search box, none of this happens.
+This site has no search page. Hosted search is retired. The old page is gone.
 
 ## Cloudflare serves this site
 

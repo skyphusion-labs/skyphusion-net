@@ -4,7 +4,7 @@
  *   /blog/<slug>/                 the post's updatedDate, else its pubDate (buildPostLastmodMap)
  *   /, /blog/, /blog/tags/        the newest post
  *   /blog/tags/<tag>/             the newest post carrying that tag
- *   /about/ /privacy/ /projects/ /search/   the last commit that touched the page's sources
+ *   /about/ /privacy/ /projects/   the last commit that touched the page's sources
  *
  * The static pages use git history, and only when the clone is not shallow: a shallow clone
  * would date every file to HEAD, which is a false lastmod. In a shallow clone those pages get
@@ -19,7 +19,6 @@ export const STATIC_PAGE_SOURCES = {
   '/about/': ['src/pages/about.md'],
   '/privacy/': ['src/pages/privacy.md'],
   '/projects/': ['src/pages/projects.astro', 'src/lib/projects.ts'],
-  '/search/': ['src/pages/search.astro'],
 };
 
 /** Tags per post path, read from frontmatter (inline array or YAML list). Drafts are skipped. */

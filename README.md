@@ -15,17 +15,17 @@ Engineering blog of [Conrad Rockenhaus](https://github.com/skyphusion) at **http
 | Related posts (tag overlap) | **Installed** | `src/lib/posts.ts`, post template |
 | Comments | **None** | Giscus was removed (no discussion was ever posted); `giscus.app` is on the link gate's forbidden list |
 | Analytics | **None** | Umami was removed (its host no longer resolves); the site loads no analytics script |
-| AI Search ask widget | **Installed** | `/search/`, `public/ask-widget.{js,css}` |
+| Site search | **None** | Hosted search is retired. The `/search/` page is gone. |
 | `www` → apex redirect | **Installed** | Edge Dynamic Redirect; `src/middleware.ts` is a fallback for non-static paths only |
 | Retired `cf-email-relay` post | **Installed** | `src/content/blog/cf-email-relay.md` (banner points at Postern). Not a 301: the live deploy is assets-only, so Worker middleware never runs. |
 | Content Signals robots policy | **Installed** | `public/robots.txt` |
 | CI: typecheck + Vitest + deploy on `main` | **Installed** | `.github/workflows/ci.yml` |
-| Corpus notify → AI Search reindex | **Installed** | `.github/workflows/corpus-notify.yml` |
+| Corpus notify | **Removed** | `.github/workflows/corpus-notify.yml` is gone. |
 | Cloudflare Web Analytics (dashboard snippet) | **Not installed** | -- |
 | Newsletter (Buttondown, Resend, etc.) | **Not installed** | -- |
-| Pagefind / client-side static index | **Not used** | Search is AI Search via search-mcp |
+| Pagefind / client-side static index | **Not used** | The site has no search page. |
 
-Monthly infra cost for the site itself: **$0** on Cloudflare Workers free tier. Search and analytics run on separate Skyphusion services (also $0 at current scale).
+Monthly infra cost for the site itself: **$0** on Cloudflare Workers free tier.
 
 ## How integrations map
 
@@ -34,63 +34,18 @@ Monthly infra cost for the site itself: **$0** on Cloudflare Workers free tier. 
 │  skyphusion.net (Cloudflare Worker, ASSETS binding, prerendered HTML)   │
 ├─────────────────────────────────────────────────────────────────────────┤
 │  /blog/*          markdown → Astro content collection → static pages    │
-│  /search/         ask-widget.js ──POST──► search.vivijure.com/ask     │
 └─────────────────────────────────────────────────────────────────────────┘
          merge to main
-              │
-              ▼
-   corpus-notify.yml ──repository_dispatch──► search-mcp corpus-sync
-              │                                      │
-              │                                      ├─► R2 public corpus bucket
-              │                                      ├─► R2 internal corpus bucket
-              │                                      ├─► AI Search: skyphusion-public
-              │                                      └─► AI Search: skyphusion-internal
               │
               ▼
         ci.yml ──wrangler deploy──► Worker + dist/client assets
 ```
 
-### Search (search-mcp + Cloudflare AI Search)
+### Search
 
-The blog does **not** embed a search index. `/search/` loads the shared [ask-widget](https://github.com/skyphusion-labs/search-mcp/tree/main/public) from `public/` and streams answers from the **search-mcp query Worker**:
+This site has no search page. Hosted search is retired. `search.vivijure.com` does not resolve. The link check lists that host as retired.
 
-| Piece | Value |
-| --- | --- |
-| Browser page | `https://skyphusion.net/search/` |
-| Query API | `POST https://search.vivijure.com/ask` |
-| Bot gate | Cloudflare Turnstile (shared widget with vivijure.com) |
-| CORS allowlist | `skyphusion.net`, `www.skyphusion.net` on the query Worker |
-| Retrieval corpus | `skyphusion-public` AI Search instance |
-| Blog-specific prompt | Query Worker uses a blog-tuned system prompt when `Origin` is the blog |
-| Source repo in corpus | `skyphusion-labs/skyphusion-net` (markdown posts + site source) |
-| Reindex trigger | `corpus-notify.yml` fires `corpus-sync` on **every merge to `main`** |
-| Backstop | search-mcp daily `corpus-sync` schedule if a notify is dropped |
-
-Internal agents use the separate MCP Worker (`search-internal.vivijure.com`) and `skyphusion-internal` instance; the same corpus-sync job refreshes **both** indexes.
-
-Operator detail: [search-mcp/docs/skyphusion/OPERATOR.md](https://github.com/skyphusion-labs/search-mcp/blob/main/docs/skyphusion/OPERATOR.md).
-
-#### Ask widget: pinned copy and drift check
-
-`public/ask-widget.js` is a copy of the canonical widget in
-[`@skyphusion/search-mcp`](https://github.com/skyphusion-labs/search-mcp) (`public/ask-widget.js`),
-never hand-edited. The version it tracks is declared in `scripts/ask-widget.canonical.json`. The
-`ask-widget-drift` CI job runs `node scripts/check-ask-widget.mjs`, which fetches that exact version
-from the npm registry and fails unless the copy equals it plus the ONE declared divergence in
-`scripts/ask-widget.divergence.diff`, and also fails if the declared version does not exist.
-
-The declared divergence is the Turnstile mount only: the copy calls `turnstile.render()` explicitly
-(polling up to 15s for a late-loading script, resetting by widget id) for the dynamically injected
-slot (2080c22), where the canonical emits a `cf-turnstile` div and relies on implicit render. Site text is configured by `data-*` attributes in
-`src/pages/search.astro`. `ask-widget.css` is site theming and is not checked. The diff file is the
-whole waiver: it stays small and any other change to the copy fails CI.
-
-To bump: set `version` in `scripts/ask-widget.canonical.json`; refresh the copy with
-`node scripts/check-ask-widget.mjs --fetch > public/ask-widget.js`; re-apply the divergence with
-`patch public/ask-widget.js scripts/ask-widget.divergence.diff` (if it no longer applies, redo the
-Turnstile edit by hand); regenerate the diff with
-`node scripts/check-ask-widget.mjs --diff > scripts/ask-widget.divergence.diff`; run Vitest; commit
-all together. Fix widget bugs upstream in search-mcp, release, then bump here.
+The ask widget and the drift check are gone.
 
 ### Comments
 
@@ -139,7 +94,6 @@ None. The site loads no analytics script. The self-hosted Umami tag was removed 
 | `/blog/<slug>/` | `src/pages/blog/[...slug].astro` | Post + related posts |
 | `/blog/tags/` | `src/pages/blog/tags/index.astro` | Tag index |
 | `/blog/tags/<tag>/` | `src/pages/blog/tags/[tag].astro` | Posts per tag |
-| `/search/` | `src/pages/search.astro` | AI Search ask widget |
 | `/rss.xml` | `src/pages/rss.xml.js` | RSS feed |
 | `/sitemap-index.xml` | Astro sitemap integration | Auto-generated at build |
 
@@ -160,8 +114,6 @@ npm run build       # dist/client/ + dist/server/
 npm run preview     # build + wrangler dev (closest to production Worker)
 ```
 
-**Search in dev:** the ask widget calls the live `search.vivijure.com` API. Turnstile and CORS are production-configured; use `npm run preview` on a built site or test on the deployed `/search/` page.
-
 ## Writing a post
 
 1. Create `src/content/blog/<slug>.md` (filename becomes the URL slug).
@@ -181,7 +133,7 @@ Body in markdown.
 ```
 
 3. Open a PR (or push to a branch). CI runs `typecheck` and Vitest.
-4. Merge to `main`: GitHub Actions deploys the Worker and `corpus-notify` reindexes AI Search.
+4. Merge to `main`. GitHub Actions deploys the Worker.
 
 Set `draft: true` to exclude a post from build, listings, RSS, and sitemap.
 
@@ -190,9 +142,7 @@ Set `draft: true` to exclude a post from build, listings, RSS, and sitemap.
 | Workflow | Trigger | Role |
 | --- | --- | --- |
 | `ci.yml` | PR / push | typecheck, build, Vitest smoke; **deploy on push to `main`** |
-| `ci.yml` job `ask-widget-drift` | PR / push | `public/ask-widget.js` matches the declared `@skyphusion/search-mcp` version (see Search) |
 | `coverage.yml` | PR / push | the org ruleset's `coverage` check context |
-| `corpus-notify.yml` | push to `main` | Dispatches `corpus-sync` on search-mcp (not a merge gate) |
 
 Deploy secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` on the repo. `account_id` is never hardcoded in `wrangler.jsonc`.
 
@@ -203,9 +153,7 @@ skyphusion-net/
 ├── astro.config.mjs              # site URL, sitemap, Shiki, Cloudflare adapter
 ├── wrangler.jsonc                # Worker name, ASSETS binding, custom domains
 ├── scripts/post-lastmod.mjs      # sitemap lastmod from markdown frontmatter
-├── scripts/check-ask-widget.mjs  # drift check: ask-widget copy vs pinned search-mcp version
 ├── public/
-│   ├── ask-widget.{js,css}       # search-mcp embed (vanilla, no build step)
 │   ├── favicon.svg, og-default.svg, robots.txt
 ├── src/
 │   ├── content.config.ts         # blog collection Zod schema
@@ -215,7 +163,7 @@ skyphusion-net/
 │   ├── lib/                    # seo.ts, projects.ts, posts.ts
 │   ├── middleware.ts             # www fallback only; does not run on prerendered HTML
 │   └── pages/                    # routes (see table above)
-└── .github/workflows/            # CI, deploy, corpus-notify, coverage
+└── .github/workflows/            # CI and coverage
 ```
 
 ## Cloudflare deployment
@@ -236,7 +184,6 @@ Custom domains are in `wrangler.jsonc` (`skyphusion.net`, `www.skyphusion.net`).
 | Homepage hero / featured post | `src/pages/index.astro` (`FEATURED_SLUG`) |
 | Project cards | `src/lib/projects.ts` |
 | Colors / typography | `:root` variables in `BaseLayout.astro` |
-| Search endpoint / Turnstile key | `src/pages/search.astro` |
 | Allowed frontmatter fields | `src/content.config.ts` |
 | SEO defaults | `src/lib/seo.ts` |
 
@@ -244,12 +191,10 @@ Custom domains are in `wrangler.jsonc` (`skyphusion.net`, `www.skyphusion.net`).
 
 - **Newsletter signup** (Buttondown, Resend, or similar).
 - **Cloudflare Web Analytics** dashboard snippet (Umami already covers aggregate traffic).
-- **Dedicated blog-only AI Search instance** (today the blog shares `skyphusion-public` with the org corpus; a split instance would isolate retrieval if the corpus grows noisy).
 
 ## Links
 
 - **Live site:** https://skyphusion.net
-- **Search backend:** https://github.com/skyphusion-labs/search-mcp
 - **Skyphusion Labs:** https://skyphusion.org · **Org:** https://github.com/skyphusion-labs
 
 ## License

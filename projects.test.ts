@@ -13,6 +13,10 @@ describe('projects data', () => {
     expect(bot[0].status).toBe('in development');
   });
 
+  it('does not link the retired site search page', () => {
+    expect(PROJECTS.flatMap(urlsOf)).not.toContain('/search/');
+  });
+
   it('lists no archived repository', () => {
     const repos = PROJECTS.flatMap(urlsOf).join(' ');
     for (const archived of ['vivijure-musetalk', 'vivijure-audio-upscale', 'cf-email-relay']) expect(repos).not.toContain(archived);

@@ -28,4 +28,3 @@
 ## Optional
 - RSS: https://skyphusion.net/rss.xml
 - Projects index: https://skyphusion.net/projects/
-- Search: https://skyphusion.net/search/

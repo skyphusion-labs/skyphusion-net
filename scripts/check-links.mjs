@@ -14,6 +14,7 @@ import { join, relative, extname, resolve } from "node:path";
 
 export const RETIRED_HOSTS = [
   "demo.vivijure.com",
+  "search.vivijure.com",
   "analytics.skyphusion.org",
   "common-thread.skyphusion.org",
   "common-thread-backend.skyphusion.org",

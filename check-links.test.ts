@@ -36,6 +36,10 @@ describe('check-links', () => {
     }
   });
 
+  it('lists search.vivijure.com as retired', () => {
+    expect(RETIRED_HOSTS).toContain('search.vivijure.com');
+  });
+
   it('fails any mention of a retired host, linked or as plain text', () => {
     for (const host of RETIRED_HOSTS) {
       expect(checkPage('/x/', page(`<a href="https://${host}/a">d</a>`), exists)).toEqual([`/x/: names retired host ${host}`]);
