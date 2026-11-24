@@ -180,9 +180,8 @@ export const PROJECTS: Project[] = [
   {
     name: 'search-mcp',
     description:
-      'A toolkit for Cloudflare AI Search: an MCP server for agents, a streaming /ask Worker with a docs widget, and git-to-R2 corpus sync. It powers the search on this site.',
+      'A toolkit for Cloudflare AI Search: an MCP server, a streaming ask Worker, and git-to-R2 corpus sync. Hosted search on this site is retired.',
     repo: `${GH}search-mcp`,
-    demo: '/search/',
     language: 'TypeScript',
     tags: ['mcp', 'rag', 'cloudflare', 'ai'],
   },

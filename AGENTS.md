@@ -23,7 +23,7 @@ npm run generate-types
 
 `npm run dev` serves http://localhost:4321. `npm run typecheck` is `astro check`. Run it before you push. `npm run preview` builds, then runs `wrangler dev`. `npm run deploy` builds, then publishes the Worker. Set `CLOUDFLARE_ACCOUNT_ID` for that publish. CI on `main` publishes too.
 
-The pull request gate is [`.github/workflows/ci.yml`](.github/workflows/ci.yml). That workflow typechecks, builds, and runs Vitest. The smoke tests need a server on port 4321, or the static server CI starts. [`.github/workflows/coverage.yml`](.github/workflows/coverage.yml) is the coverage check. [`.github/workflows/corpus-notify.yml`](.github/workflows/corpus-notify.yml) refreshes the search corpus after a merge to `main`.
+The pull request gate is [`.github/workflows/ci.yml`](.github/workflows/ci.yml). That workflow typechecks, builds, and runs Vitest. The smoke tests need a server on port 4321, or the static server CI starts. [`.github/workflows/coverage.yml`](.github/workflows/coverage.yml) is the coverage check.
 
 ## Architecture
 
@@ -35,7 +35,7 @@ The pull request gate is [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 Comments are absent. `giscus.app` is on the link check forbidden list.
 
-`src/pages/search.astro` embeds `public/ask-widget.js` and `public/ask-widget.css`. Do not hand-edit those files. `scripts/ask-widget.canonical.json` names the pinned package version. The `ask-widget-drift` job enforces that pin. The README has the bump steps. The browser posts to the ask URL in that page. A Turnstile check gates the ask call.
+This site has no search page. Hosted search is retired. Do not restore `/search/` or the ask widget.
 
 `src/middleware.ts` redirects `www.skyphusion.net` to the apex. A fully static asset response does not run that file. `astro.config.mjs` uses the `@astrojs/cloudflare` adapter. `wrangler.jsonc` defines the Worker. Custom domains are `skyphusion.net` and `www.skyphusion.net`. Routes use `getStaticPaths`, so the build prerenders the pages. Code highlighting uses Shiki. The theme is `github-dark-dimmed`.
 
