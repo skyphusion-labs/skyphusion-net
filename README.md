@@ -61,7 +61,7 @@ None. The site loads no analytics script. The self-hosted Umami tag was removed 
 
 ### SEO and feeds
 
-- **Canonical host:** `skyphusion.net`. `www.skyphusion.net` 301s to apex via Cloudflare Dynamic Redirect (desired state: `fleet-chezmoi/system/cloudflare/host-redirects/`). Middleware still mirrors the redirect for non-static paths.
+- **Canonical host:** `skyphusion.net`. `www.skyphusion.net` 301s to apex via Cloudflare Dynamic Redirect. Middleware still mirrors the redirect for non-static paths.
 - **JSON-LD:** `WebSite` on home, `BlogPosting` + `BreadcrumbList` on posts, blog index schema on `/blog/`.
 - **Open Graph / Twitter:** per-page title, description, default OG image (`/og-default.png` in `seo.ts`; asset under `public/`).
 - **RSS:** all non-draft posts via `@astrojs/rss`.
