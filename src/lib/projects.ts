@@ -205,7 +205,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'The Hollow Grid',
     description:
-      'A federated, post-apocalyptic MUD on Cloudflare Workers and Durable Objects. Separate worlds share one Grid. Play at hollow.skyphusion.org and dustfall.skyphusion.org.',
+      'A post-apocalyptic text MUD with six worlds online. Play in the browser or connect with a WebSocket client.',
     repo: `${GH}the-hollow-grid`,
     demo: 'https://hollow.skyphusion.org/',
     post: '/blog/the-hollow-grid/',
@@ -215,7 +215,7 @@ export const PROJECTS: Project[] = [
   {
     name: 'Hollow Grid world servers: Go, Python, C, assembly',
     description:
-      'Ports of the Grid world server in four languages, each speaking the same wire protocol and passing the shared smoke suite. Their worlds are offline, moving to containers.',
+      'Rust Choir, Verdigris Spool, Ferrite Wastes, and Basalt Relay are online. Their Go, Python, C, and assembly servers speak the same wire protocol.',
     repo: `${GH}hollow-grid-go`,
     more: [
       { label: 'Python', url: `${GH}hollow-grid-py` },

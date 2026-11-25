@@ -18,9 +18,6 @@ export const RETIRED_HOSTS = [
   "analytics.skyphusion.org",
   "common-thread.skyphusion.org",
   "common-thread-backend.skyphusion.org",
-  "rustchoir.skyphusion.org",
-  "verdigris.skyphusion.org",
-  "ferrite.skyphusion.org",
 ];
 // Third parties the site must never reference again. Privacy is the primary goal (#153).
 export const FORBIDDEN_HOSTS = ["giscus.app"];
