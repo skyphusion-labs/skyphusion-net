@@ -24,7 +24,7 @@ All six worlds are online and playable in a browser. WebSocket clients can conne
 | Ferrite Wastes | [Play](https://ferrite.skyphusion.org/) | C container |
 | Basalt Relay | [Play](https://basalt.skyphusion.org/) | Assembly container |
 
-On federated worlds, `travel` carries your name, level, and standing through the shared Grid Hub. Verdigris Spool uses its own local hub and keeps characters in that world.
+All six worlds connect to the shared Grid Hub. Use `travel` to look up another world and `gridcast` to send a message across the Grid.
 
 Like the other writeups, this is less a feature tour and more the decisions that shaped it, including the one bug that motivated the whole project and a subtler one that taught us what a service binding actually is.
 

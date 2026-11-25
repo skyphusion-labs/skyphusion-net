@@ -22,7 +22,7 @@ All six worlds are online. The [live world directory](/blog/the-hollow-grid/#pla
 | Rust Choir | [Play](https://rustchoir.skyphusion.org/) | Go / Cloudflare container |
 | Verdigris Spool | [Play](https://verdigris.skyphusion.org/) | Python Worker |
 
-Rust Choir uses the shared Grid Hub for cross-world play. Verdigris Spool runs with a local hub and keeps its characters in that world. Every world accepts WebSocket connections at `/ws`.
+Rust Choir and Verdigris Spool both use the shared Grid Hub for cross-world play. Every world accepts WebSocket connections at `/ws`.
 
 The ports were never meant to replace the reference implementation. They exist to prove the contract is real: `wscat`, `smoke.mjs`, and the bots connect to `/ws` the same way on every node.
 
