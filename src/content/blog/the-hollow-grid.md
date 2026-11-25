@@ -1,22 +1,30 @@
 ---
 title: "The Hollow Grid: a federated MUD on Cloudflare Workers and Durable Objects"
 seoTitle: "The Hollow Grid: a federated MUD on Cloudflare Workers"
-description: "Introducing The Hollow Grid, a multiplayer MUD that runs entirely on Cloudflare Workers and Durable Objects: one Durable Object holds a whole world, WebSocket hibernation lets it sleep at $0 when empty, and a single alarm drives all of time. It is also a small federation, where separate world deployments share one backend Grid (one faction war, one character that travels between worlds) over a service-binding RPC contract. Notes on the design rules that make it testable, the structured event channel that drives the client, a bot, and the tests alike, the cross-Worker bug that taught us how service bindings really behave, and the human-and-AI collaboration that built it."
+description: "Introducing The Hollow Grid, a multiplayer MUD with a reference engine on Cloudflare Workers and Durable Objects: one Durable Object holds a whole world, WebSocket hibernation lets it sleep at $0 when empty, and a single alarm drives all of time. It is also a small federation, where separate world deployments share one backend Grid (one faction war, one character that travels between worlds) over a service-binding RPC contract. Notes on the design rules that make it testable, the structured event channel that drives the client, a bot, and the tests alike, the cross-Worker bug that taught us how service bindings really behave, and the human-and-AI collaboration that built it."
 seoDescription: "The Hollow Grid is a multiplayer MUD on Cloudflare Workers and Durable Objects: one Durable Object holds a world, sleeps at $0 when empty, and worlds federate."
 pubDate: 2026-06-06
-updatedDate: 2026-07-05
+updatedDate: 2026-11-25
 tags: ["cloudflare", "durable-objects", "websockets", "mud", "serverless", "federation", "side-project"]
 draft: false
 ---
 
-The first two posts here were about an [AI playground](/blog/llm/) and [Vivijure](https://github.com/skyphusion-labs/vivijure), a self-hosted AI film studio on Cloudflare Workers. This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket) that runs entirely on Cloudflare Workers and Durable Objects. No VPS, no process to babysit, and about $0 when nobody is playing. It is also a small federation: two worlds live in production, share one backend, and your character walks between them.
+The first two posts here were about an [AI playground](/blog/llm/) and [Vivijure](https://github.com/skyphusion-labs/vivijure), a self-hosted AI film studio on Cloudflare Workers. This one is a game: **The Hollow Grid**, a multiplayer MUD (a text-based, multiplayer world you play over a socket). The original two worlds use Cloudflare Workers and Durable Objects. The other worlds run on a Python Worker or Cloudflare Containers.
 
-You can play it right now in a browser:
+## Play online
 
-- **The Hollow Grid**, the dead neon city: [hollow.skyphusion.org](https://hollow.skyphusion.org)
-- **Dustfall**, the open salt pan people fled to: [dustfall.skyphusion.org](https://dustfall.skyphusion.org)
+All six worlds are online and playable in a browser. WebSocket clients can connect to `/ws` on the same host.
 
-Make a character in one, type `travel` to the other, and your name, level, and standing come with you. Both are the same engine; only the content differs.
+| World | Browser | Runtime |
+| --- | --- | --- |
+| The Hollow Grid | [Play](https://hollow.skyphusion.org/) | TypeScript Worker |
+| Dustfall | [Play](https://dustfall.skyphusion.org/) | TypeScript Worker |
+| Rust Choir | [Play](https://rustchoir.skyphusion.org/) | Go container |
+| Verdigris Spool | [Play](https://verdigris.skyphusion.org/) | Python Worker |
+| Ferrite Wastes | [Play](https://ferrite.skyphusion.org/) | C container |
+| Basalt Relay | [Play](https://basalt.skyphusion.org/) | Assembly container |
+
+On federated worlds, `travel` carries your name, level, and standing through the shared Grid Hub. Verdigris Spool uses its own local hub and keeps characters in that world.
 
 Like the other writeups, this is less a feature tour and more the decisions that shaped it, including the one bug that motivated the whole project and a subtler one that taught us what a service binding actually is.
 
@@ -66,7 +74,7 @@ That is a small architectural choice with a large payoff: the dead neon city and
 
 ## The Grid: federation as canon
 
-Here is where it stops being a single server and becomes a small network. A separate backend Worker, **the Grid Hub**, owns everything that is shared across worlds: a single global faction tide that every world nudges, one canonical character that follows you between worlds, a cross-world chat and a shared memory ledger, and the registry you `travel` through. Each world reaches the Hub over a **service binding**, which is Worker-to-Worker RPC: a world calls `env.GRID.someMethod(...)` and the call lands in the Hub as if it were local, even though it crosses a deployment boundary. Both sides compile against one shared contract file, so they cannot quietly drift apart.
+Here is where it stops being a single server and becomes a small network. A separate backend Worker, **the Grid Hub**, owns everything that is shared across worlds: a single global faction tide that every world nudges, one canonical character that follows you between worlds, a cross-world chat and a shared memory ledger, and the registry you `travel` through. The reference TypeScript worlds reach the Hub over a **service binding**, which is Worker-to-Worker RPC: a world calls `env.GRID.someMethod(...)` and the call lands in the Hub as if it were local, even though it crosses a deployment boundary. Both sides compile against one shared contract file, so they cannot quietly drift apart.
 
 This is diegetic, not bolted on. The whole premise of the setting is a dead network that outlived its makers; worlds are *nodes* on that network and the shared backend literally *is* the Grid. Federation is canon, not plumbing.
 
