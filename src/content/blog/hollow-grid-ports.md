@@ -1,9 +1,10 @@
 ---
 title: "The Grid speaks Go and Python: Rust Choir and Verdigris Spool ship"
 seoTitle: "The Hollow Grid in Go and Python: two world-server ports"
-description: "hollow-grid-go and hollow-grid-py are complete world-server ports of The Hollow Grid. Both pass the upstream smoke.mjs conformance suite, run in production on the fleet as Rust Choir and Verdigris Spool, and prove the wire protocol survives a language change. Notes on the scoreboard method, what each node asks players, and how four worlds now share one Grid Hub."
+description: "hollow-grid-go and hollow-grid-py are complete world-server ports of The Hollow Grid. Both pass the upstream smoke.mjs conformance suite, launched as Rust Choir and Verdigris Spool, and prove the wire protocol survives a language change. Notes on the scoreboard method, what each node asks players, and how the public worlds are hosted today."
 seoDescription: "hollow-grid-go and hollow-grid-py are complete world-server ports of The Hollow Grid. Both pass the upstream conformance suite and keep the wire protocol."
 pubDate: 2026-07-13
+updatedDate: 2026-11-25
 tags: ["go", "mud", "federation", "websockets", "side-project"]
 draft: false
 ---
@@ -12,18 +13,16 @@ In June I wrote up [The Hollow Grid](/blog/the-hollow-grid/), a federated MUD on
 
 That post landed on July 9. By that evening the Python port was also green, deployed, and registered on the same Grid Hub. This one is the completion line for both ports: **[hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go)** (Rust Choir) and **[hollow-grid-py](https://github.com/skyphusion-labs/hollow-grid-py)** (Verdigris Spool), two autonomous world servers that speak the same language-agnostic wire spec as [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid) and join the federation when `GRID_HUB_URL` is set.
 
-## Four worlds, one Grid
+## Where to play
 
-The reference TypeScript worlds still live on Workers:
+All six worlds are online. The [live world directory](/blog/the-hollow-grid/#play-online) links to every browser terminal.
 
-| World | URL | Engine |
+| World | Browser | Runtime |
 | --- | --- | --- |
-| The Hollow Grid | [hollow.skyphusion.org](https://hollow.skyphusion.org) | TypeScript / Durable Objects |
-| Dustfall | [dustfall.skyphusion.org](https://dustfall.skyphusion.org) | TypeScript / Durable Objects |
-| **Rust Choir** | offline, moving to containers | **Go** (`hollow-grid-go`) |
-| **Verdigris Spool** | offline, moving to containers | **Python** (`hollow-grid-py`) |
+| Rust Choir | [Play](https://rustchoir.skyphusion.org/) | Go / Cloudflare container |
+| Verdigris Spool | [Play](https://verdigris.skyphusion.org/) | Python Worker |
 
-Make a character in any of them, type `travel` to another, and name, level, and standing follow through the hub registry. [`mud-bots`](/blog/mud-bots/) load-tests all four; the shared backend is still `grid-hub.skyphusion.org`.
+Rust Choir uses the shared Grid Hub for cross-world play. Verdigris Spool runs with a local hub and keeps its characters in that world. Every world accepts WebSocket connections at `/ws`.
 
 The ports were never meant to replace the reference implementation. They exist to prove the contract is real: `wscat`, `smoke.mjs`, and the bots connect to `/ws` the same way on every node.
 
@@ -31,9 +30,9 @@ The ports were never meant to replace the reference implementation. They exist t
 
 Both repos inherited the same scoreboard from upstream: **`smoke.mjs`**, phase by phase, asserting on `@event` JSON and never on English room text. A green run is the definition of done; a reworded room description must not break a test.
 
-**Rust Choir (Go)** reached production parity in July with **158 ok / 0 fail / 1 skip** against live hub and Dustfall (the lone skip is a holding-pit warden grace wall-clock wait that slow CI boxes time out on; the behavior is implemented). The port runs on biafra as a distroless GHCR image on `:8790`, rolled by GitHub Actions dispatch after green `main` builds.
+**Rust Choir (Go)** reached production parity in July with **158 ok / 0 fail / 1 skip** against live hub and Dustfall (the lone skip is a holding-pit warden grace wall-clock wait that slow CI boxes time out on; the behavior is implemented). The July deployment ran on a fleet host as a distroless image.
 
-**Verdigris Spool (Python)** closed Phase 3 the same week: standalone local smoke at **152 ok / 0 fail / 1 skip**, federation headline checks passing against live Dustfall, and `/health/deep` reporting `grid_hub: ok` on fleet. It listens on `:8791`, image `ghcr.io/skyphusion-labs/hollow-grid-py`. (Verdigris Spool is offline, moving to containers.)
+**Verdigris Spool (Python)** closed Phase 3 the same week: standalone local smoke at **152 ok / 0 fail / 1 skip**, federation headline checks passing against live Dustfall, and `/health/deep` reporting `grid_hub: ok` on fleet. The self-hosted process listens on `:8791`. Its image is `ghcr.io/skyphusion-labs/hollow-grid-py`.
 
 If you want to score your own build from a clone of [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid):
 
@@ -91,4 +90,4 @@ The Hollow Grid was always meant to be forked, ported, and extended. The TypeScr
 
 The moral spine, the no-silent-lies movement rule, the federation treated as canon: all of it ported intact. The network that outlived its makers now has a memory node in Go and a suspension node in Python, asking what you did and what you deferred.
 
-The Go and Python worlds are offline, moving to containers. Code: [hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go) · [hollow-grid-py](https://github.com/skyphusion-labs/hollow-grid-py). Wire spec: [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid).
+[Play Rust Choir](https://rustchoir.skyphusion.org/) or [play Verdigris Spool](https://verdigris.skyphusion.org/). Code: [hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go) · [hollow-grid-py](https://github.com/skyphusion-labs/hollow-grid-py). Wire spec: [the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid).
