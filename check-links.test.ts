@@ -30,9 +30,15 @@ describe('check-links', () => {
     ]);
   });
 
-  it('keeps every host the 2026-11-11 audit found dead (NXDOMAIN or no address) on the list', () => {
-    for (const host of ['demo.vivijure.com', 'analytics.skyphusion.org', 'common-thread.skyphusion.org', 'common-thread-backend.skyphusion.org', 'rustchoir.skyphusion.org', 'verdigris.skyphusion.org', 'ferrite.skyphusion.org']) {
+  it('keeps hosts that remain retired on the list', () => {
+    for (const host of ['demo.vivijure.com', 'analytics.skyphusion.org', 'common-thread.skyphusion.org', 'common-thread-backend.skyphusion.org']) {
       expect(RETIRED_HOSTS).toContain(host);
+    }
+  });
+
+  it('allows links to the restored Hollow Grid hosts', () => {
+    for (const host of ['rustchoir.skyphusion.org', 'verdigris.skyphusion.org', 'ferrite.skyphusion.org']) {
+      expect(checkPage('/x/', page(`<a href="https://${host}/">Play</a>`), exists)).toEqual([]);
     }
   });
 

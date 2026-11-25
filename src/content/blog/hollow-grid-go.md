@@ -4,6 +4,7 @@ seoTitle: "The Hollow Grid in Go: the Rust Choir world server"
 description: "hollow-grid-go is a from-scratch Go port of the Hollow Grid world server. It passes the upstream smoke.mjs conformance suite, runs in production as Rust Choir (the third federated world on the Grid), and proves the wire protocol is language-agnostic. Notes on the phase-by-phase scoreboard, the login cascade that started broken, federation bugs that echoed the TypeScript service-binding lesson, and what still has rough edges."
 seoDescription: "hollow-grid-go is a from-scratch Go port of the Hollow Grid world server."
 pubDate: 2026-07-09
+updatedDate: 2026-11-25
 tags: ["go", "mud", "federation", "websockets", "side-project"]
 draft: false
 ---
@@ -16,7 +17,7 @@ It is not the only stack someone might want.
 
 The port's definition of done was never "feature parity by eye." It was **green on `smoke.mjs`**, phase by phase, asserting on `@event` lines and never on English prose. As of **July 9, 2026**, production **Rust Choir** scored **158 ok / 0 fail / 1 skip** against live hub and Dustfall. The lone skip is a holding-pit warden grace wall-clock wait that slow CI boxes time out on; the game behavior is implemented.
 
-Rust Choir is offline, moving to containers. To run a node yourself, pull the GHCR image: `ghcr.io/skyphusion-labs/hollow-grid-go:latest`.
+Rust Choir is online in a Cloudflare container. [Play in your browser](https://rustchoir.skyphusion.org/) or connect to `wss://rustchoir.skyphusion.org/ws`. To run a node yourself, pull the GHCR image `ghcr.io/skyphusion-labs/hollow-grid-go:latest`.
 
 ## Why port at all
 
@@ -24,7 +25,7 @@ Three honest reasons:
 
 1. **Prove the protocol.** If `@event` framing and the Grid Hub RPC contract are language-agnostic, a Go world should be a first-class citizen, not a second-class fork. The upstream repo always said that in docs; this repo is the proof.
 
-2. **Run outside Workers.** Operators who want a self-hosted MUD on a VPS or a fleet container should not have to learn Durable Objects to stand up a world. Rust Choir runs on Hetzner (biafra, `:8790`, distroless image, cloudflared tunnel), alongside the TypeScript worlds on Cloudflare.
+2. **Run outside Workers.** Operators who want a self-hosted MUD on a VPS or a fleet container should not have to learn Durable Objects to stand up a world. Rust Choir originally ran on a Hetzner host behind a Cloudflare tunnel. It now runs in a Cloudflare container.
 
 3. **Exercise the federation.** A third world with its own geography and voice stress-tests travel, tide, gridcast, and canonical character sync harder than two deployments of the same engine badge.
 
@@ -78,13 +79,13 @@ It will be a cold day in hell before I trade these workflows back for the hellsc
 
 ## Federation in production
 
-Three worlds now share one Grid Hub:
+At launch, Rust Choir joined the two TypeScript worlds on the Grid Hub. The [live world directory](/blog/the-hollow-grid/#play-online) lists all six worlds.
 
 | World | URL | Engine |
 |-------|-----|--------|
 | The Hollow Grid | [hollow.skyphusion.org](https://hollow.skyphusion.org) | TypeScript / Workers |
 | Dustfall | [dustfall.skyphusion.org](https://dustfall.skyphusion.org) | TypeScript / Workers |
-| **Rust Choir** | offline, moving to containers | **Go** |
+| **Rust Choir** | [rustchoir.skyphusion.org](https://rustchoir.skyphusion.org/) | Go / Cloudflare container |
 
 Make a character in one, `travel` to another, and name, level, and standing follow through the hub registry. [`mud-bots`](/blog/mud-bots/) load-tests all three; fleet layout lives in the org's runbooks.
 
@@ -126,4 +127,4 @@ The Hollow Grid was always meant to be forked, ported, and extended. The TypeScr
 
 The moral spine, the no-silent-lies movement rule, the federation treated as canon: all of it ported intact. The network that outlived its makers now has a node written in Go, asking what the Grid will remember.
 
-Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). Rust Choir itself is offline, moving to containers.
+Code: [github.com/skyphusion-labs/hollow-grid-go](https://github.com/skyphusion-labs/hollow-grid-go). Wire spec: [github.com/skyphusion-labs/the-hollow-grid](https://github.com/skyphusion-labs/the-hollow-grid). [Play Rust Choir](https://rustchoir.skyphusion.org/).
