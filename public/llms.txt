@@ -14,6 +14,7 @@
 
 ## Key posts
 - Pagefeather (matrix and Workers for Platforms framework): https://skyphusion.net/blog/wordpress-on-cloudflare/
+- Pagefeather 0.2.0 (pre-alpha, 2026-11-28; site https://www.pagefeather.dev/): https://github.com/skyphusion-labs/pagefeather/releases/tag/v0.2.0
 - Skyphusion AI for WordPress (v0.6.3): https://skyphusion.net/blog/skyphusion-ai/
 - Zaraz Consent must-use drop-in (v0.1.0): https://skyphusion.net/blog/zaraz-consent/
 - Postern v1.7.0 read scope: https://skyphusion.net/blog/postern-v1-7/

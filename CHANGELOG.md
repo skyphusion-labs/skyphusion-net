@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **docs(site): Pagefeather 0.2.0 pre-alpha.**
+  - The Pagefeather project card notes the 0.2.0 pre-alpha release (2026-11-28) for testers on approach A and links www.pagefeather.dev.
+  - `llms.txt` links the v0.2.0 release notes.
+
 - **docs(blog): Pagefeather store path is b-dosql, not a Container (#162).**
   - The featured Pagefeather post matches current research: checkout on the Durable Object, C1 retired, approach A for scale-out, ggc.sh as the live example.
   - Projects hub and home featured summary no longer say orders need a Container.
